@@ -1,11 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-}
 
-html .page-wrapper{
-    height:calc(100vh - 64px);
-    .page-content{
-        padding: 15px;
-    }
-}
+@import 'green-yellow';
+
+@import 'layout';

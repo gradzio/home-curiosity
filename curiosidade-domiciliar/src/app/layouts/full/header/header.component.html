@@ -2,8 +2,8 @@
 <!-- ============================================================== -->
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
-<button mat-icon-button><mat-icon>search</mat-icon></button>
-<button [matMenuTriggerFor]="profile" mat-icon-button><mat-icon>person</mat-icon></button>
+<button id="searchButton" mat-icon-button><mat-icon>search</mat-icon></button>
+<button id="profileButton" [matMenuTriggerFor]="profile" mat-icon-button><mat-icon>person</mat-icon></button>
 <mat-menu #profile="matMenu">
     <button mat-menu-item>
         <mat-icon>settings</mat-icon> Settings </button>

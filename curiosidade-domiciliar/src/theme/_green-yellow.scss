@@ -1,0 +1,92 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+$mat-green-color: #459A45;
+$mat-green: (
+50: #e9f3e9,
+100: #c7e1c7,
+200: #a2cda2,
+300: #7db87d,
+400: #61a961,
+500: #459a45,
+600: #3e923e,
+700: #368836,
+800: #2e7e2e,
+900: #1f6c1f,
+A100: #abffab,
+A200: #78ff78,
+A400: #45ff45,
+A700: #2bff2b,
+contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+$mat-yellow-color: #fae04b;
+$mat-yellow: (
+  50: #fefbe9,
+  100: #fef6c9,
+  200: #fdf0a5,
+  300: #fce981,
+  400: #fbe566,
+  500: #fae04b,
+  600: #f9dc44,
+  700: #f9d83b,
+  800: #f8d333,
+  900: #f6cb23,
+  A100: #ffffff,
+  A200: #fffefc,
+  A400: #fff3c9,
+  A700: #ffeeb0,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+$mat-blue-color: #052372;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: mat-palette($mat-green);
+$candy-app-accent:  mat-palette($mat-yellow);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
