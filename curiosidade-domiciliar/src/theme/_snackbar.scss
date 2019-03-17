@@ -1,0 +1,12 @@
+@import 'green-yellow';
+
+@include mat-core();
+
+.snackbar-success {
+    background-color: map-get($candy-app-primary, 'default') !important;
+    color: #fff !important;
+}
+.snackbar-error {
+    background-color: map-get($candy-app-warn, 'default') !important;
+    color: #fff !important;
+}

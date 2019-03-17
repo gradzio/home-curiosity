@@ -8,11 +8,13 @@ import { PresentationComponentsModule } from '../../presentation-components/pres
 import { Exercise } from './exercise.model';
 import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { MaterialModule } from 'src/app/material.module';
+import { MatSnackBar } from '@angular/material';
 
 fdescribe('ExercisesComponent', () => {
   let component: ExercisesComponent;
   let fixture: ComponentFixture<ExercisesComponent>;
-  let service;
+  let exerciseService;
+  let notificationService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,7 +24,7 @@ fdescribe('ExercisesComponent', () => {
         MaterialModule,
         PresentationComponentsModule
       ],
-      providers: [ ExercisesService ]
+      providers: [ ExercisesService, MatSnackBar ]
     })
     .compileComponents();
   }));
@@ -30,8 +32,9 @@ fdescribe('ExercisesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExercisesComponent);
     component = fixture.componentInstance;
-    service = TestBed.get(ExercisesService);
-    spyOn(service, 'getAll').and.returnValue(of(ExerciseProvider.twoNotCompleted));
+    exerciseService = TestBed.get(ExercisesService);
+    notificationService = TestBed.get(MatSnackBar);
+    spyOn(exerciseService, 'getAll').and.returnValue(of(ExerciseProvider.twoNotCompleted));
     fixture.detectChanges();
   });
 
@@ -41,7 +44,7 @@ fdescribe('ExercisesComponent', () => {
 
   it('should get exercises from a service', () => {
     component.ngOnInit();
-    expect(service.getAll).toHaveBeenCalled();
+    expect(exerciseService.getAll).toHaveBeenCalled();
   });
 
   it('should set current exercise as first', () => {
@@ -53,11 +56,33 @@ fdescribe('ExercisesComponent', () => {
   });
 
   it('should set current exercise as second', () => {
-    service.getAll.and.returnValue(of(ExerciseProvider.twoFirstCompleted));
+    exerciseService.getAll.and.returnValue(of(ExerciseProvider.twoFirstCompleted));
     component.ngOnInit();
     component.currentExercise$.subscribe(exercise => {
       expect(exercise).toEqual(jasmine.any(Exercise))
       expect(exercise).toEqual(ExerciseProvider.twoNotCompleted[1]);
+    });
+  });
+
+  it('should show positive snackbar on correct answer', () => {
+    spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
+    spyOn(notificationService, 'open');
+    component.onAnswerSubmitted("2");
+
+    expect(exerciseService.postAnswer).toHaveBeenCalledWith('guid1', "2");
+    expect(notificationService.open).toHaveBeenCalledWith('Congrats!', null, {
+      panelClass: ['snackbar-success'],    
+    });
+  });
+
+  it('should show negative snackbar on wrong answer', () => {
+    spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': false, 'exerciseGuid': 'guid1'}));
+    spyOn(notificationService, 'open');
+    component.onAnswerSubmitted("2");
+
+    expect(exerciseService.postAnswer).toHaveBeenCalledWith('guid1', "2");
+    expect(notificationService.open).toHaveBeenCalledWith('Incorrect! Try again...', null, {
+      panelClass: ['snackbar-error'],    
     });
   });
 });

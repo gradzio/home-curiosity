@@ -8,4 +8,8 @@ export class ExercisesService {
     getAll(): Observable<Exercise[]> {
         return of(ExerciseProvider.twoNotCompleted);
     }
+
+    postAnswer(exerciseGuid: string, answerValue: string): Observable<any> {
+        return of({exerciseGuid, success: Math.random() >= 0.5});
+    }
 }

@@ -1,5 +1,5 @@
 <mat-card *ngIf="currentExercise$ | async as currentExercise">
-  <app-answer-box [header]="currentExercise.title">
+  <app-answer-box [header]="currentExercise.title" (answerSubmitted)="onAnswerSubmitted($event)">
     <img [src]="currentExercise.imageUrl" width="100%" />
   </app-answer-box>
 </mat-card>
