@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
+import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -20,7 +21,8 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         FlexLayoutModule,
         MaterialModule,
-        PresentationComponentsModule
+        PresentationComponentsModule,
+        SmartComponentsModule
       ],
       declarations: [
         AppComponent,

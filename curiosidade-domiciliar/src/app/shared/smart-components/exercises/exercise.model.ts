@@ -11,6 +11,12 @@ export class Exercise {
         this._isCompleted = isCompleted;
     }
 
+    isEqual(exercise: Exercise): boolean {
+        return this._guid === exercise.guid
+            && this._title === exercise.title
+            && this._imageUrl === exercise.imageUrl;
+    }
+
     get guid(): string {
         return this._guid;
     }
@@ -25,5 +31,9 @@ export class Exercise {
 
     get isCompleted(): boolean {
         return this._isCompleted;
+    }
+
+    complete() {
+        this._isCompleted = true;
     }
 }

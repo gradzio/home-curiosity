@@ -2,15 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExercisesComponent } from './exercises.component';
 import { ExercisesService } from './exercises.service.stub';
-import { of } from 'rxjs';
+import { of, EMPTY } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PresentationComponentsModule } from '../../presentation-components/presentation-components.module';
 import { Exercise } from './exercise.model';
 import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { MaterialModule } from 'src/app/material.module';
 import { MatSnackBar } from '@angular/material';
+import { NotificationService } from './notification.service';
+import { filter } from 'rxjs/operators';
 
-fdescribe('ExercisesComponent', () => {
+describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
   let fixture: ComponentFixture<ExercisesComponent>;
   let exerciseService;
@@ -24,7 +26,7 @@ fdescribe('ExercisesComponent', () => {
         MaterialModule,
         PresentationComponentsModule
       ],
-      providers: [ ExercisesService, MatSnackBar ]
+      providers: [ ExercisesService, NotificationService ]
     })
     .compileComponents();
   }));
@@ -33,7 +35,7 @@ fdescribe('ExercisesComponent', () => {
     fixture = TestBed.createComponent(ExercisesComponent);
     component = fixture.componentInstance;
     exerciseService = TestBed.get(ExercisesService);
-    notificationService = TestBed.get(MatSnackBar);
+    notificationService = TestBed.get(NotificationService);
     spyOn(exerciseService, 'getAll').and.returnValue(of(ExerciseProvider.twoNotCompleted));
     fixture.detectChanges();
   });
@@ -49,40 +51,37 @@ fdescribe('ExercisesComponent', () => {
 
   it('should set current exercise as first', () => {
     component.ngOnInit();
-    component.currentExercise$.subscribe(exercise => {
+    component.currentExercise$
+    .subscribe(exercise => {
       expect(exercise).toEqual(jasmine.any(Exercise))
       expect(exercise).toEqual(ExerciseProvider.twoNotCompleted[0]);
-    });
-  });
-
-  it('should set current exercise as second', () => {
-    exerciseService.getAll.and.returnValue(of(ExerciseProvider.twoFirstCompleted));
-    component.ngOnInit();
-    component.currentExercise$.subscribe(exercise => {
-      expect(exercise).toEqual(jasmine.any(Exercise))
-      expect(exercise).toEqual(ExerciseProvider.twoNotCompleted[1]);
-    });
+    })
+    .unsubscribe();
   });
 
   it('should show positive snackbar on correct answer', () => {
     spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
-    spyOn(notificationService, 'open');
+    spyOn(notificationService, 'notifyCorrectAnswer');
     component.onAnswerSubmitted("2");
 
-    expect(exerciseService.postAnswer).toHaveBeenCalledWith('guid1', "2");
-    expect(notificationService.open).toHaveBeenCalledWith('Congrats!', null, {
-      panelClass: ['snackbar-success'],    
-    });
+    expect(exerciseService.postAnswer).toHaveBeenCalledWith('2');
+    expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
   });
 
   it('should show negative snackbar on wrong answer', () => {
     spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': false, 'exerciseGuid': 'guid1'}));
-    spyOn(notificationService, 'open');
+    spyOn(notificationService, 'notifyWrongAnswer');
     component.onAnswerSubmitted("2");
 
-    expect(exerciseService.postAnswer).toHaveBeenCalledWith('guid1', "2");
-    expect(notificationService.open).toHaveBeenCalledWith('Incorrect! Try again...', null, {
-      panelClass: ['snackbar-error'],    
-    });
+    expect(exerciseService.postAnswer).toHaveBeenCalledWith('2');
+    expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
+  });
+
+  it('should call nextExercise on correct answer', () => {
+    notificationService.correctAnswerDismissed$ = of(true);
+    spyOn(exerciseService, 'nextExercise');
+    component.ngOnInit();
+
+    expect(exerciseService.nextExercise).toHaveBeenCalled();
   });
 });

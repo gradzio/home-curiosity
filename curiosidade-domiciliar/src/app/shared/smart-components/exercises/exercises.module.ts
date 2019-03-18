@@ -4,6 +4,7 @@ import { PresentationComponentsModule } from '../../presentation-components/pres
 import { CommonModule } from '@angular/common';
 import { ExercisesService } from './exercises.service.stub';
 import { MaterialModule } from 'src/app/material.module';
+import { NotificationService } from './notification.service';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { MaterialModule } from 'src/app/material.module';
         ExercisesComponent
     ],
     providers: [
-        ExercisesService
+        ExercisesService,
+        NotificationService
       ]
 })
 export class ExercisesModule { }

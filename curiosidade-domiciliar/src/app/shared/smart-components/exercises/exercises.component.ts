@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ExercisesService } from './exercises.service.stub';
 import { Observable } from 'rxjs';
 import { Exercise } from './exercise.model';
-import { map } from 'rxjs/operators';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { NotificationService } from './notification.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exercises',
@@ -13,34 +13,30 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 export class ExercisesComponent implements OnInit {
 
   exercises$: Observable<Exercise[]>;
-  currentExercise$?: Observable<Exercise>;
+  currentExercise$: Observable<Exercise>;
 
-  constructor(private exerciseService: ExercisesService, private notificationService: MatSnackBar) { }
+  constructor(private exerciseService: ExercisesService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.exercises$ = this.exerciseService.getAll();
-    this.currentExercise$ = this.exercises$
-    .pipe( 
-      map((exercises: Exercise[]) => {
-        const notCompleted = exercises.filter(exercise => !exercise.isCompleted);
-        return notCompleted.length > 0 ? notCompleted[0] : null;
-      }),
-    )
+    this.currentExercise$ = this.exerciseService.current$
+      .pipe(
+        filter(exercise => exercise !== null)
+      );
+    this.notificationService.correctAnswerDismissed$
+      .pipe(
+        filter(isCorrect => isCorrect == true)
+      ).subscribe(_ => this.exerciseService.nextExercise());
   }
 
   onAnswerSubmitted(answerValue: string) {
-    this.currentExercise$
-      .subscribe((exercise: Exercise) => {
-        this.exerciseService.postAnswer(exercise.guid, answerValue)
+      this.exerciseService.postAnswer(answerValue)
         .subscribe(answer => {
-          const notification = answer.success
-            ? {text: 'Congrats!', classes: ['snackbar-success']}
-            : {text: 'Incorrect! Try again...', classes: ['snackbar-error']}
-          this.notificationService.open(notification.text, null, {
-            panelClass: notification.classes,    
-          })
-        }); 
-      });
+          if (answer.success) {
+            this.notificationService.notifyCorrectAnswer();
+          } else {
+            this.notificationService.notifyWrongAnswer();
+          }
+        });
   }
-
 }
