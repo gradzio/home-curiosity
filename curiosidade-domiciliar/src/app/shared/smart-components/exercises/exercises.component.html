@@ -1,6 +1,8 @@
-Total of: {{(exercises$ | async)?.length}}
-<mat-card *ngIf="currentExercise$ | async as currentExercise">
-  <app-answer-box [header]="currentExercise.title" (answerSubmitted)="onAnswerSubmitted($event)">
-    <img [src]="currentExercise.imageUrl" width="100%" />
+<mat-card *ngIf="exercises$ | async as currentExercises">
+  <app-answer-box *ngIf="!currentExercises.progress.isCompleted else congrats" [header]="currentExercises.current.title" (answerSubmitted)="onAnswerSubmitted($event)">
+    <img [src]="currentExercises.current.imageUrl" width="100%" />
   </app-answer-box>
+  <ng-template #congrats>
+    CONGRATS!
+  </ng-template>
 </mat-card>

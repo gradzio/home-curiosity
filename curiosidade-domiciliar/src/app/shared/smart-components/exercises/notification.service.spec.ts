@@ -22,7 +22,7 @@ describe('NotificationService', () => {
         service = TestBed.get(NotificationService);
       });
 
-    it('should have correctAnswerDismissed set to false by default', () => {
+    it('should have right defaults', () => {
         service.correctAnswerDismissed$.subscribe(isDismissed => expect(isDismissed).toEqual(false));
     });
 

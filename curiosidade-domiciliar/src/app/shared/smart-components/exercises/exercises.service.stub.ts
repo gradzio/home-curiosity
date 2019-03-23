@@ -1,29 +1,32 @@
 import { Injectable } from "@angular/core";
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Exercise } from './exercise.model';
 import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { map } from 'rxjs/operators';
+import { Collection } from 'src/app/core/collection';
 
 @Injectable()
 export class ExercisesService {
     private _currentSubject = new BehaviorSubject(null);
     current$: Observable<Exercise> = this._currentSubject.asObservable();
 
-    private _exercisesSubject = new BehaviorSubject([]);
-    exercises$: Observable<Exercise[]> = this._exercisesSubject.asObservable();
+    // TODO: Return type
+    private _exercisesSubject = new BehaviorSubject<Collection<Exercise>>(new Collection([]));
+    exercises$ = this._exercisesSubject.asObservable();
 
-    getAll(): Observable<Exercise[]> {
-        return of(ExerciseProvider.twoNotCompleted)
+    getAll() {
+        of(ExerciseProvider.twoNotCompleted)
         .pipe(
             map(exercises => {
                 const notCompleted = exercises.filter(exercise => !exercise.isCompleted);
                 if (notCompleted.length > 0) {
                     this._currentSubject.next(notCompleted[0]);
                 }
-                this._exercisesSubject.next(exercises);
-                return exercises;
+                const exerciseCollection = new Collection<Exercise>(exercises);
+                this._exercisesSubject.next(exerciseCollection);
+                return exerciseCollection;
             })
-        );
+        ).subscribe();
     }
 
     postAnswer(answerValue: string): Observable<any> {
@@ -31,20 +34,8 @@ export class ExercisesService {
     }
 
     nextExercise() {
-        const current = this._currentSubject.getValue();
-        const all = this._exercisesSubject.getValue();
-        let foundCurrent = false;
-        this._exercisesSubject.next(all.map(exercise => {
-            if (foundCurrent) {
-                this._currentSubject.next(exercise);
-            } else {
-                exercise.complete();
-            }
-
-            if (exercise.isEqual(current)) {
-                foundCurrent = true;
-            }
-            return exercise;
-        }));
+        const collection = this._exercisesSubject.getValue();
+        collection.next();
+        this._exercisesSubject.next(collection);
     }
 }

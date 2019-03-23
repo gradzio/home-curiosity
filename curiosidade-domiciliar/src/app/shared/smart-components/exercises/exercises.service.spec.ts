@@ -1,8 +1,6 @@
 import { ExercisesService } from "./exercises.service.stub";
-import { Exercise } from './exercise.model';
-import { last } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { ExerciseProvider } from 'src/tests/exercise.provider';
+import { Collection } from 'src/app/core/collection';
 
 describe('ExercisesService', () => {
     let service: ExercisesService;
@@ -11,31 +9,31 @@ describe('ExercisesService', () => {
         service = new ExercisesService();
     });
     it('should getAll', () => {
-
-        const actual$ = service.getAll();
-
-        actual$.subscribe(exercises => {
-            expect(exercises.length).toBeGreaterThan(0);
-            expect(exercises[0]).toEqual(jasmine.any(Exercise));
-        });
-    });
-
-    it('should set first exercise by default', () => {
-        const exercises = ExerciseProvider.twoNotCompleted;
-        service.exercises$ = of(exercises);
-        service.current$
-            .subscribe(exercise => expect(exercise).toEqual(exercises[0]))
+        service.getAll();
+        service.exercises$
+            .subscribe(exercises => {
+                expect(exercises).toEqual(jasmine.any(Collection));
+            })
             .unsubscribe();
     });
 
+    it('should have right default', () => {
+        service.getAll();
+        service.exercises$
+            .subscribe(exercises => {
+                expect(exercises.progress.current).toEqual(1);
+            }).unsubscribe();
+
+        
+    });
+
     it('should set next Exercise', () => {
-        const exercises = ExerciseProvider.twoNotCompleted;
-        service.exercises$ = of(exercises);
+        service.getAll();
 
         service.nextExercise();
 
-        service.current$
-            .subscribe(exercise => expect(exercise).toEqual(exercises[1]))
+        service.exercises$
+            .subscribe(exercises => expect(exercises.progress.current).toEqual(2))
             .unsubscribe();
     });
 

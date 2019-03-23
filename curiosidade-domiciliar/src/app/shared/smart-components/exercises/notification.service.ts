@@ -1,6 +1,5 @@
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 import { Injectable } from '@angular/core';
-import { SimpleCallExpression } from 'estree';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 interface NotificationInterface {

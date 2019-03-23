@@ -2,15 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExercisesComponent } from './exercises.component';
 import { ExercisesService } from './exercises.service.stub';
-import { of, EMPTY } from 'rxjs';
+import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PresentationComponentsModule } from '../../presentation-components/presentation-components.module';
 import { Exercise } from './exercise.model';
 import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { MaterialModule } from 'src/app/material.module';
-import { MatSnackBar } from '@angular/material';
 import { NotificationService } from './notification.service';
-import { filter } from 'rxjs/operators';
+import { Collection } from 'src/app/core/collection';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -36,7 +35,7 @@ describe('ExercisesComponent', () => {
     component = fixture.componentInstance;
     exerciseService = TestBed.get(ExercisesService);
     notificationService = TestBed.get(NotificationService);
-    spyOn(exerciseService, 'getAll').and.returnValue(of(ExerciseProvider.twoNotCompleted));
+    spyOn(exerciseService, 'exercises$').and.returnValue(of(new Collection(ExerciseProvider.twoNotCompleted)));
     fixture.detectChanges();
   });
 
@@ -45,11 +44,12 @@ describe('ExercisesComponent', () => {
   });
 
   it('should get exercises from a service', () => {
+    spyOn(exerciseService, 'getAll');
     component.ngOnInit();
     expect(exerciseService.getAll).toHaveBeenCalled();
   });
 
-  it('should set current exercise as first', () => {
+  it('should set right defaults', () => {
     component.ngOnInit();
     component.currentExercise$
     .subscribe(exercise => {
