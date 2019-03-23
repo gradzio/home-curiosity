@@ -4,7 +4,7 @@ import { AnswerBox } from './answer-box';
 import { By } from '@angular/platform-browser';
 import { DebugElement, Component } from '@angular/core';
 
-fdescribe('AnswerBoxComponent', () => {
+describe('AnswerBoxComponent', () => {
   let component: ImageAnswerBox;
   let fixture: ComponentFixture<ImageAnswerBox>;
   let answerBoxElement: DebugElement;

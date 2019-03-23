@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AnswerBoxModule } from './answer-box/answer-box-module';
+import { AnswerBoxModule } from './answer-box/answer-box.module';
 
 @NgModule({
     imports: [
