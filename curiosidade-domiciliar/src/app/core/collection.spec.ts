@@ -9,13 +9,14 @@ describe('Collection', () => {
         expect(collection.progress.current).toEqual(1);
         expect(collection.progress.total).toEqual(3);
         expect(collection.progress.state).toEqual(ProgressStates.NOT_STARTED);
-        expect(collection.items.length).toEqual(3);
+        expect(collection.length).toEqual(3);
     }); 
 
-    it('should map a collection', () => {
+    it('should test main helper functions in a collection', () => {
         const actual = collection.map(item => item + 1);
 
         expect(actual).toEqual([2, 3, 4]);
+        expect(actual.length).toEqual(3);
     });
 
     it('should get next', () => {

@@ -63,7 +63,11 @@ export class Collection<T> {
         return arr;
     }
 
-    get current() {
+    get length (): number {
+        return this._items.length;
+    }
+
+    get current(): T {
         return this._items[this._progress.current - 1];
     }
 
@@ -78,9 +82,5 @@ export class Collection<T> {
 
     get progress(): Progress {
         return this._progress;
-    }
-
-    get items(): T[] {
-        return this._items;
     }
 }

@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -18,6 +19,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MaterialModule,
         BrowserModule,
+        HttpClientModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         MaterialModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ExercisesService } from './exercises.service.stub';
+import { ExercisesService } from './exercises.service';
 import { Observable } from 'rxjs';
 import { Exercise } from './exercise.model';
 import { NotificationService } from './notification.service';
@@ -25,10 +25,6 @@ export class ExercisesComponent implements OnInit {
 
     this.exercises$ = this.exerciseService.exercises$.pipe(tap(_ => this.changeDetectorRef.detectChanges()));
 
-    this.currentExercise$ = this.exerciseService.current$
-      .pipe(
-        filter(exercise => exercise !== null)
-      );
     this.notificationService.correctAnswerDismissed$
       .pipe(
         filter(isCorrect => isCorrect == true)

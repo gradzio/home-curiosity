@@ -1,15 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExercisesComponent } from './exercises.component';
-import { ExercisesService } from './exercises.service.stub';
+import { ExercisesService } from './exercises.service';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PresentationComponentsModule } from '../../presentation-components/presentation-components.module';
 import { Exercise } from './exercise.model';
-import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { MaterialModule } from 'src/app/material.module';
 import { NotificationService } from './notification.service';
-import { Collection } from 'src/app/core/collection';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provider';
+import { last } from 'rxjs/operators';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -23,19 +24,24 @@ describe('ExercisesComponent', () => {
       imports: [
         CommonModule,
         MaterialModule,
-        PresentationComponentsModule
+        PresentationComponentsModule,
+        HttpClientTestingModule
       ],
       providers: [ ExercisesService, NotificationService ]
     })
     .compileComponents();
   }));
 
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   beforeEach(() => {
     fixture = TestBed.createComponent(ExercisesComponent);
     component = fixture.componentInstance;
     exerciseService = TestBed.get(ExercisesService);
     notificationService = TestBed.get(NotificationService);
-    spyOn(exerciseService, 'exercises$').and.returnValue(of(new Collection(ExerciseProvider.twoNotCompleted)));
+    spyOn(exerciseService, 'exercises$').and.returnValue(of(ExerciseCollectionProvider.two));
     fixture.detectChanges();
   });
 
@@ -51,10 +57,13 @@ describe('ExercisesComponent', () => {
 
   it('should set right defaults', () => {
     component.ngOnInit();
-    component.currentExercise$
-    .subscribe(exercise => {
-      expect(exercise).toEqual(jasmine.any(Exercise))
-      expect(exercise).toEqual(ExerciseProvider.twoNotCompleted[0]);
+    component.exercises$
+    .pipe(
+      last()
+    )
+    .subscribe(exercises => {
+      expect(exercises.current).toEqual(jasmine.any(Exercise));
+      expect(exercises.progress.current).toEqual(1);
     })
     .unsubscribe();
   });

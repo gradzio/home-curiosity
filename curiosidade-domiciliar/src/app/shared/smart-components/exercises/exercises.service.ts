@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Exercise } from './exercise.model';
-import { ExerciseProvider } from 'src/tests/exercise.provider';
 import { map } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
+import { HttpClient } from '@angular/common/http';
+import { ExerciseFactory } from './exercise.factory';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Injectable()
 export class ExercisesService {
@@ -14,23 +16,21 @@ export class ExercisesService {
     private _exercisesSubject = new BehaviorSubject<Collection<Exercise>>(new Collection([]));
     exercises$ = this._exercisesSubject.asObservable();
 
+    baseUrl = '/assets/mocks';
+
+    constructor(private client: HttpClient) {}
+
     getAll() {
-        of(ExerciseProvider.twoNotCompleted)
-        .pipe(
-            map(exercises => {
-                const notCompleted = exercises.filter(exercise => !exercise.isCompleted);
-                if (notCompleted.length > 0) {
-                    this._currentSubject.next(notCompleted[0]);
-                }
-                const exerciseCollection = new Collection<Exercise>(exercises);
-                this._exercisesSubject.next(exerciseCollection);
-                return exerciseCollection;
-            })
-        ).subscribe();
+        this.client.get(`${this.baseUrl}/exercises.json`)
+            .pipe(
+                map(response => response['data'].map(ExerciseFactory.make))
+            )
+            .subscribe(exercises => this._exercisesSubject.next(new Collection<Exercise>(exercises)));
     }
 
     postAnswer(answerValue: string): Observable<any> {
-        return of({exerciseGuid: this._currentSubject.getValue(), success: Math.random() >= 0.5});
+        const exerciseGuid = this._exercisesSubject.getValue().current.guid;
+        return this.client.post(`${this.baseUrl}/exercises/${exerciseGuid}/answer.json`, {answer: answerValue});
     }
 
     nextExercise() {

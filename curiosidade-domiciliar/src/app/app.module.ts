@@ -11,6 +11,7 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SmartComponentsModule } from './shared/smart-components/smart-component
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
