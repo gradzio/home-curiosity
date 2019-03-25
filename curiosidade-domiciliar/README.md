@@ -1,5 +1,10 @@
 # CuriosidadeDomiciliar
 
+| Build Status | Code Coverage |
+| :---: | :---: |
+| [![Build Status](https://travis-ci.org/gradzio/home-curiosity.svg?branch=master)](https://travis-ci.org/gradzio/home-curiosity) | [![codecov](https://codecov.io/gh/gradzio/home-curiosity/branch/master/graph/badge.svg)](https://codecov.io/gh/gradzio/home-curiosity) |
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
 
 ## Development server
