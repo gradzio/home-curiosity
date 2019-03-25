@@ -16,9 +16,12 @@ cache:
   directories:
      - ./node_modules
 
+before_install:
+  - cd curiosidade-domiciliar
+
 install:
   - npm install
 
 script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-  - npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+  # - cd curiosidade-domiciliar && npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
