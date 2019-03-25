@@ -16,9 +16,15 @@ cache:
   directories:
      - ./node_modules
 
+before_install:
+  - cd curiosidade-domiciliar
+
 install:
   - npm install
 
 script:
-  - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-  - npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+  - npm run test-headless
+  # - npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
