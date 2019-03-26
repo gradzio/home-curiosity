@@ -19,7 +19,7 @@ describe('AppHeaderComponent', () => {
         fixture = TestBed.createComponent(AppHeaderComponent);
         component = fixture.debugElement.componentInstance;
       }));
-    
+
       it('should create the component', () => {
         expect(component).toBeTruthy();
       });

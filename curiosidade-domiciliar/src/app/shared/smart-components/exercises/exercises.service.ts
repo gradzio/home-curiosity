@@ -1,11 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Observable, of, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Exercise } from './exercise.model';
 import { map } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
 import { HttpClient } from '@angular/common/http';
 import { ExerciseFactory } from './exercise.factory';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Injectable()
 export class ExercisesService {

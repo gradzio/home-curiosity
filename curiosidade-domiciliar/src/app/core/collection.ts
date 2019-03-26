@@ -8,11 +8,11 @@ export class Progress {
     private _total: number;
     private _current = 1;
     private _state = ProgressStates.NOT_STARTED;
-    
+
     constructor(total: number) {
         this._total = total;
     }
-    
+
     get total(): number {
         return this._total;
     }
@@ -57,7 +57,7 @@ export class Collection<T> {
 
     map(callback) {
         const arr = [];
-        for (var i = 0; i < this._items.length; i++) {
+        for (let i = 0; i < this._items.length; i++) {
             arr.push(callback(this._items[i], i, this._items));
         }
         return arr;

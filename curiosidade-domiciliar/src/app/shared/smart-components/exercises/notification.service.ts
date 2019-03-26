@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 interface NotificationInterface {
     text: string;
-    config?: MatSnackBarConfig
+    config?: MatSnackBarConfig;
 }
 
 @Injectable()
@@ -15,24 +15,14 @@ export class NotificationService {
     constructor(private snackbar: MatSnackBar) {}
 
     notifyCorrectAnswer(): void {
-        this._notify({
-            text: 'Congrats!',
-            config: {duration: 1000, panelClass: ['snackbar-success']}
-        })
-        .afterDismissed()
-        .subscribe(_ => {
-            this.correctAnswerDismissedSubject.next(true);
-        });
+        this.snackbar.open('Congrats!', null, {duration: 1000, panelClass: ['snackbar-success']})
+            .afterDismissed()
+            .subscribe(_ => {
+                this.correctAnswerDismissedSubject.next(true);
+            });
     }
 
     notifyWrongAnswer(): void {
-        this._notify({
-            text: 'Incorrect! Try again...',
-            config: {duration: 5000, panelClass: ['snackbar-error']}
-        });
-    }
-
-    private _notify(notification: NotificationInterface): MatSnackBarRef<SimpleSnackBar> {
-        return this.snackbar.open(notification.text, null, notification.config);
+        this.snackbar.open('Incorrect! Try again...', null, {duration: 5000, panelClass: ['snackbar-error']});
     }
 }

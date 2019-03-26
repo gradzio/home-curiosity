@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, async } from '@angular/core/testing';
 import { MaterialModule } from 'src/app/material.module';
 import { MatSnackBar } from '@angular/material';
 import { NotificationService } from './notification.service';
@@ -40,7 +40,7 @@ describe('NotificationService', () => {
       notificationService.notifyWrongAnswer();
         expect(snackbar.open).toHaveBeenCalledWith('Incorrect! Try again...', null, {
             panelClass: ['snackbar-error'],
-            duration: 5000 
+            duration: 5000
           });
 
           notificationService.correctAnswerDismissed$.subscribe(isDismissed => expect(isDismissed).toEqual(false));

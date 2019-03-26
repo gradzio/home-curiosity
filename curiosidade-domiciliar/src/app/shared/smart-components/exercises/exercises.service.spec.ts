@@ -1,4 +1,4 @@
-import { ExercisesService } from "./exercises.service";
+import { ExercisesService } from './exercises.service';
 import { Collection } from 'src/app/core/collection';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -19,11 +19,7 @@ describe('ExercisesService', () => {
         exerciseService = TestBed.get(ExercisesService);
     });
 
-    // afterEach(() => {
-    //     TestBed.resetTestingModule();
-    // });
-
-    it('should getAll', () => {   
+    it('should getAll', () => {
         exerciseService.getAll();
 
         exerciseService.exercises$
@@ -36,9 +32,8 @@ describe('ExercisesService', () => {
                     expect(exercises).toEqual(jasmine.any(Collection));
                     expect(exercises.length).toEqual(1);
                 }
-                
             }).unsubscribe();
-        
+
         const req = httpTestingController.expectOne('/assets/mocks/exercises.json');
 
         expect(req.request.method).toEqual('GET');
