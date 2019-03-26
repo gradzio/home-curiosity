@@ -1,5 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { Button } from 'protractor';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+  Input,
+  HostBinding
+} from '@angular/core';
 
 @Component({
   selector: 'app-answer-box',
@@ -7,10 +15,10 @@ import { Button } from 'protractor';
   templateUrl: './answer-box.html',
   styleUrls: ['./answer-box.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'app-answer-box'}
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnswerBox implements OnInit {
+  @HostBinding('class') classes = 'app-answer-box';
   @Input()
   header: string;
 
@@ -18,7 +26,7 @@ export class AnswerBox implements OnInit {
 
   get isDisabled(): boolean {
     return this._answerText == null || this._answerText.trim().length === 0;
-  };
+  }
 
   @Output()
   answerSubmitted: EventEmitter<string> = new EventEmitter();

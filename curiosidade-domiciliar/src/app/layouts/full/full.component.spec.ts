@@ -1,4 +1,4 @@
-import { AppFullComponent } from "./full.component";
+import { AppFullComponent } from './full.component';
 import { async, TestBed } from '@angular/core/testing';
 import { MaterialModule } from 'src/app/material.module';
 import { AppHeaderComponent } from './header/header.component';
@@ -24,7 +24,7 @@ describe('AppFullComponent', () => {
         fixture = TestBed.createComponent(AppFullComponent);
         component = fixture.debugElement.componentInstance;
       }));
-    
+
       it('should create the component', () => {
         expect(component).toBeTruthy();
       });
@@ -36,16 +36,16 @@ describe('AppFullComponent', () => {
       });
 
       it('should have side drawer on mobile', () => {
-        component.mobileQuery = {media: "(min-width: 768px)", matches: true, onchange: null, removeListener: (x) => {}}
+        component.mobileQuery = {media: '(min-width: 768px)', matches: true, onchange: null, removeListener: (x) => {}};
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.mat-drawer-over'))).toBeFalsy;
-        expect(fixture.debugElement.query(By.css('.mat-drawer-side'))).toBeTruthy;
+        expect(fixture.debugElement.query(By.css('.mat-drawer-over'))).toBeFalsy();
+        expect(fixture.debugElement.query(By.css('.mat-drawer-side'))).toBeTruthy();
       });
-        
+
       it('should have side drawer on tablet und up', () => {
-        component.mobileQuery = {media: "(min-width: 768px)", matches: false, onchange: null, removeListener: (x) => {}};
+        component.mobileQuery = {media: '(min-width: 768px)', matches: false, onchange: null, removeListener: (x) => {}};
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.mat-drawer-over'))).toBeTruthy;
-        expect(fixture.debugElement.query(By.css('.mat-drawer-side'))).toBeFalsy;
+        expect(fixture.debugElement.query(By.css('.mat-drawer-over'))).toBeTruthy();
+        expect(fixture.debugElement.query(By.css('.mat-drawer-side'))).toBeFalsy();
       });
 });

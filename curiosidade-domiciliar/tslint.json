@@ -11,9 +11,7 @@
       "check-space"
     ],
     "curly": true,
-    "deprecation": {
-      "severity": "warn"
-    },
+    "deprecation": false,
     "eofline": true,
     "forin": true,
     "import-blacklist": [
@@ -125,7 +123,7 @@
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
+    "component-class-suffix": false,
     "directive-class-suffix": true
   }
 }

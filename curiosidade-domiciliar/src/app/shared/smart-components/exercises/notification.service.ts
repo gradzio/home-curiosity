@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 interface NotificationInterface {
     text: string;
-    config?: MatSnackBarConfig
+    config?: MatSnackBarConfig;
 }
 
 @Injectable()

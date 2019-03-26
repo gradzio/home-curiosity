@@ -18,16 +18,23 @@ export class ExercisesComponent implements OnInit {
   exercises$: Observable<Collection<Exercise>>;
   currentExercise$: Observable<Exercise>;
 
-  constructor(private exerciseService: ExercisesService, private notificationService: NotificationService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private exerciseService: ExercisesService,
+    private notificationService: NotificationService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.exerciseService.getAll();
 
-    this.exercises$ = this.exerciseService.exercises$.pipe(tap(_ => this.changeDetectorRef.detectChanges()));
+    this.exercises$ = this.exerciseService.exercises$
+      .pipe(
+        tap(_ => this.changeDetectorRef.detectChanges())
+      );
 
     this.notificationService.correctAnswerDismissed$
       .pipe(
-        filter(isCorrect => isCorrect == true)
+        filter(isCorrect => isCorrect === true)
       ).subscribe(_ => this.exerciseService.nextExercise());
   }
 

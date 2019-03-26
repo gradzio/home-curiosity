@@ -1,8 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AnswerBox } from './answer-box';
 import { By } from '@angular/platform-browser';
 import { DebugElement, Component } from '@angular/core';
+
+@Component({
+  template: `<app-answer-box
+              (answerSubmitted)="onAnswered($event)"
+              header="Header">
+              <img src="image.jpg" alt="image" />
+             </app-answer-box>`,
+})
+class ImageAnswerBox {
+  answeredValue: string;
+  onAnswered(value: string) {
+    this.answeredValue = value;
+  }
+}
 
 describe('AnswerBoxComponent', () => {
   let component: ImageAnswerBox;
@@ -24,7 +37,7 @@ describe('AnswerBoxComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     answerBoxElement = fixture.debugElement.query(By.css('.app-answer-box'));
-    headerElement = answerBoxElement.query(By.css('.app-answer-box__header'))
+    headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
     inputElement = answerBoxElement.query(By.css('.app-answer-box__answer'));
     buttonElement = answerBoxElement.query(By.css('.app-answer-box__button'));
   });
@@ -45,12 +58,12 @@ describe('AnswerBoxComponent', () => {
   it('should output an answer', () => {
     inputElement.nativeElement.value = 1;
     inputElement.nativeElement.dispatchEvent(new Event('input'));
-    
+
     fixture.detectChanges();
-    
+
     expect(buttonElement.nativeElement.disabled).toBe(false);
     buttonElement.nativeElement.dispatchEvent(new Event('click'));
-    
+
     expect(component.answeredValue).toEqual('1');
   });
 
@@ -58,17 +71,3 @@ describe('AnswerBoxComponent', () => {
     expect(headerElement.nativeElement.textContent).toContain('Header');
   });
 });
-
-@Component({
-  template: `<app-answer-box
-              (answerSubmitted)="onAnswered($event)"
-              header="Header">
-              <img src="image.jpg" alt="image" />
-             </app-answer-box>`,
-})
-class ImageAnswerBox {
-  answeredValue: string;
-  onAnswered(value: string) {
-    this.answeredValue = value;
-  }
-}

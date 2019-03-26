@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "outDir": "../out-tsc/spec",
     "types": [
@@ -15,7 +14,6 @@
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts",
-    "**/*.json"
+    "**/*.d.ts"
   ]
 }

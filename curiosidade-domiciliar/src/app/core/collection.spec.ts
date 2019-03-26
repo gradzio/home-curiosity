@@ -10,7 +10,7 @@ describe('Collection', () => {
         expect(collection.progress.total).toEqual(3);
         expect(collection.progress.state).toEqual(ProgressStates.NOT_STARTED);
         expect(collection.length).toEqual(3);
-    }); 
+    });
 
     it('should test main helper functions in a collection', () => {
         const actual = collection.map(item => item + 1);
