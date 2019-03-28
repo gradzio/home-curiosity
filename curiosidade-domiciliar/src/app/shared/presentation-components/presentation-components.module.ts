@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { AnswerBoxModule } from './answer-box/answer-box.module';
+import { ProgressBarModule } from './progress-bar/progress-bar.module';
 
 @NgModule({
     imports: [
-        AnswerBoxModule
+        AnswerBoxModule,
+        ProgressBarModule
     ],
     exports: [
-        AnswerBoxModule
+        AnswerBoxModule,
+        ProgressBarModule
     ]
 })
 export class PresentationComponentsModule { }

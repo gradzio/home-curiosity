@@ -42,6 +42,13 @@ export class Progress {
     get state(): number {
         return this._state;
     }
+
+    get percentage(): number {
+        if (this._state === ProgressStates.COMPLETED) {
+            return 100;
+        }
+        return Math.floor((this._current - 1) / this._total * 100);
+    }
 }
 
 export class Collection<T> {

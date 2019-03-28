@@ -29,7 +29,7 @@ export class ExercisesService {
 
     postAnswer(answerValue: string): Observable<any> {
         const exerciseGuid = this._exercisesSubject.getValue().current.guid;
-        return this.client.post(`${this.baseUrl}/exercises/${exerciseGuid}/answer.json`, {answer: answerValue});
+        return this.client.get(`${this.baseUrl}/exercises/${exerciseGuid}/answer.json`);
     }
 
     nextExercise() {
