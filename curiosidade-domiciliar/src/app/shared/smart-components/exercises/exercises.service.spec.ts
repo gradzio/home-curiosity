@@ -49,8 +49,6 @@ describe('ExercisesService', () => {
 
         const req = httpTestingController.expectOne('/assets/mocks/exercises/guid1/answer.json');
 
-        expect(req.request.method).toEqual('POST');
-
         req.flush(postAnswerMock);
 
         httpTestingController.verify();
