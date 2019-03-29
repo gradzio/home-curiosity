@@ -12,13 +12,16 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LessonsComponent } from './pages/lessons/lessons.component';
+import { LessonsService } from './pages/lessons/lessons.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppFullComponent,
     AppHeaderComponent,
-    AppSidebarComponent
+    AppSidebarComponent,
+    LessonsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     PresentationComponentsModule,
     SmartComponentsModule
   ],
-  providers: [],
+  providers: [LessonsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

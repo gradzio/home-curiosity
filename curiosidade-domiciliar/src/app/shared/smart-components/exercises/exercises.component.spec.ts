@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ExercisesComponent } from './exercises.component';
 import { ExercisesService } from './exercises.service';
 import { of } from 'rxjs';
@@ -70,7 +71,7 @@ describe('ExercisesComponent', () => {
   it('should show positive snackbar on correct answer', () => {
     spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyCorrectAnswer');
-    component.onAnswerSubmitted('2');
+    component.onAnswerSubmitted("2");
 
     expect(exerciseService.postAnswer).toHaveBeenCalledWith('2');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
@@ -79,7 +80,7 @@ describe('ExercisesComponent', () => {
   it('should show negative snackbar on wrong answer', () => {
     spyOn(exerciseService, 'postAnswer').and.returnValue(of({'success': false, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyWrongAnswer');
-    component.onAnswerSubmitted('2');
+    component.onAnswerSubmitted("2");
 
     expect(exerciseService.postAnswer).toHaveBeenCalledWith('2');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();

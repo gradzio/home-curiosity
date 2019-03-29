@@ -1,0 +1,14 @@
+{
+    "data": [
+        {
+            "guid": "lessonguid1",
+            "name": "First lesson",
+            "icon": "filter_1"
+        },
+        {
+            "guid": "lessonguid2",
+            "name": "Second lesson",
+            "icon": "filter_2"
+        }
+    ]
+}
