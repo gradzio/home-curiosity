@@ -1,4 +1,6 @@
-export class LessonModel {
+import { IconButtonInterface } from 'src/app/shared/presentation-components/icon-button/icon-button.interface';
+
+export class LessonModel implements IconButtonInterface {
     private _name: string;
     private _icon: string;
     constructor(name: string, icon: string) {

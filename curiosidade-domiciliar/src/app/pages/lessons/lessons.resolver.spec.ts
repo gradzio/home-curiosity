@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { LessonModel } from './lesson.model';
 import { debug } from 'util';
 import { async } from 'q';
+import { HttpErrorResponse } from '@angular/common/http';
 
 fdescribe('LessonsResolver', () => {
     let router: Router;
@@ -48,5 +49,4 @@ fdescribe('LessonsResolver', () => {
         expect(lessonsService.getAll).toHaveBeenCalledWith('subject');
         expect(router.navigate).not.toHaveBeenCalled();
     });
-
 });
