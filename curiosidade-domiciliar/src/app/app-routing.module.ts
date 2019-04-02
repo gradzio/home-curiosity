@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LessonsComponent } from './pages/lessons/lessons.component';
-import { LessonsResolver } from './pages/lessons/lessons.resolver';
+import { SUBJECT_ROUTES } from './pages/subjects/subjects.routes';
 
 const routes: Routes = [  
   {
     path: 'subjects/:subject',
-    component: LessonsComponent,
-    resolve: {
-      lessons: LessonsResolver
-    }
+    children: SUBJECT_ROUTES
   }
 ];
 

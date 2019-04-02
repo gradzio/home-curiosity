@@ -6,7 +6,9 @@ import {
   EventEmitter,
   Output,
   Input,
-  HostBinding
+  HostBinding,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 
 @Component({
@@ -22,6 +24,8 @@ export class AnswerBox implements OnInit {
   @Input()
   header: string;
 
+  @ViewChild('answerInput') answerInput: ElementRef;
+
   private _answerText: string;
 
   get isDisabled(): boolean {
@@ -35,8 +39,14 @@ export class AnswerBox implements OnInit {
   ngOnInit() {
   }
 
+  clearState() {
+    this._answerText = null;
+    this.answerInput.nativeElement.value = '';
+  }
+
   onSubmitAnswer() {
     this.answerSubmitted.emit(this._answerText);
+    this.clearState();
   }
 
   onValueChange(value: string) {

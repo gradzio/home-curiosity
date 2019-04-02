@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header>
+      {{item.title}}
+    </mat-card-header>
+    <mat-card-content>
+        <iframe fxFlex="100%" [src]="item.resourceUrl" frameborder="0" allowfullscreen></iframe>
+    </mat-card-content>
+    <mat-card-actions>
+        <a class="navigation-primary" mat-raised-button color="primary" [routerLink]="[item.navigation.link]">{{item.navigation.text}}</a>
+    </mat-card-actions>
+  </mat-card>

@@ -1,5 +1,0 @@
-<mat-card *ngIf="lessons$ | async as lessons">
-  <div fxLayout="column" fxLayoutAlign="space-around center">
-      <app-icon-button *ngFor="let lesson of lessons" [item]="lesson"></app-icon-button>
-  </div>
-</mat-card>

@@ -4,8 +4,8 @@ import { ProgressBar } from './progress-bar';
 import { MatProgressBarModule } from '@angular/material';
 import { MaterialModule } from 'src/app/material.module';
 import { Component, DebugElement } from '@angular/core';
-import { Progress } from 'src/app/core/collection';
 import { By } from '@angular/platform-browser';
+import { Progress } from 'src/app/core/progress';
 
 @Component({template: '<app-progress-bar [progress]="progress"></app-progress-bar>'})
 class BasicProgressBar {

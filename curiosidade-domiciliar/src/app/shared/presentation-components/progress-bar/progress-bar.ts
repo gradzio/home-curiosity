@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { Progress } from 'src/app/core/collection';
+import { Progress } from 'src/app/core/progress';
 
 @Component({
   selector: 'app-progress-bar',
