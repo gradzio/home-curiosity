@@ -5,14 +5,16 @@ import { AppHeaderComponent } from './header/header.component';
 import { AppSidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppFullComponent', () => {
     let fixture, component;
     beforeEach(async(() => {
         TestBed.configureTestingModule({
           imports: [
-              MaterialModule,
-              BrowserAnimationsModule
+            RouterTestingModule,
+            MaterialModule,
+            BrowserAnimationsModule
           ],
           declarations: [
             AppFullComponent,

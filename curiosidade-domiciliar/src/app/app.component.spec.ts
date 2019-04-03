@@ -11,11 +11,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CommonModule,
         RouterTestingModule,
         MaterialModule,
         BrowserModule,

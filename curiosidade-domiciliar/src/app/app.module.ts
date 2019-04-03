@@ -12,6 +12,7 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
@@ -27,10 +28,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
+    PagesModule,
     PresentationComponentsModule,
     SmartComponentsModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

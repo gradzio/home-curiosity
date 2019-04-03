@@ -1,0 +1,14 @@
+<div *ngIf="exercises$ | async as currentExercises">
+<mat-card>
+  <app-progress-bar [progress]="currentExercises.progress"></app-progress-bar>
+</mat-card>
+<mat-card>
+  <app-answer-box *ngIf="!currentExercises.progress.isCompleted else congrats" [header]="currentExercises.current?.title" (answerSubmitted)="onAnswerSubmitted($event)">
+    <img [src]="currentExercises.current?.imageUrl" width="100%" />
+  </app-answer-box>
+  <ng-template #congrats>
+    <h2>CONGRATS!</h2>
+    <a mat-raised-button color="primary" [routerLink]="['/subjects/math']">Back to Math lessons</a>
+  </ng-template>
+</mat-card>
+</div>
