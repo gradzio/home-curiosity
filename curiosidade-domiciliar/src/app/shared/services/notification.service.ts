@@ -1,4 +1,4 @@
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, SimpleSnackBar, MatSnackBarDismiss } from '@angular/material';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -14,12 +14,9 @@ export class NotificationService {
 
     constructor(private snackbar: MatSnackBar) {}
 
-    notifyCorrectAnswer(): void {
-        this.snackbar.open('Congrats!', null, {duration: 1000, panelClass: ['snackbar-success']})
-            .afterDismissed()
-            .subscribe(_ => {
-                this.correctAnswerDismissedSubject.next(true);
-            });
+    notifyCorrectAnswer(): Observable<MatSnackBarDismiss> {
+        return this.snackbar.open('Congrats!', null, {duration: 1000, panelClass: ['snackbar-success']})
+            .afterDismissed();
     }
 
     notifyWrongAnswer(): void {

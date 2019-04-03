@@ -13,6 +13,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { ExerciseModel } from './exercise.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnswersService } from './answers.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -20,6 +21,7 @@ describe('ExercisesComponent', () => {
   let exerciseService;
   let notificationService;
   let answersService;
+  let changeDetectorRef;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +33,7 @@ describe('ExercisesComponent', () => {
         PresentationComponentsModule,
         HttpClientTestingModule
       ],
-      providers: [ ExercisesService, AnswersService, NotificationService ]
+      providers: [ ExercisesService, AnswersService, NotificationService, ChangeDetectorRef ]
     })
     .compileComponents();
   }));
@@ -46,6 +48,7 @@ describe('ExercisesComponent', () => {
     exerciseService = TestBed.get(ExercisesService);
     notificationService = TestBed.get(NotificationService);
     answersService = TestBed.get(AnswersService);
+    changeDetectorRef = TestBed.get(ChangeDetectorRef);
     spyOn(exerciseService, 'exercises$').and.returnValue(of(ExerciseCollectionProvider.two));
     fixture.detectChanges();
   });
@@ -67,29 +70,27 @@ describe('ExercisesComponent', () => {
     .unsubscribe();
   });
 
-  it('should show positive snackbar on correct answer', () => {
+  it('should show positive snackbar and call nextExercise on correct answer', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
-    spyOn(notificationService, 'notifyCorrectAnswer');
+    spyOn(notificationService, 'notifyCorrectAnswer').and.returnValue(of({dismissedByAction: true}));
+    spyOn(exerciseService, 'nextExercise');
+    // spyOn(changeDetectorRef, 'detectChanges');
     component.onAnswerSubmitted('2');
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
+    expect(exerciseService.nextExercise).toHaveBeenCalled();
+    // expect(changeDetectorRef.detectChanges).toHaveBeenCalled();
   });
 
   it('should show negative snackbar on wrong answer', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': false, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyWrongAnswer');
+    spyOn(exerciseService, 'nextExercise');
     component.onAnswerSubmitted('2');
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
-  });
-
-  it('should call nextExercise on correct answer', () => {
-    notificationService.correctAnswerDismissed$ = of(true);
-    spyOn(exerciseService, 'nextExercise');
-    component.ngOnInit();
-
-    expect(exerciseService.nextExercise).toHaveBeenCalled();
+    expect(exerciseService.nextExercise).not.toHaveBeenCalled();
   });
 });

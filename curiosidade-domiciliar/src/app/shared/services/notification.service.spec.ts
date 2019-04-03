@@ -33,7 +33,6 @@ describe('NotificationService', () => {
             panelClass: ['snackbar-success'],
             duration: 1000
           });
-          notificationService.correctAnswerDismissed$.subscribe(isDismissed => expect(isDismissed).toEqual(true));
     });
 
     it('should notify wrong', () => {
@@ -42,7 +41,5 @@ describe('NotificationService', () => {
             panelClass: ['snackbar-error'],
             duration: 5000
           });
-
-          notificationService.correctAnswerDismissed$.subscribe(isDismissed => expect(isDismissed).toEqual(false));
     });
 });

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { ExercisesService } from './exercises.service';
 import { Observable, Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { filter, tap, map } from 'rxjs/operators';
+import { filter, tap, map, last } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
 import { ActivatedRoute } from '@angular/router';
 import { ExerciseModel } from './exercise.model';
@@ -32,17 +32,6 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.exercises$ = this.route.data
       .pipe(map(data => data['exercises']));
-
-    this.exercises$ = this.exerciseService.exercises$
-      .pipe(
-        tap(_ => this.changeDetectorRef.detectChanges())
-      );
-
-    this._subscriptions['correctAnswerDismissed'] = this.notificationService.correctAnswerDismissed$
-      .pipe(
-        filter(isCorrect => isCorrect === true),
-        tap(_ => this.exerciseService.nextExercise())
-      ).subscribe();
   }
 
   ngOnDestroy() {
@@ -54,7 +43,10 @@ export class ExercisesComponent implements OnInit, OnDestroy {
       this.answerService.create(answerValue, 'guid1')
         .subscribe(answer => {
           if (answer.success) {
-            this.notificationService.notifyCorrectAnswer();
+            this._subscriptions['notifyCorrectAnswer'] = this.notificationService.notifyCorrectAnswer().subscribe(_ => {
+              this.exerciseService.nextExercise();
+              this.changeDetectorRef.detectChanges();
+            });
           } else {
             this.notificationService.notifyWrongAnswer();
           }
