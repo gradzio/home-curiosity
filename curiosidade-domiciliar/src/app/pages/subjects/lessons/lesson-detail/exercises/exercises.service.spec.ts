@@ -28,7 +28,7 @@ describe('ExercisesService', () => {
                     expect(exercises).toEqual(jasmine.any(Collection));
                     expect(exercises.length).toEqual(2);
                 }
-            }).unsubscribe;
+            }).unsubscribe();
 
         const req = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/lessonguid/exercises.json');
 

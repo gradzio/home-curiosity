@@ -7,5 +7,5 @@ import { ResourceCardInterface } from './video-card.interface';
   styleUrls: ['./video-card.scss']
 })
 export class VideoCard {
-  @Input() item: ResourceCardInterface
+  @Input() item: ResourceCardInterface;
 }

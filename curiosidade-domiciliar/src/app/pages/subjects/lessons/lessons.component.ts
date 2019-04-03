@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { LessonModel } from './lesson.model';
 import { IconButton } from 'src/app/shared/presentation-components/icon-button/icon-button';
 import { IconButtonInterface } from 'src/app/shared/presentation-components/icon-button/icon-button.interface';
+import { ResourceCardInterface } from 'src/app/shared/presentation-components/video-card/video-card.interface';
 
 @Component({
   selector: 'app-lessons',
@@ -21,12 +22,8 @@ export class LessonsComponent implements OnInit {
   ngOnInit() {
     this.iconButtonVMs$ = this.route.data
       .pipe(
-        map(data => data.lessons.map(lesson => { return {
-          name: lesson.name,
-          icon: lesson.icon,
-          navigationLink: `/subjects/math/lessons/${lesson.guid}`
-            }
-        }))
+        map(data => data.lessons.map((lesson: LessonModel) => lesson.makeIconButtonViewModel)
+        )
       );
   }
 }

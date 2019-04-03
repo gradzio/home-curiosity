@@ -1,4 +1,4 @@
-import { LessonModel } from "./lesson.model";
+import { LessonModel } from './lesson.model';
 
 describe('LessonModel', () => {
     it('should create', () => {

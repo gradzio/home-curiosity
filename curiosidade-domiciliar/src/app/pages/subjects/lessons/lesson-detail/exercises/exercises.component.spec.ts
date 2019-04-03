@@ -74,13 +74,11 @@ describe('ExercisesComponent', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyCorrectAnswer').and.returnValue(of({dismissedByAction: true}));
     spyOn(exerciseService, 'nextExercise');
-    // spyOn(changeDetectorRef, 'detectChanges');
     component.onAnswerSubmitted('2');
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
     expect(exerciseService.nextExercise).toHaveBeenCalled();
-    // expect(changeDetectorRef.detectChanges).toHaveBeenCalled();
   });
 
   it('should show negative snackbar on wrong answer', () => {

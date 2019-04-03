@@ -1,4 +1,4 @@
-import { HttpTestingController, HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LessonsService } from './lessons.service';
 import { LessonModel } from './lesson.model';

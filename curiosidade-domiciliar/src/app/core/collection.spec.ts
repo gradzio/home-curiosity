@@ -26,8 +26,6 @@ describe('Collection', () => {
 
     it('should find element', () => {
         expect(collection.find(item => item === 2)).toEqual(2);
-        // const collectionOfObjects = new Collection([{guid: 'guid2'}, {guid: 'guid1'}]);
-        // expect(collectionOfObjects.find('guid1', 'guid')).toEqual({guid: 'guid1'});
     });
 
     it('should set right state', () => {

@@ -1,3 +1,5 @@
+import { IconButtonInterface } from 'src/app/shared/presentation-components/icon-button/icon-button.interface';
+
 export class LessonModel {
     private _guid: string;
     private _name: string;
@@ -11,7 +13,7 @@ export class LessonModel {
     }
 
     get guid(): string {
-        return this._guid
+        return this._guid;
     }
 
     get name(): string {
@@ -24,5 +26,13 @@ export class LessonModel {
 
     get videoUrl(): string {
         return this._videoUrl;
+    }
+
+    makeIconButtonViewModel(): IconButtonInterface {
+    return {
+            name: this._name,
+            icon: this._icon,
+            navigationLink: `/subjects/math/lessons/${this._guid}`
+        };
     }
 }

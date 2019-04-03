@@ -19,7 +19,7 @@ export class ExercisesComponent implements OnInit, OnDestroy {
 
   exercises$: Observable<Collection<ExerciseModel>>;
 
-  private _subscriptions: { [id: string] : Subscription; } = {};
+  private _subscriptions: { [id: string]: Subscription; } = {};
 
   constructor(
     private route: ActivatedRoute,

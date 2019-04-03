@@ -1,4 +1,4 @@
-import { ProgressStates, Progress } from "./progress";
+import { ProgressStates, Progress } from './progress';
 
 describe('Progress', () => {
     let progress;

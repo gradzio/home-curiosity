@@ -18,11 +18,11 @@ export class LessonsDetailResolver implements Resolve<LessonModel> {
                     if (!lessons) {
                         lessons = [];
                     }
-                    const lesson = lessons.find(lesson => lesson.guid === route.params.lessonGuid);
-                    if (!lesson) {
+                    const singleLesson = lessons.find(lesson => lesson.guid === route.params.lessonGuid);
+                    if (!singleLesson) {
                         return this.lessonsService.getOne(route.params.lessonGuid);
                     }
-                    return of(lesson);
+                    return of(singleLesson);
                 }),
                 first()
             );

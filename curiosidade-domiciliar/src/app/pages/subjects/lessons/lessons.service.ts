@@ -7,10 +7,10 @@ import { LessonFactory } from './lesson.factory';
 import { environment } from 'src/environments/environment';
 
 export interface LessonResponseContract {
-        guid: string,
-        name: string,
-        icon: string,
-        videoUrl: string
+        guid: string;
+        name: string;
+        icon: string;
+        videoUrl: string;
 }
 
 @Injectable()

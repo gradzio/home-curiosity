@@ -1,4 +1,4 @@
-import { LessonsResolver } from "./lessons.resolver";
+import { LessonsResolver } from './lessons.resolver';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
@@ -12,7 +12,7 @@ describe('LessonsResolver', () => {
     let lessonsServiceMock;
     let lessonsService;
     let lessonResolver: LessonsResolver;
-    const mockSnapshot:any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
+    const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
     beforeEach(() => {
         lessonsServiceMock = jasmine.createSpyObj('LessonsService', ['getAll']);
