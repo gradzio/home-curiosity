@@ -9,7 +9,7 @@ describe('ExercisesService', () => {
     let exerciseService: ExercisesService;
     let httpTestingController: HttpTestingController;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [ExercisesService],
             imports: [HttpClientTestingModule]
@@ -19,7 +19,7 @@ describe('ExercisesService', () => {
     });
 
     it('should getAll', () => {
-        exerciseService.getAll('lessonguid')
+        const subscription = exerciseService.getAll('lessonguid')
             .pipe(
                 last()
             )
@@ -28,7 +28,7 @@ describe('ExercisesService', () => {
                     expect(exercises).toEqual(jasmine.any(Collection));
                     expect(exercises.length).toEqual(2);
                 }
-            }).unsubscribe();
+            });
 
         const req = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/lessonguid/exercises.json');
 
@@ -37,10 +37,12 @@ describe('ExercisesService', () => {
         req.flush(exercisesMock);
 
         httpTestingController.verify();
+
+        subscription.unsubscribe();
     });
 
     it('should set next Exercise', () => {
-        exerciseService.getAll('lessonguid').subscribe();
+        const subscription = exerciseService.getAll('lessonguid').subscribe();
 
         const req = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/lessonguid/exercises.json');
 
@@ -53,6 +55,7 @@ describe('ExercisesService', () => {
         exerciseService.exercises$
             .subscribe(exercises => expect(exercises.progress.current).toEqual(2))
             .unsubscribe();
+        subscription.unsubscribe();
     });
 
 });

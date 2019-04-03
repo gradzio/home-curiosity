@@ -15,12 +15,14 @@ export class LessonsDetailResolver implements Resolve<LessonModel> {
         return this.lessonsService.lessons$
             .pipe(
                 flatMap(lessons => {
+                    const lessonGuid = route.params.lessonGuid;
                     if (!lessons) {
                         lessons = [];
                     }
-                    const singleLesson = lessons.find(lesson => lesson.guid === route.params.lessonGuid);
+
+                    const singleLesson = lessons.find(lesson => lesson.guid === lessonGuid);
                     if (!singleLesson) {
-                        return this.lessonsService.getOne(route.params.lessonGuid);
+                        return this.lessonsService.getOne(lessonGuid);
                     }
                     return of(singleLesson);
                 }),

@@ -22,7 +22,7 @@ export class LessonsComponent implements OnInit {
   ngOnInit() {
     this.iconButtonVMs$ = this.route.data
       .pipe(
-        map(data => data.lessons.map((lesson: LessonModel) => lesson.makeIconButtonViewModel)
+        map(data => data.lessons.map((lesson: LessonModel) => lesson.makeIconButtonViewModel())
         )
       );
   }

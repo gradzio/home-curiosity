@@ -8,12 +8,13 @@ import { IconButton } from 'src/app/shared/presentation-components/icon-button/i
 import { MaterialModule } from 'src/app/material.module';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LessonsProvider } from 'src/tests/lessons.provider';
 
 describe('LessonsComponent', () => {
   let component: LessonsComponent;
   let fixture: ComponentFixture<LessonsComponent>;
   const activatedRoute = new ActivatedRoute();
-  activatedRoute.data = of({lessons: [new LessonModel('guid', 'name', 'icon', 'videoUrl')]});
+  activatedRoute.data = of({lessons: LessonsProvider.two});
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,7 +37,7 @@ describe('LessonsComponent', () => {
 
   it('should get lessons', () => {
     component.iconButtonVMs$.subscribe(iconButtons => {
-      expect(iconButtons.length).toEqual(1);
+      expect(iconButtons.length).toEqual(2);
     }).unsubscribe();
   });
 });
