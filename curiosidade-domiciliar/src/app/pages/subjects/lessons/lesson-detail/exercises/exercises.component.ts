@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ExercisesService } from './exercises.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, EMPTY, combineLatest, of } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { filter, tap, map, last } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
 import { ActivatedRoute } from '@angular/router';
 import { ExerciseModel } from './exercise.model';
@@ -40,16 +40,20 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   }
 
   onAnswerSubmitted(answerValue: string) {
-      this.answerService.create(answerValue, 'guid1')
-        .subscribe(answer => {
-          if (answer.success) {
-            this._subscriptions['notifyCorrectAnswer'] = this.notificationService.notifyCorrectAnswer().subscribe(_ => {
-              this.exerciseService.nextExercise();
-              this.changeDetectorRef.detectChanges();
-            });
-          } else {
-            this.notificationService.notifyWrongAnswer();
-          }
+      this._subscriptions['createAnswer'] = this.answerService.create(answerValue, 'guid1')
+        .pipe(
+          flatMap(answer => {
+            if (answer.success) {
+              return this.notificationService.notifyCorrectAnswer();
+            } else {
+              this.notificationService.notifyWrongAnswer();
+              return EMPTY;
+            }
+          })
+        )
+        .subscribe(exercises => {
+            this.exerciseService.nextExercise();
+            this.changeDetectorRef.detectChanges();
         });
   }
 }
