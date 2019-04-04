@@ -11,6 +11,7 @@ export interface LessonResponseContract {
         name: string;
         icon: string;
         videoUrl: string;
+        isCompleted: boolean;
 }
 
 @Injectable()
@@ -38,5 +39,17 @@ export class LessonsService {
                 map(response => response['data']),
                 map(LessonFactory.make)
             );
+    }
+
+    completeLesson(lessonGuid: string) {
+        const lessons = this._lessonsSubject.getValue();
+        if (lessons) {
+            this._lessonsSubject.next(lessons.map(lesson => {
+                if (lesson.guid === lessonGuid) {
+                    lesson.complete();
+                }
+                return lesson;
+            }));
+        }
     }
 }

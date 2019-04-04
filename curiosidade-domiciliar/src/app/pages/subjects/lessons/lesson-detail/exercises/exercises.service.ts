@@ -35,9 +35,11 @@ export class ExercisesService {
             );
     }
 
-    nextExercise() {
+    nextExercise(): boolean {
         const collection = this._exercisesSubject.getValue();
         collection.next();
         this._exercisesSubject.next(collection);
+
+        return collection.progress.isCompleted;
     }
 }

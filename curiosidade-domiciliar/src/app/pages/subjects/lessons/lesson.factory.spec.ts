@@ -7,7 +7,8 @@ describe('LessonFactory', () => {
             guid: 'lessonguid1',
             name: 'name',
             icon: 'icon',
-            videoUrl: 'https://www.youtube.com/embed/DR-cfDsHCGA'
+            videoUrl: 'https://www.youtube.com/embed/DR-cfDsHCGA',
+            isCompleted: false
         });
         expect(actual).toEqual(jasmine.any(LessonModel));
     });

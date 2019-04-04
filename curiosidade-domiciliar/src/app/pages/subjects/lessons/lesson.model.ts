@@ -5,11 +5,13 @@ export class LessonModel {
     private _name: string;
     private _icon: string;
     private _videoUrl: string;
-    constructor(guid: string, name: string, icon: string, videoUrl: string) {
+    private _isCompleted: boolean;
+    constructor(guid: string, name: string, icon: string, videoUrl: string, isCompleted = false) {
         this._guid = guid;
         this._name = name;
         this._icon = icon;
         this._videoUrl = videoUrl;
+        this._isCompleted = isCompleted;
     }
 
     get guid(): string {
@@ -28,11 +30,20 @@ export class LessonModel {
         return this._videoUrl;
     }
 
+    get isCompleted(): boolean {
+        return this._isCompleted;
+    }
+
+    complete() {
+        this._isCompleted = true;
+    }
+
     makeIconButtonViewModel(): IconButtonInterface {
     return {
             name: this._name,
             icon: this._icon,
-            navigationLink: `/subjects/math/lessons/${this._guid}`
+            navigationLink: `/subjects/math/lessons/${this._guid}`,
+            isDisabled: this._isCompleted
         };
     }
 }
