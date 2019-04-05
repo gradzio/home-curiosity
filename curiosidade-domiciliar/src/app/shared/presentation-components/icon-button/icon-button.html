@@ -1,4 +1,4 @@
 <div *ngIf="item" fxLayout="column" fxLayoutAlign="space-around center">
-    <a [routerLink]="[item.navigationLink]" mat-fab color="primary"><mat-icon color="accent">{{item.icon}}</mat-icon></a>
+    <button [routerLink]="[item.navigationLink]" mat-fab color="primary" [disabled]="item.isDisabled"><mat-icon color="accent">{{item.icon}}</mat-icon></button>
     <h4>{{item.name}}</h4>
 </div>

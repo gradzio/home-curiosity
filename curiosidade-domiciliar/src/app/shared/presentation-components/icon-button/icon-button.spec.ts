@@ -8,7 +8,7 @@ import { IconButtonInterface } from './icon-button.interface';
 
 @Component({template: '<app-icon-button [item]="iconButton"></app-icon-button>'})
 class BasicIconButton {
-  public iconButton: IconButtonInterface = {name: 'name', icon: 'icon', navigationLink: 'navLink'};
+  public iconButton: IconButtonInterface = {name: 'name', icon: 'icon', navigationLink: 'navLink', isDisabled: false};
 }
 
 

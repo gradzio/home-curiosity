@@ -14,6 +14,7 @@ import { ExerciseModel } from './exercise.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnswersService } from './answers.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { LessonsService } from '../../lessons.service';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -21,6 +22,7 @@ describe('ExercisesComponent', () => {
   let exerciseService;
   let notificationService;
   let answersService;
+  let lessonsService;
   let changeDetectorRef;
 
   beforeEach(async(() => {
@@ -33,7 +35,7 @@ describe('ExercisesComponent', () => {
         PresentationComponentsModule,
         HttpClientTestingModule
       ],
-      providers: [ ExercisesService, AnswersService, NotificationService, ChangeDetectorRef ]
+      providers: [ ExercisesService, AnswersService, LessonsService, NotificationService, ChangeDetectorRef ]
     })
     .compileComponents();
   }));
@@ -48,6 +50,7 @@ describe('ExercisesComponent', () => {
     exerciseService = TestBed.get(ExercisesService);
     notificationService = TestBed.get(NotificationService);
     answersService = TestBed.get(AnswersService);
+    lessonsService = TestBed.get(LessonsService);
     changeDetectorRef = TestBed.get(ChangeDetectorRef);
     spyOn(exerciseService, 'exercises$').and.returnValue(of(ExerciseCollectionProvider.two));
     fixture.detectChanges();

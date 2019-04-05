@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { ExercisesService } from './exercises.service';
 import { Observable, Subscription, EMPTY, combineLatest, of } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { map, flatMap } from 'rxjs/operators';
+import { map, flatMap, switchMap } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
 import { ActivatedRoute } from '@angular/router';
 import { ExerciseModel } from './exercise.model';
 import { AnswersService } from './answers.service';
+import { LessonsService } from '../../lessons.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private exerciseService: ExercisesService,
+    private lessonsService: LessonsService,
     private answerService: AnswersService,
     private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef
@@ -49,10 +51,14 @@ export class ExercisesComponent implements OnInit, OnDestroy {
               this.notificationService.notifyWrongAnswer();
               return EMPTY;
             }
-          })
+          }),
+          switchMap(_ => this.route.params)
         )
-        .subscribe(exercises => {
-            this.exerciseService.nextExercise();
+        .subscribe(params => {
+            const isCompleted = this.exerciseService.nextExercise();
+            if (isCompleted) {
+              this.lessonsService.completeLesson(params.lessonGuid);
+            }
             this.changeDetectorRef.detectChanges();
         });
   }
