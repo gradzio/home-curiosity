@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResourceCardInterface } from 'src/app/shared/presentation-components/video-card/video-card.interface';
 import { LessonModel } from '../lesson.model';
+import { Select } from '@ngxs/store';
+import { SubjectState } from '../../subject.state';
 
 @Component({
   selector: 'app-lesson-detail',
@@ -12,23 +14,24 @@ import { LessonModel } from '../lesson.model';
   styleUrls: ['./lesson-detail.component.scss']
 })
 export class LessonDetailComponent implements OnInit {
-
+  @Select(SubjectState.selectedLesson)
+  lesson$: Observable<LessonModel>;
+  
   videoCard$: Observable<ResourceCardInterface>;
   constructor(private route: ActivatedRoute, private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.videoCard$ = this.route.data
+    this.videoCard$ = this.lesson$
       .pipe(
-        map((data: {lesson: LessonModel}) => {
-          return {
-            title: data.lesson.name,
-            resourceUrl: this._sanitizer.bypassSecurityTrustResourceUrl(data.lesson.videoUrl),
+        map((lesson: LessonModel) => ({
+            title: lesson.name,
+            resourceUrl: this._sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl),
             navigation: {
-              link: `/subjects/math/lessons/${data.lesson.guid}/exercises`,
+              link: `/subjects/math/lessons/${lesson.guid}/exercises`,
               text: 'Exercises'
             }
-          };
-        })
+          })
+        )
       );
   }
 }

@@ -3,30 +3,27 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@a
 import { Observable, of } from 'rxjs';
 import { first, flatMap } from 'rxjs/operators';
 import { LessonModel } from '../lesson.model';
-import { LessonsService } from '../lessons.service';
+import { Store } from '@ngxs/store';
+import { SubjectState, SubjectStateInterface, GetLessons, GetLesson } from '../../subject.state';
+import { LessonsProvider } from 'src/tests/lessons.provider';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LessonsDetailResolver implements Resolve<LessonModel> {
-    constructor(private lessonsService: LessonsService, private router: Router) {}
+    constructor(private _store: Store, private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LessonModel> {
-        return this.lessonsService.lessons$
-            .pipe(
-                flatMap(lessons => {
-                    const lessonGuid = route.params.lessonGuid;
-                    if (!lessons) {
-                        lessons = [];
-                    }
+        const subjectStateSnapshot  = this._store.selectSnapshot<SubjectStateInterface>((state) => state.subject);
+        
+        if (subjectStateSnapshot.selectedLesson && subjectStateSnapshot.selectedLesson.guid === route.params.lessonGuid) {
+            return of(subjectStateSnapshot.selectedLesson);
+        }
 
-                    const singleLesson = lessons.find(lesson => lesson.guid === lessonGuid);
-                    if (!singleLesson) {
-                        return this.lessonsService.getOne(lessonGuid);
-                    }
-                    return of(singleLesson);
-                }),
-                first()
-            );
+        if (subjectStateSnapshot.lessons.length == 0) {
+            return this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
+        }
+
+        return this._store.dispatch(new GetLesson(route.params.lessonGuid)).pipe(first());
     }
 }

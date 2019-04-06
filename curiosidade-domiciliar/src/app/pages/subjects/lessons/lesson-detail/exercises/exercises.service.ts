@@ -15,31 +15,21 @@ export interface ExerciseResponseContract {
 
 @Injectable()
 export class ExercisesService {
-    private _exercisesSubject = new BehaviorSubject<Collection<ExerciseModel>>(new Collection([]));
-    exercises$ = this._exercisesSubject.asObservable();
-
-    private _currentLessonGuidSubject = new BehaviorSubject(null);
-    currentLessonGuid$ = this._currentLessonGuidSubject.asObservable();
 
     constructor(private client: HttpClient) {}
 
     getAll(lessonGuid: string): Observable<Collection<ExerciseModel>> {
         return this.client.get(`${environment.apis.baseUrl}/subjects/math/lessons/${lessonGuid}/exercises.json`)
             .pipe(
-                map(response => {
-                    const exerciseCollection = new Collection<ExerciseModel>(response['data'].map(ExerciseFactory.make));
-                    this._exercisesSubject.next(exerciseCollection);
-                    this._currentLessonGuidSubject.next(lessonGuid);
-                    return exerciseCollection;
-                })
+                map(response => new Collection<ExerciseModel>(response['data'].map(ExerciseFactory.make)))
             );
     }
 
-    nextExercise(): boolean {
-        const collection = this._exercisesSubject.getValue();
-        collection.next();
-        this._exercisesSubject.next(collection);
+    // nextExercise(): boolean {
+    //     const collection = this._exercisesSubject.getValue();
+    //     collection.next();
+    //     this._exercisesSubject.next(collection);
 
-        return collection.progress.isCompleted;
-    }
+    //     return collection.progress.isCompleted;
+    // }
 }
