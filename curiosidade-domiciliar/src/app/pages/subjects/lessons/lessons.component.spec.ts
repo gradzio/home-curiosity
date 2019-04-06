@@ -9,18 +9,25 @@ import { MaterialModule } from 'src/app/material.module';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LessonsProvider } from 'src/tests/lessons.provider';
+import { NgxsModule, Store } from '@ngxs/store';
+import { SubjectState } from '../subject.state';
+import { ExercisesState } from './lesson-detail/exercises/exercises.state';
+import { ExercisesService } from './lesson-detail/exercises/exercises.service';
+import { LessonsService } from './lessons.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LessonsComponent', () => {
   let component: LessonsComponent;
   let fixture: ComponentFixture<LessonsComponent>;
+  let store;
   const activatedRoute = new ActivatedRoute();
   activatedRoute.data = of({lessons: LessonsProvider.two});
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LessonsComponent ],
-      imports: [RouterTestingModule, MaterialModule, PresentationComponentsModule],
-      providers: [{provide: ActivatedRoute, useValue: activatedRoute}]
+      imports: [NgxsModule.forRoot([SubjectState, ExercisesState]), HttpClientTestingModule, RouterTestingModule, MaterialModule, PresentationComponentsModule],
+      providers: [ExercisesService, LessonsService, {provide: ActivatedRoute, useValue: activatedRoute}]
     })
     .compileComponents();
   }));
@@ -28,6 +35,12 @@ describe('LessonsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LessonsComponent);
     component = fixture.componentInstance;
+    store = TestBed.get(Store);
+    store.reset({
+      subject: {
+        lessons: LessonsProvider.two
+      }
+    });
     fixture.detectChanges();
   });
 

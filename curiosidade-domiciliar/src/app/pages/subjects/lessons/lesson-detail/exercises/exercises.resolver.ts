@@ -22,6 +22,6 @@ export class ExercisesResolver implements Resolve<Collection<ExerciseModel>> {
             this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
         }
 
-        return this._store.dispatch(new GetExercises(route.params.lessonGuid)).pipe(first());
+        return this._store.dispatch(new GetExercises(route.params.lessonGuid));
     }
 }

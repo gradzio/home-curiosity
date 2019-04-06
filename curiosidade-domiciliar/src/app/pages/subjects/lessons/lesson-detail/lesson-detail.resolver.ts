@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { first, flatMap } from 'rxjs/operators';
 import { LessonModel } from '../lesson.model';
 import { Store } from '@ngxs/store';
-import { SubjectState, SubjectStateInterface, GetLessons, GetLesson } from '../../subject.state';
+import { SubjectState, SubjectStateInterface, GetLessons, GetLesson, SelectLesson } from '../../subject.state';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 
 @Injectable({
@@ -16,14 +16,10 @@ export class LessonsDetailResolver implements Resolve<LessonModel> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LessonModel> {
         const subjectStateSnapshot  = this._store.selectSnapshot<SubjectStateInterface>((state) => state.subject);
         
-        if (subjectStateSnapshot.selectedLesson && subjectStateSnapshot.selectedLesson.guid === route.params.lessonGuid) {
-            return of(subjectStateSnapshot.selectedLesson);
+        if (subjectStateSnapshot.lessons.find(lesson => lesson.guid === route.params.lessonGuid)) {
+            return this._store.dispatch(new SelectLesson(route.params.lessonGuid));
         }
 
-        if (subjectStateSnapshot.lessons.length == 0) {
-            return this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
-        }
-
-        return this._store.dispatch(new GetLesson(route.params.lessonGuid)).pipe(first());
+        return this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
     }
 }

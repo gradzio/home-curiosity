@@ -6,12 +6,16 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LessonsService } from '../lessons.service';
+import { ExercisesService } from './exercises/exercises.service';
+import { SubjectState, GetLessons, SelectLesson } from '../../subject.state';
+import { ExercisesState } from './exercises/exercises.state';
+import { NgxsModule, Store } from '@ngxs/store';
 
 
 describe('LessonsDetailResolver', () => {
     let router: Router;
     let lessonsServiceMock;
-    let lessonsService;
+    let store;
     let lessonDetailResolver: LessonsDetailResolver;
     const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
     const activatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -21,17 +25,20 @@ describe('LessonsDetailResolver', () => {
         lessonsServiceMock.getOne.and.returnValue(of(LessonsProvider.two));
         TestBed.configureTestingModule({
             imports: [
+                NgxsModule.forRoot([SubjectState, ExercisesState]),
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule
             ],
             providers: [
                 LessonsDetailResolver,
-                {provide: LessonsService, useValue: lessonsServiceMock},
+                ExercisesService,
+                LessonsService,
                 {provide: RouterStateSnapshot, useValue: mockSnapshot}
             ]
         });
         router = TestBed.get(Router);
-        lessonsService = TestBed.get(LessonsService);
+        store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
         lessonDetailResolver = TestBed.get(LessonsDetailResolver);
     });
 
@@ -40,29 +47,31 @@ describe('LessonsDetailResolver', () => {
         expect(lessonDetailResolver).toEqual(jasmine.any(LessonsDetailResolver));
     });
 
-    it('should fall back', () => {
-        lessonsService.lessons$ = of(null);
-        activatedRouteSnapshot.params = {lessonGuid: 'guid1'};
+    it('should call lessons on page reload', () => {
+        store.reset({
+            subject: {
+              lessons: []
+            }
+          });
+        activatedRouteSnapshot.params = {subject: 'subject', lessonGuid: 'guid1'};
 
-        lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot)
-            .subscribe(_ => expect(lessonsService.getOne).toHaveBeenCalledWith('guid1'))
-            .unsubscribe();
+        lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot);
+
+        expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
+        expect(store.dispatch).not.toHaveBeenCalledWith(new SelectLesson('guid1'));
     });
 
-    it('should fall back on invalid guid', () => {
-        lessonsService.lessons$ = of(LessonsProvider.two);
-        activatedRouteSnapshot.params = {lessonGuid: 'differentguid'};
-        lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot)
-            .subscribe(_ => expect(lessonsService.getOne).toHaveBeenCalledWith('differentguid'))
-            .unsubscribe();
-    });
+    it('should select a lesson from existing lessons', () => {
+        store.reset({
+            subject: {
+              lessons: LessonsProvider.two
+            }
+          });
+        activatedRouteSnapshot.params = {subject: 'subject', lessonGuid: 'guid1'};
 
-    it('should not fall back', () => {
-        lessonsService.lessons$ = of(LessonsProvider.two);
-        activatedRouteSnapshot.params = {lessonGuid: 'guid1'};
+        lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
-        lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot)
-            .subscribe(_ => expect(lessonsService.getOne).not.toHaveBeenCalled())
-            .unsubscribe();
+        expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
+        expect(store.dispatch).toHaveBeenCalledWith(new SelectLesson('guid1'));
     });
 });

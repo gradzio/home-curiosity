@@ -19,6 +19,6 @@ export class LessonsResolver implements Resolve<any> {
             return of(lessons);
         }
 
-        return this._store.dispatch(new GetLessons(route.params.subject)).pipe(first());
+        return this._store.dispatch(new GetLessons(route.params.subject));
     }
 }

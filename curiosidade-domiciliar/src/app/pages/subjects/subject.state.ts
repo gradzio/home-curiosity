@@ -21,6 +21,11 @@ export class CompletedExercises {
   constructor(public lessonGuid: string) {};
 }
 
+export class SelectLesson {
+  static readonly type = '[Lesson Detail Page] Select lesson'
+  constructor(public lessonGuid: string) {};
+}
+
 export interface SubjectStateInterface {
   subject: { name: string; };
   lessons: LessonModel[];
@@ -63,11 +68,10 @@ export class SubjectState {
     );
   }
 
-  @Action(GetLesson)
-  getLesson(ctx: StateContext<SubjectStateInterface>, action: GetLesson) {
-    return this.lessonService.getOne(action.lessonGuid).pipe(
-      tap(selectedLesson => ctx.patchState({ selectedLesson }))
-    );
+  @Action(SelectLesson)
+  getLesson(ctx: StateContext<SubjectStateInterface>, action: SelectLesson) {
+    const selectedLesson = ctx.getState().lessons.find(lesson => lesson.guid === action.lessonGuid);
+    return ctx.patchState({ selectedLesson });
   }
 
   @Action(CompletedExercises)

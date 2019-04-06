@@ -6,30 +6,35 @@ import { LessonsService } from './lessons.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { LessonsProvider } from 'src/tests/lessons.provider';
+import { NgxsModule, Store } from '@ngxs/store';
+import { SubjectState, GetLessons } from '../subject.state';
+import { ExercisesState } from './lesson-detail/exercises/exercises.state';
+import { ExercisesService } from './lesson-detail/exercises/exercises.service';
+import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 describe('LessonsResolver', () => {
     let router: Router;
-    let lessonsServiceMock;
-    let lessonsService;
+    let store;
     let lessonResolver: LessonsResolver;
     const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
     beforeEach(() => {
-        lessonsServiceMock = jasmine.createSpyObj('LessonsService', ['getAll']);
-        lessonsServiceMock.getAll.and.returnValue(of(LessonsProvider.two));
         TestBed.configureTestingModule({
             imports: [
+                NgxsModule.forRoot([SubjectState, ExercisesState]),
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule
             ],
             providers: [
                 LessonsResolver,
-                {provide: LessonsService, useValue: lessonsServiceMock},
+                ExercisesService,
+                LessonsService,
                 {provide: RouterStateSnapshot, useValue: mockSnapshot}
             ]
         });
         router = TestBed.get(Router);
-        lessonsService = TestBed.get(LessonsService);
+        store = TestBed.get(Store);
+        spyOn(store, 'dispatch');
         lessonResolver = TestBed.get(LessonsResolver);
     });
 
@@ -38,21 +43,21 @@ describe('LessonsResolver', () => {
         expect(lessonResolver).toEqual(jasmine.any(LessonsResolver));
     });
 
-    it('should fall back', () => {
-        lessonsService.lessons$ = of(null);
+    it('should fall back on page reload', () => {
+        store.reset(SubjectStateProvider.EMPTY_LESSONS);
         const activatedRouteSnapshot = new ActivatedRouteSnapshot();
         activatedRouteSnapshot.params = {subject: 'subject'};
-        lessonResolver.resolve(activatedRouteSnapshot, mockSnapshot)
-            .subscribe(_ => expect(lessonsService.getAll).toHaveBeenCalledWith('subject'))
-            .unsubscribe();
+        lessonResolver.resolve(activatedRouteSnapshot, mockSnapshot);
+
+        expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject'));
     });
 
-    it('should not fall back', () => {
-        lessonsService.lessons$ = of(LessonsProvider.two);
+    it('should use existing lessons', () => {
+        store.reset(SubjectStateProvider.TWO_LESSONS);
         const activatedRouteSnapshot = new ActivatedRouteSnapshot();
         activatedRouteSnapshot.params = {subject: 'subject'};
-        lessonResolver.resolve(activatedRouteSnapshot, mockSnapshot)
-            .subscribe(_ => expect(lessonsService.getAll).not.toHaveBeenCalled())
-            .unsubscribe();
+        lessonResolver.resolve(activatedRouteSnapshot, mockSnapshot);
+
+        expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject'));
     });
 });
