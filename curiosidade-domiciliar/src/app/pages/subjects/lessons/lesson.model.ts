@@ -1,18 +1,11 @@
 import { IconButtonInterface } from 'src/app/shared/presentation-components/icon-button/icon-button.interface';
+import { TopicModel } from './lesson-detail/topic.model';
+import { Collection } from 'src/app/core/collection';
+import { ResourceCardInterface } from 'src/app/shared/presentation-components/video-card/video-card.interface';
 
 export class LessonModel {
-    private _guid: string;
-    private _name: string;
-    private _icon: string;
-    private _videoUrl: string;
-    private _isCompleted: boolean;
-    constructor(guid: string, name: string, icon: string, videoUrl: string, isCompleted = false) {
-        this._guid = guid;
-        this._name = name;
-        this._icon = icon;
-        this._videoUrl = videoUrl;
-        this._isCompleted = isCompleted;
-    }
+    private _topics: Collection<TopicModel>;
+    constructor(private _guid: string, private _name: string, private _icon: string, private _isCompleted = false) { }
 
     get guid(): string {
         return this._guid;
@@ -26,12 +19,16 @@ export class LessonModel {
         return this._icon;
     }
 
-    get videoUrl(): string {
-        return this._videoUrl;
-    }
-
     get isCompleted(): boolean {
         return this._isCompleted;
+    }
+
+    set topics(topics: Collection<TopicModel>) {
+        this._topics = topics;
+    }
+
+    get topics(): Collection<TopicModel> {
+        return this._topics;
     }
 
     complete() {

@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { LessonsService } from './lessons.service';
 import { LessonModel } from './lesson.model';
 import lessonsMock from 'src/assets/mocks/subjects/math/lessons.json';
-import lessonMock from 'src/assets/mocks/subjects/math/lessons/lessonguid1.json';
 import { Subscription } from 'rxjs';
 
 describe('LessonsService', () => {
@@ -22,6 +21,7 @@ describe('LessonsService', () => {
 
     afterEach(() => {
         subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
+        TestBed.resetTestingModule();
     });
 
     it('should getAll', () => {
@@ -34,20 +34,6 @@ describe('LessonsService', () => {
         expect(lessonsRequest.request.method).toEqual('GET');
 
         lessonsRequest.flush(lessonsMock);
-
-        httpTestingController.verify();
-    });
-
-    it('should getOne', () => {
-        subscriptions.push(lessonsService.getOne('lessonguid')
-            .subscribe(lesson => {
-                expect(lesson).toEqual(jasmine.any(LessonModel));
-            }));
-
-        const lessonsRequest = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/lessonguid.json');
-        expect(lessonsRequest.request.method).toEqual('GET');
-
-        lessonsRequest.flush(lessonMock);
 
         httpTestingController.verify();
     });

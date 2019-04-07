@@ -22,6 +22,7 @@ describe('ExercisesResolver', () => {
     const activatedRouteSnapshot = new ActivatedRouteSnapshot();
 
     beforeEach(() => {
+        activatedRouteSnapshot.params = {lessonGuid: 'guid1', topicGuid: 'topicGuid', subject: 'subject'};
         exercisesServiceMock = jasmine.createSpyObj('ExercisesService', ['getAll']);
         exercisesServiceMock.getAll.and.returnValue(of(ExerciseCollectionProvider.two));
         TestBed.configureTestingModule({
@@ -44,22 +45,20 @@ describe('ExercisesResolver', () => {
     });
 
     it('should get lessons on page reload', () => {
-        activatedRouteSnapshot.params = {lessonGuid: 'guid1', subject: 'subject'};
         store.reset(SubjectStateProvider.EMPTY_LESSONS);
 
         exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('guid1'));
+        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('topicGuid'));
     });
 
     it('should not get lessons on navigation', () => {
-        activatedRouteSnapshot.params = {lessonGuid: 'guid1', subject: 'subject'};
         store.reset(SubjectStateProvider.TWO_LESSONS);
 
         exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('guid1'));
+        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('topicGuid'));
     });
 });

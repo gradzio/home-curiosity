@@ -41,7 +41,7 @@ describe('ExercisesComponent', () => {
       providers: [ {
         provide: ActivatedRoute,
         useValue: {
-          params: of({lessonGuid: 'lessonGuid'})
+          params: of({lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'})
         }
       }, AnswersService, ExercisesService, LessonsService, NotificationService, ChangeDetectorRef ]
     })
@@ -85,7 +85,7 @@ describe('ExercisesComponent', () => {
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly('lessonGuid'));
+    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly('lessonGuid', 'topicGuid'));
   });
 
   it('should show negative snackbar on wrong answer', () => {
@@ -97,5 +97,11 @@ describe('ExercisesComponent', () => {
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
     expect(store.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('should get backlink', () => {
+      component.backLink$
+        .subscribe(backLink => expect(backLink).toEqual('/subjects/math/lessons/lessonGuid'))
+        .unsubscribe();
   });
 });

@@ -7,6 +7,8 @@ import { ResourceCardInterface } from 'src/app/shared/presentation-components/vi
 import { LessonModel } from '../lesson.model';
 import { Select } from '@ngxs/store';
 import { SubjectState } from '../../subject.state';
+import { Collection } from 'src/app/core/collection';
+import { TopicModel } from './topic.model';
 
 @Component({
   selector: 'app-lesson-detail',
@@ -23,14 +25,7 @@ export class LessonDetailComponent implements OnInit {
   ngOnInit() {
     this.videoCard$ = this.selectedLesson$
       .pipe(
-        map((lesson: LessonModel) => ({
-            title: lesson.name,
-            resourceUrl: this._sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl),
-            navigation: {
-              link: `/subjects/math/lessons/${lesson.guid}/exercises`,
-              text: 'Exercises'
-            }
-          })
+        map((lesson: LessonModel) => (lesson.topics.current.makeVideoCardViewModel(lesson.guid, this._sanitizer))
         )
       );
   }

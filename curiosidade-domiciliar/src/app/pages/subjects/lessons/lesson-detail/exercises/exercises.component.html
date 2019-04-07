@@ -8,7 +8,7 @@
   </app-answer-box>
   <ng-template #congrats>
     <h2>CONGRATS!</h2>
-    <a mat-raised-button color="primary" [routerLink]="['/subjects/math']">Back to Math lessons</a>
+    <a mat-raised-button color="primary" [routerLink]="backLink$ | async">Back to lesson's topics</a>
   </ng-template>
 </mat-card>
 </div>

@@ -21,7 +21,7 @@ export const SUBJECT_ROUTES = [
         }
     },
     {
-        path: 'lessons/:lessonGuid/exercises',
+        path: 'lessons/:lessonGuid/topics/:topicGuid/exercises',
         component: ExercisesComponent,
         resolve: {
         exercises: ExercisesResolver
