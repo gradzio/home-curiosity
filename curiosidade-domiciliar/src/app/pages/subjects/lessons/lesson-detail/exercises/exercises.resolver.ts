@@ -16,9 +16,9 @@ export class ExercisesResolver implements Resolve<Collection<ExerciseModel>> {
     constructor(private _store: Store, private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Collection<ExerciseModel>> {
-        const subjectStateSnapshot  = this._store.selectSnapshot<SubjectStateInterface>((state) => state.subject);
+        const subjectStateSnapshot  = this._store.selectSnapshot<SubjectStateInterface>((subjectState) => subjectState.subject);
 
-        if (subjectStateSnapshot.lessons.length == 0) {
+        if (subjectStateSnapshot.lessons.length === 0) {
             this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
         }
 

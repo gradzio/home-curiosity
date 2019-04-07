@@ -14,7 +14,7 @@ export class LessonsResolver implements Resolve<any> {
     constructor(private _store: Store, private _router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LessonModel[]> {
-        const lessons = this._store.selectSnapshot<LessonModel[]>((state) => state.subject.lessons);
+        const lessons = this._store.selectSnapshot<LessonModel[]>((appState) => appState.subject.lessons);
         if (lessons.length) {
             return of(lessons);
         }

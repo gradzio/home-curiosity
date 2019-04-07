@@ -24,7 +24,12 @@ describe('LessonDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LessonDetailComponent ],
-      imports: [NgxsModule.forRoot([SubjectState, ExercisesState]), HttpClientTestingModule, RouterTestingModule, PresentationComponentsModule],
+      imports: [
+        NgxsModule.forRoot([SubjectState, ExercisesState]),
+        HttpClientTestingModule,
+        RouterTestingModule,
+        PresentationComponentsModule
+      ],
       providers: [ExercisesService, LessonsService, {provide: ActivatedRoute, useValue: activatedRoute}]
     })
     .compileComponents();

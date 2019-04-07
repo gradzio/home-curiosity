@@ -1,25 +1,22 @@
+/* tslint:disable:no-feature-envy */
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { LessonModel } from './lessons/lesson.model';
 import { LessonsService } from './lessons/lessons.service';
-import { tap, catchError, finalize, map } from 'rxjs/operators';
-import { Collection } from 'src/app/core/collection';
-import { ExerciseModel } from './lessons/lesson-detail/exercises/exercise.model';
-import { ExercisesService } from './lessons/lesson-detail/exercises/exercises.service';
-import { AnsweredCorrectly } from './lessons/lesson-detail/exercises/exercises.state';
+import { map } from 'rxjs/operators';
 
 export class GetLessons {
   static readonly type = '[Lessons List Page] Get lessons';
-  constructor(public subject: string, public selectedLessonGuid?: string) {};
+  constructor(public subject: string, public selectedLessonGuid?: string) {}
 }
 
 export class CompletedExercises {
   static readonly type = '[Exercise Flow Page] Completed pages';
-  constructor(public lessonGuid: string) {};
+  constructor(public lessonGuid: string) {}
 }
 
 export class SelectLesson {
-  static readonly type = '[Lesson Detail Page] Select lesson'
-  constructor(public lessonGuid: string) {};
+  static readonly type = '[Lesson Detail Page] Select lesson';
+  constructor(public lesson: LessonModel) {}
 }
 
 export interface SubjectStateInterface {
@@ -59,9 +56,14 @@ export class SubjectState {
         if (action.selectedLessonGuid) {
           selectedLesson = lessons.find(lesson => lesson.guid === action.selectedLessonGuid);
         }
-        return ctx.patchState({ lessons, selectedLesson })
+        return ctx.patchState({ lessons, selectedLesson });
       })
     );
+  }
+
+  @Action(SelectLesson)
+  SelectLesson(ctx: StateContext<SubjectStateInterface>, action: SelectLesson) {
+    ctx.patchState({selectedLesson: action.lesson});
   }
 
   @Action(CompletedExercises)

@@ -10,6 +10,7 @@ import { ExercisesService } from './exercises/exercises.service';
 import { SubjectState, GetLessons, SelectLesson } from '../../subject.state';
 import { ExercisesState } from './exercises/exercises.state';
 import { NgxsModule, Store } from '@ngxs/store';
+import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 
 describe('LessonsDetailResolver', () => {
@@ -48,30 +49,21 @@ describe('LessonsDetailResolver', () => {
     });
 
     it('should call lessons on page reload', () => {
-        store.reset({
-            subject: {
-              lessons: []
-            }
-          });
+        store.reset(SubjectStateProvider.EMPTY_LESSONS);
         activatedRouteSnapshot.params = {subject: 'subject', lessonGuid: 'guid1'};
 
         lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).not.toHaveBeenCalledWith(new SelectLesson('guid1'));
     });
 
     it('should select a lesson from existing lessons', () => {
-        store.reset({
-            subject: {
-              lessons: LessonsProvider.two
-            }
-          });
+        store.reset(SubjectStateProvider.TWO_LESSONS);
         activatedRouteSnapshot.params = {subject: 'subject', lessonGuid: 'guid1'};
 
         lessonDetailResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).toHaveBeenCalledWith(new SelectLesson('guid1'));
+        expect(store.dispatch).toHaveBeenCalledWith(new SelectLesson(LessonsProvider.two[0]));
     });
 });

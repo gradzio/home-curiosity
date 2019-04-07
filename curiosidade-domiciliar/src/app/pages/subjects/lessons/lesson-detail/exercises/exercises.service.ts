@@ -24,12 +24,4 @@ export class ExercisesService {
                 map(response => new Collection<ExerciseModel>(response['data'].map(ExerciseFactory.make)))
             );
     }
-
-    // nextExercise(): boolean {
-    //     const collection = this._exercisesSubject.getValue();
-    //     collection.next();
-    //     this._exercisesSubject.next(collection);
-
-    //     return collection.progress.isCompleted;
-    // }
 }

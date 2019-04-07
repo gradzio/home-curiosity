@@ -19,7 +19,7 @@ import { ExercisesState, AnsweredCorrectly } from './exercises.state';
   styleUrls: ['./exercises.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExercisesComponent implements OnInit, OnDestroy {
+export class ExercisesComponent implements OnDestroy {
 
   @Select(ExercisesState.exercises)
   exercises$: Observable<Collection<ExerciseModel>>;
@@ -33,11 +33,6 @@ export class ExercisesComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
-
-  ngOnInit() {
-    // this.exercises$ = this.route.data
-    //   .pipe(map(data => data['exercises']));
-  }
 
   ngOnDestroy() {
     Object.keys(this._subscriptions)
