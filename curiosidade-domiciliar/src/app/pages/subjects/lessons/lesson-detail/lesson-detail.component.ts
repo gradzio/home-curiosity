@@ -15,20 +15,19 @@ import { SubjectState } from '../../subject.state';
 })
 export class LessonDetailComponent implements OnInit {
   @Select(SubjectState.selectedLesson)
-  lesson$: Observable<LessonModel>;
+  selectedLesson$: Observable<LessonModel>;
 
   videoCard$: Observable<ResourceCardInterface>;
   constructor(private route: ActivatedRoute, private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.videoCard$ = this.lesson$
+    this.videoCard$ = this.selectedLesson$
       .pipe(
-        map((l: LessonModel) => ({
-            title: l.name,
-            resourceUrl: this._sanitizer
-              .bypassSecurityTrustResourceUrl(l.videoUrl),
+        map((lesson: LessonModel) => ({
+            title: lesson.name,
+            resourceUrl: this._sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl),
             navigation: {
-              link: `/subjects/math/lessons/${l.guid}/exercises`,
+              link: `/subjects/math/lessons/${lesson.guid}/exercises`,
               text: 'Exercises'
             }
           })

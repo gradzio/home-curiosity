@@ -15,6 +15,7 @@ import { ExercisesState } from './lesson-detail/exercises/exercises.state';
 import { ExercisesService } from './lesson-detail/exercises/exercises.service';
 import { LessonsService } from './lessons.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 describe('LessonsComponent', () => {
   let component: LessonsComponent;
@@ -42,11 +43,7 @@ describe('LessonsComponent', () => {
     fixture = TestBed.createComponent(LessonsComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    store.reset({
-      subject: {
-        lessons: LessonsProvider.two
-      }
-    });
+    store.reset(SubjectStateProvider.TWO_LESSONS);
     fixture.detectChanges();
   });
 

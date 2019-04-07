@@ -13,13 +13,15 @@ import { ExercisesService } from './exercises/exercises.service';
 import { LessonsService } from '../lessons.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LessonsProvider } from 'src/tests/lessons.provider';
+import { By } from '@angular/platform-browser';
+import { MaterialModule } from 'src/app/material.module';
+import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 describe('LessonDetailComponent', () => {
   let component: LessonDetailComponent;
   let fixture: ComponentFixture<LessonDetailComponent>;
   let store;
   const activatedRoute = new ActivatedRoute();
-  activatedRoute.data = of({lesson: new LessonModel('guid', 'name', 'icon', 'videoUrl')});
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,6 +29,7 @@ describe('LessonDetailComponent', () => {
       imports: [
         NgxsModule.forRoot([SubjectState, ExercisesState]),
         HttpClientTestingModule,
+        MaterialModule,
         RouterTestingModule,
         PresentationComponentsModule
       ],
@@ -39,15 +42,15 @@ describe('LessonDetailComponent', () => {
     fixture = TestBed.createComponent(LessonDetailComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    store.reset({
-      subject: {
-        selectedLesson: LessonsProvider.two[0]
-      }
-    });
+    store.reset(SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a back button', () => {
+    expect(fixture.debugElement.query(By.css('.mat-mini-fab'))).toBeTruthy();
   });
 });
