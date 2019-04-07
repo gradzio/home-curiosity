@@ -14,7 +14,7 @@ export interface ExercisesStateInterface {
 
 export class AnsweredCorrectly {
     static readonly type = '[Exercises Flow Page] Answered correctly'
-    constructor(public lessonGuid: string) {};
+      constructor(public lessonGuid: string) {};
 }
 
 export class GetExercises {
@@ -25,8 +25,7 @@ export class GetExercises {
 @State<ExercisesStateInterface>({
   name: 'exercises',
   defaults: {
-      exercises: new Collection([]),
-      currentExercise: null
+      exercises: new Collection([])
   }
 })
 export class ExercisesState {
@@ -37,25 +36,20 @@ export class ExercisesState {
     return state.exercises;
   }
 
-  @Selector()
-  static currentExercise(state: ExercisesStateInterface) {
-    return state.currentExercise;
-  }
-
   @Action(GetExercises)
   getExercises(ctx: StateContext<ExercisesStateInterface>, action: GetExercises) {
     return this.exerciseService.getAll(action.lessonGuid).pipe(
-      tap(exercises => ctx.patchState({currentExercise: exercises.current, exercises}))
+      tap(exercises => ctx.patchState({exercises}))
     );
   }
 
   @Action(AnsweredCorrectly)
   answeredCorrectly(ctx: StateContext<ExercisesStateInterface>, action: AnsweredCorrectly) {
-      const exercises = ctx.getState().exercises;
-      exercises.next();
-      if (exercises.progress.isCompleted) {
+    const exercises = ctx.getState().exercises;
+    exercises.next();
+    if (exercises.progress.isCompleted) {
         return ctx.dispatch(new CompletedExercises(action.lessonGuid));
-      }
-      ctx.patchState({currentExercise: exercises.current, exercises});
+    }
+    return ctx.patchState({exercises});
   }
 }

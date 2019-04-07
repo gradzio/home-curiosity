@@ -4,8 +4,7 @@ import { Observable, of } from 'rxjs';
 import { first, flatMap } from 'rxjs/operators';
 import { LessonModel } from '../lesson.model';
 import { Store } from '@ngxs/store';
-import { SubjectState, SubjectStateInterface, GetLessons, GetLesson, SelectLesson } from '../../subject.state';
-import { LessonsProvider } from 'src/tests/lessons.provider';
+import { SubjectStateInterface, GetLessons, SelectLesson } from '../../subject.state';
 
 @Injectable({
     providedIn: 'root',

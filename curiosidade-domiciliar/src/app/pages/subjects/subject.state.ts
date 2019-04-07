@@ -5,15 +5,11 @@ import { tap, catchError, finalize, map } from 'rxjs/operators';
 import { Collection } from 'src/app/core/collection';
 import { ExerciseModel } from './lessons/lesson-detail/exercises/exercise.model';
 import { ExercisesService } from './lessons/lesson-detail/exercises/exercises.service';
+import { AnsweredCorrectly } from './lessons/lesson-detail/exercises/exercises.state';
 
 export class GetLessons {
   static readonly type = '[Lessons List Page] Get lessons';
   constructor(public subject: string, public selectedLessonGuid?: string) {};
-}
-
-export class GetLesson {
-  static readonly type = '[Lesson Detail Page] Get lesson';
-  constructor(public lessonGuid: string) {};
 }
 
 export class CompletedExercises {
@@ -66,12 +62,6 @@ export class SubjectState {
         return ctx.patchState({ lessons, selectedLesson })
       })
     );
-  }
-
-  @Action(SelectLesson)
-  getLesson(ctx: StateContext<SubjectStateInterface>, action: SelectLesson) {
-    const selectedLesson = ctx.getState().lessons.find(lesson => lesson.guid === action.lessonGuid);
-    return ctx.patchState({ selectedLesson });
   }
 
   @Action(CompletedExercises)
