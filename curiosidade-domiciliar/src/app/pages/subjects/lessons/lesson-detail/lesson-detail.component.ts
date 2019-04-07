@@ -31,8 +31,8 @@ export class LessonDetailComponent implements OnInit {
               link: `/subjects/math/lessons/${lesson.guid}/exercises`,
               text: 'Exercises'
             }
-          };
-        })
+          })
+        )
       );
   }
 }
