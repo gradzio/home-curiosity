@@ -15,27 +15,35 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AnswersService } from './answers.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { LessonsService } from '../../lessons.service';
+import { Store, NgxsModule } from '@ngxs/store';
+import { ExercisesState, AnsweredCorrectly } from './exercises.state';
+import { SubjectState } from '../../../subject.state';
+import { ActivatedRoute } from '@angular/router';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
   let fixture: ComponentFixture<ExercisesComponent>;
-  let exerciseService;
   let notificationService;
   let answersService;
-  let lessonsService;
-  let changeDetectorRef;
+  let store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ExercisesComponent ],
       imports: [
+        NgxsModule.forRoot([SubjectState, ExercisesState]),
         RouterTestingModule,
         CommonModule,
         MaterialModule,
         PresentationComponentsModule,
         HttpClientTestingModule
       ],
-      providers: [ ExercisesService, AnswersService, LessonsService, NotificationService, ChangeDetectorRef ]
+      providers: [ {
+        provide: ActivatedRoute,
+        useValue: {
+          params: of({lessonGuid: 'lessonGuid'})
+        }
+      }, AnswersService, ExercisesService, LessonsService, NotificationService, ChangeDetectorRef ]
     })
     .compileComponents();
   }));
@@ -47,12 +55,9 @@ describe('ExercisesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExercisesComponent);
     component = fixture.componentInstance;
-    exerciseService = TestBed.get(ExercisesService);
     notificationService = TestBed.get(NotificationService);
     answersService = TestBed.get(AnswersService);
-    lessonsService = TestBed.get(LessonsService);
-    changeDetectorRef = TestBed.get(ChangeDetectorRef);
-    spyOn(exerciseService, 'exercises$').and.returnValue(of(ExerciseCollectionProvider.two));
+    store = TestBed.get(Store);
     fixture.detectChanges();
   });
 
@@ -61,7 +66,6 @@ describe('ExercisesComponent', () => {
   });
 
   it('should set right defaults', () => {
-    component.ngOnInit();
     component.exercises$
     .pipe(
       last()
@@ -73,25 +77,25 @@ describe('ExercisesComponent', () => {
     .unsubscribe();
   });
 
-  it('should show positive snackbar and call nextExercise on correct answer', () => {
+  it('should show positive snackbar and trigger AnsweredCorrectly even on correct answer', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyCorrectAnswer').and.returnValue(of({dismissedByAction: true}));
-    spyOn(exerciseService, 'nextExercise');
+    spyOn(store, 'dispatch');
     component.onAnswerSubmitted('2');
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
-    expect(exerciseService.nextExercise).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly('lessonGuid'));
   });
 
   it('should show negative snackbar on wrong answer', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': false, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyWrongAnswer');
-    spyOn(exerciseService, 'nextExercise');
+    spyOn(store, 'dispatch');
     component.onAnswerSubmitted('2');
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
-    expect(exerciseService.nextExercise).not.toHaveBeenCalled();
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 });

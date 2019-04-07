@@ -155,7 +155,7 @@
     "rxjs-no-finnish": false,
     "rxjs-no-ignored-error": false,
     "rxjs-no-ignored-notifier": true,
-    "rxjs-no-ignored-observable": true,
+    "rxjs-no-ignored-observable": false,
     "rxjs-no-ignored-replay-buffer": true,
     "rxjs-no-ignored-subscribe": false,
     "rxjs-no-internal": true,
