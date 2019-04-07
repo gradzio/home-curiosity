@@ -23,8 +23,7 @@ export class LessonDetailComponent implements OnInit {
   ngOnInit() {
     this.videoCard$ = this.selectedLesson$
       .pipe(
-        map((lesson: LessonModel) => {
-          return {
+        map((lesson: LessonModel) => ({
             title: lesson.name,
             resourceUrl: this._sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl),
             navigation: {
