@@ -13,6 +13,9 @@ import { PresentationComponentsModule } from './shared/presentation-components/p
 import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
+import { NgxsModule } from '@ngxs/store';
+import { SubjectState } from './pages/subjects/subject.state';
+import { ExercisesState } from './pages/subjects/lessons/lesson-detail/exercises/exercises.state';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,10 @@ import { PagesModule } from './pages/pages.module';
     AppSidebarComponent
   ],
   imports: [
+    NgxsModule.forRoot([
+      SubjectState,
+      ExercisesState
+    ]),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

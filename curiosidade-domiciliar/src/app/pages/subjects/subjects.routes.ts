@@ -1,16 +1,16 @@
 import { LessonsComponent } from './lessons/lessons.component';
-import { LessonsResolver } from './lessons/lessons.resolver';
 import { LessonDetailComponent } from './lessons/lesson-detail/lesson-detail.component';
 import { LessonsDetailResolver } from './lessons/lesson-detail/lesson-detail.resolver';
 import { ExercisesComponent } from './lessons/lesson-detail/exercises/exercises.component';
 import { ExercisesResolver } from './lessons/lesson-detail/exercises/exercises.resolver';
+import { LessonsResolver } from './lessons/lessons.resolver';
 
 export const SUBJECT_ROUTES = [
     {
         path: '',
         component: LessonsComponent,
         resolve: {
-        lessons: LessonsResolver
+            lessons: LessonsResolver
         }
     },
     {

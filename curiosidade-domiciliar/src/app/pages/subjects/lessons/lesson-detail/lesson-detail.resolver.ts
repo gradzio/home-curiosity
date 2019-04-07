@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { first, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { LessonModel } from '../lesson.model';
-import { LessonsService } from '../lessons.service';
+import { Store } from '@ngxs/store';
+import { SubjectStateInterface, GetLessons, SelectLesson } from '../../subject.state';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LessonsDetailResolver implements Resolve<LessonModel> {
-    constructor(private lessonsService: LessonsService, private router: Router) {}
+    constructor(private _store: Store, private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LessonModel> {
-        return this.lessonsService.lessons$
-            .pipe(
-                flatMap(lessons => {
-                    const lessonGuid = route.params.lessonGuid;
-                    if (!lessons) {
-                        lessons = [];
-                    }
+        const subjectStateSnapshot  = this._store
+            .selectSnapshot<SubjectStateInterface>((appState) => appState.subject);
 
-                    const singleLesson = lessons.find(lesson => lesson.guid === lessonGuid);
-                    if (!singleLesson) {
-                        return this.lessonsService.getOne(lessonGuid);
-                    }
-                    return of(singleLesson);
-                }),
-                first()
-            );
+        const lesson = subjectStateSnapshot.lessons
+            .find(l => l.guid === route.params.lessonGuid);
+
+        if (lesson) {
+            return this._store.dispatch(new SelectLesson(lesson));
+        }
+
+        return this._store.dispatch(new GetLessons(route.params.subject, route.params.lessonGuid));
     }
 }

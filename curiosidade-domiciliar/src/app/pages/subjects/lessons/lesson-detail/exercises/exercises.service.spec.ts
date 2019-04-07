@@ -40,22 +40,4 @@ describe('ExercisesService', () => {
 
         subscription.unsubscribe();
     });
-
-    it('should set next Exercise', () => {
-        const subscription = exerciseService.getAll('lessonguid').subscribe();
-
-        const req = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/lessonguid/exercises.json');
-
-        expect(req.request.method).toEqual('GET');
-
-        req.flush(exercisesMock);
-
-        exerciseService.nextExercise();
-
-        exerciseService.exercises$
-            .subscribe(exercises => expect(exercises.progress.current).toEqual(2))
-            .unsubscribe();
-        subscription.unsubscribe();
-    });
-
 });

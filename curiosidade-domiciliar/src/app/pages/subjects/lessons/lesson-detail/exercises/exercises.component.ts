@@ -8,6 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ExerciseModel } from './exercise.model';
 import { AnswersService } from './answers.service';
 import { LessonsService } from '../../lessons.service';
+import { Select, Store } from '@ngxs/store';
+import { SubjectState } from '../../../subject.state';
+import { ExercisesState, AnsweredCorrectly } from './exercises.state';
 
 
 @Component({
@@ -16,25 +19,20 @@ import { LessonsService } from '../../lessons.service';
   styleUrls: ['./exercises.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExercisesComponent implements OnInit, OnDestroy {
+export class ExercisesComponent implements OnDestroy {
 
+  @Select(ExercisesState.exercises)
   exercises$: Observable<Collection<ExerciseModel>>;
 
   private _subscriptions: { [id: string]: Subscription; } = {};
 
   constructor(
     private route: ActivatedRoute,
-    private exerciseService: ExercisesService,
-    private lessonsService: LessonsService,
+    private _store: Store,
     private answerService: AnswersService,
     private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
-
-  ngOnInit() {
-    this.exercises$ = this.route.data
-      .pipe(map(data => data['exercises']));
-  }
 
   ngOnDestroy() {
     Object.keys(this._subscriptions)
@@ -55,10 +53,7 @@ export class ExercisesComponent implements OnInit, OnDestroy {
           switchMap(_ => this.route.params)
         )
         .subscribe(params => {
-            const isCompleted = this.exerciseService.nextExercise();
-            if (isCompleted) {
-              this.lessonsService.completeLesson(params.lessonGuid);
-            }
+            this._store.dispatch(new AnsweredCorrectly(params.lessonGuid));
             this.changeDetectorRef.detectChanges();
         });
   }
