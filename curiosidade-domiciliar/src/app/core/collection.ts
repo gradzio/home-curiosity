@@ -4,6 +4,7 @@ export class Collection<T> {
     private _items: T[];
     private _progress: Progress;
     private _current: T;
+    private _counter = 0;
 
     constructor(items) {
         this._items = items;

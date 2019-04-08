@@ -7,8 +7,21 @@
             "objectives": "Contagem de rotina. Contagem ascendente e descendente. Reconhecimento de números no contexto diário: indicação de quantidades, indicação de ordem ou indicação de código para a organização de informações",
             "abilities": "(EF01MA01) Utilizar números naturais como indicador de quantidade ou de ordem em diferentes situações cotidianas e reconhecer situações em que os números não indicam contagem nem ordem, mas sim código de identificação.",
             "icon": "filter_1",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": [
+                {
+                    "guid": "topicguid1",
+                    "name": "1 ate 10",
+                    "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
+                    "isCompleted": false
+                },
+                {
+                    "guid": "topicguid2",
+                    "name": "10 ate 20",
+                    "videoUrl": "https://www.youtube.com/embed/wiGEEJLLKd8",
+                    "isCompleted": false
+                }
+            ]
         },
         {
             "guid": "lessonguid2",
@@ -17,8 +30,8 @@
             "objectives": "Quantificação de elementos de uma coleção: estimativas, contagem um a um, pareamento ou outros agrupamentos e comparação",
             "abilities": "(EF01MA02) Contar de maneira exata ou aproximada, utilizando diferentes estratégias como o pareamento e outros agrupamentos.",
             "icon": "filter_2",
-            "videoUrl": "https://www.youtube.com/embed/wiGEEJLLKd8",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid3",
@@ -27,8 +40,8 @@
             "objectives": "Quantificação de elementos de uma coleção: estimativas, contagem um a um, pareamento ou outros agrupamentos e comparação",
             "abilities": "(EF01MA03) Estimar e comparar quantidades de objetos de dois conjuntos (em torno de 20 elementos), por estimativa e/ou por correspondência (um a um, dois a dois) para indicar “tem mais”, “tem menos” ou “tem a mesma quantidade”.",
             "icon": "filter_3",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid4",
@@ -37,8 +50,8 @@
             "objectives": "Leitura, escrita e comparação de números naturais (até 100)",
             "abilities": "(EF01MA04) Contar a quantidade de objetos de coleções até 100 unidades e apresentar o resultado por registros verbais e simbólicos, em situações de seu interesse, como jogos, brincadeiras, materiais da sala de aula, entre outros.",
             "icon": "filter_4",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid5",
@@ -47,8 +60,8 @@
             "objectives": "Leitura, escrita e comparação de números naturais (até 100)",
             "abilities": "(EF01MA05) Comparar números naturais de até duas ordens em situações cotidianas, com e sem suporte da reta numérica.",
             "icon": "filter_5",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid6",
@@ -57,8 +70,8 @@
             "objectives": "Construção de fatos básicos da adição",
             "abilities": "(EF01MA06) Construir fatos básicos da adição e utilizá-los em procedimentos de cálculo para resolver problemas.",
             "icon": "filter_6",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid7",
@@ -67,8 +80,8 @@
             "objectives": "Composição e decomposição de números naturais",
             "abilities": "(EF01MA07) Compor e decompor número de até duas ordens, por meio de diferentes adições, com o suporte de material manipulável, contribuindo para a compreensão de características do sistema de numeração decimal e o desenvolvimento de estratégias de cálculo.",
             "icon": "filter_7",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid8",
@@ -77,8 +90,8 @@
             "objectives": "Composição e decomposição de números naturais",
             "abilities": "(EF01MA08) Resolver e elaborar problemas de adição e de subtração, envolvendo números de até dois algarismos, com os significados de juntar, acrescentar, separar e retirar, com o suporte de imagens e/ou material manipulável, utilizando estratégias e formas de registro pessoais.",
             "icon": "filter_8",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid9",
@@ -87,8 +100,8 @@
             "objectives": "Padrões figurais e numéricos: investigação de regularidades ou padrões em sequências",
             "abilities": "(EF01MA09) Organizar e ordenar objetos familiares ou representações por figuras, por meio de atributos, tais como cor, forma e medida.",
             "icon": "exposure_plus_1",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid10",
@@ -97,8 +110,8 @@
             "objectives": "Sequências recursivas: observação de regras usadas utilizadas em seriações numéricas (mais 1, mais 2, menos 1, menos 2, por exemplo)",
             "abilities": "(EF01MA10) Descrever, após o reconhecimento e a explicitação de um padrão (ou regularidade), os elementos ausentes em sequências recursivas de números naturais, objetos ou figuras.",
             "icon": "exposure_plus_2",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid11",
@@ -107,8 +120,8 @@
             "objectives": "Localização de objetos e de pessoas no espaço, utilizando diversos pontos de referência e vocabulário apropriado",
             "abilities": "(EF01MA11) Descrever a localização de pessoas e de objetos no espaço em relação à sua própria posição, utilizando termos como à direita, à esquerda, em frente, atrás.",
             "icon": "hdr_strong",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid12",
@@ -117,8 +130,8 @@
             "objectives": "Localização de objetos e de pessoas no espaço, utilizando diversos pontos de referência e vocabulário apropriado",
             "abilities": "(EF01MA12) Descrever a localização de pessoas e de objetos no espaço segundo um dado ponto de referência, compreendendo que, para a utilização de termos que se referem à posição, como direita, esquerda, em cima, em baixo, é necessário explicitar-se o referencial.",
             "icon": "hdr_strong",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid13",
@@ -127,8 +140,8 @@
             "objectives": "Figuras geométricas espaciais: reconhecimento e relações com objetos familiares do mundo físico",
             "abilities": "(EF01MA13) Relacionar figuras geométricas espaciais (cones, cilindros, esferas e blocos retangulares) a objetos familiares do mundo físico.",
             "icon": "hdr_strong",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid14",
@@ -137,8 +150,8 @@
             "objectives": "Figuras geométricas planas: reconhecimento do formato das faces de figuras geométricas espaciais",
             "abilities": "(EF01MA14) Identificar e nomear figuras planas (círculo, quadrado, retângulo e triângulo) em desenhos apresentados em diferentes disposições ou em contornos de faces de sólidos geométricos.",
             "icon": "hdr_strong",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid15",
@@ -147,8 +160,8 @@
             "objectives": "Medidas de comprimento, massa e capacidade: comparações e unidades de medida não convencionais",
             "abilities": "(EF01MA15) Comparar comprimentos, capacidades ou massas, utilizando termos como mais alto, mais baixo, mais comprido, mais curto, mais grosso, mais fino, mais largo, mais pesado, mais leve, cabe mais, cabe menos, entre outros, para ordenar objetos de uso cotidiano.",
             "icon": "landscape",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid16",
@@ -157,8 +170,8 @@
             "objectives": "Medidas de tempo: unidades de medida de tempo, suas relações e o uso do calendário",
             "abilities": "(EF01MA16) Relatar em linguagem verbal ou não verbal sequência de acontecimentos relativos a um dia, utilizando, quando possível, os horários dos eventos.",
             "icon": "landscape",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid17",
@@ -167,8 +180,8 @@
             "objectives": "Medidas de tempo: unidades de medida de tempo, suas relações e o uso do calendário",
             "abilities": "(EF01MA17) Reconhecer e relacionar períodos do dia, dias da semana e meses do ano, utilizando calendário, quando necessário.",
             "icon": "landscape",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid18",
@@ -177,8 +190,8 @@
             "objectives": "Medidas de tempo: unidades de medida de tempo, suas relações e o uso do calendário",
             "abilities": "(EF01MA18) Produzir a escrita de uma data, apresentando o dia, o mês e o ano, e indicar o dia da semana de uma data, consultando calendários.",
             "icon": "landscape",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid19",
@@ -187,8 +200,8 @@
             "objectives": "Sistema monetário brasileiro: reconhecimento de cédulas e moedas",
             "abilities": "(EF01MA19) Reconhecer e relacionar valores de moedas e cédulas do sistema monetário brasileiro para resolver situações simples do cotidiano do estudante.",
             "icon": "landscape",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid20",
@@ -197,8 +210,8 @@
             "objectives": "Noção de acaso",
             "abilities": "(EF01MA20) Classificar eventos envolvendo o acaso, tais como “acontecerá com certeza”, “talvez aconteça” e “é impossível acontecer”, em situações do cotidiano.",
             "icon": "assessment",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid21",
@@ -207,8 +220,8 @@
             "objectives": "Leitura de tabelas e de gráficos de colunas simples",
             "abilities": "(EF01MA21) Ler dados expressos em tabelas e em gráficos de colunas simples.",
             "icon": "assessment",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         },
         {
             "guid": "lessonguid22",
@@ -217,8 +230,8 @@
             "objectives": "Coleta e organização de informações. Registros pessoais para comunicação de informações coletadas",
             "abilities": "(EF01MA22) Realizar pesquisa, envolvendo até duas variáveis categóricas de seu interesse e universo de até 30 elementos, e organizar dados por meio de representações pessoais.",
             "icon": "assessment",
-            "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-            "isCompleted": false
+            "isCompleted": false,
+            "topics": []
         }
     ]
 }

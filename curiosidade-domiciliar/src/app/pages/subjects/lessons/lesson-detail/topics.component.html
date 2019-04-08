@@ -1,0 +1,15 @@
+
+<div class="fab-container">
+    <button [routerLink]="['/subjects/math']" mat-mini-fab color="accent"><mat-icon>arrow_back</mat-icon></button>
+</div>
+<mat-card>
+    <app-progress-bar [progress]="(selectedLesson$ | async)?.topics.progress"></app-progress-bar>
+</mat-card>
+<app-video-card *ngIf="!(selectedLesson$ | async)?.topics.progress.isCompleted else congratsTopics" [item]="videoCard$ | async"></app-video-card>
+<ng-template #congratsTopics>
+    <mat-card>
+        <h2>CONGRATS!</h2>
+        <p>You have completed all the topics for this lesson!</p>
+        <a mat-raised-button color="primary" [routerLink]="['/subjects/math']">Back to lessons</a>
+    </mat-card>
+</ng-template>

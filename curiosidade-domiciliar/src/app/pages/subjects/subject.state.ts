@@ -10,7 +10,12 @@ export class GetLessons {
 }
 
 export class CompletedExercises {
-  static readonly type = '[Exercise Flow Page] Completed pages';
+  static readonly type = '[Exercise Flow Page] Completed exercises';
+  constructor(public lessonGuid: string, public topicGuid: string) {}
+}
+
+export class CompletedTopics {
+  static readonly type = '[Lesson Detail Page] Completed topics';
   constructor(public lessonGuid: string) {}
 }
 
@@ -54,7 +59,7 @@ export class SubjectState {
       map(lessons => {
         let selectedLesson;
         if (action.selectedLessonGuid) {
-          selectedLesson = lessons.find(lesson => lesson.guid === action.selectedLessonGuid);
+          selectedLesson = lessons.find(l => l.guid === action.selectedLessonGuid);
         }
         return ctx.patchState({ lessons, selectedLesson });
       })
@@ -68,6 +73,20 @@ export class SubjectState {
 
   @Action(CompletedExercises)
   completedExercises(ctx: StateContext<SubjectStateInterface>, action: CompletedExercises) {
+    const lessons = ctx.getState().lessons.map(lesson => {
+      if (lesson.guid === action.lessonGuid) {
+          lesson.topics.next();
+          if (lesson.topics.progress.isCompleted) {
+            ctx.dispatch(new CompletedTopics(action.lessonGuid));
+          }
+      }
+      return lesson;
+    });
+    ctx.patchState({lessons});
+  }
+
+  @Action(CompletedTopics)
+  completedTopics(ctx: StateContext<SubjectStateInterface>, action: CompletedTopics) {
     const lessons = ctx.getState().lessons.map(lesson => {
       if (lesson.guid === action.lessonGuid) {
           lesson.complete();

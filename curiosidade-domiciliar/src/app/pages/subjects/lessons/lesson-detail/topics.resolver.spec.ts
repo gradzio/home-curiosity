@@ -1,5 +1,5 @@
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { LessonsDetailResolver } from './lesson-detail.resolver';
+import { TopicsResolver } from './topics.resolver';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
@@ -13,11 +13,11 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 
-describe('LessonsDetailResolver', () => {
+describe('TopicsResolver', () => {
     let router: Router;
     let lessonsServiceMock;
     let store;
-    let lessonDetailResolver: LessonsDetailResolver;
+    let lessonDetailResolver: TopicsResolver;
     const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
     const activatedRouteSnapshot = new ActivatedRouteSnapshot();
 
@@ -31,7 +31,7 @@ describe('LessonsDetailResolver', () => {
                 HttpClientTestingModule
             ],
             providers: [
-                LessonsDetailResolver,
+                TopicsResolver,
                 ExercisesService,
                 LessonsService,
                 {provide: RouterStateSnapshot, useValue: mockSnapshot}
@@ -40,12 +40,12 @@ describe('LessonsDetailResolver', () => {
         router = TestBed.get(Router);
         store = TestBed.get(Store);
         spyOn(store, 'dispatch');
-        lessonDetailResolver = TestBed.get(LessonsDetailResolver);
+        lessonDetailResolver = TestBed.get(TopicsResolver);
     });
 
     it('should create', () => {
         expect(lessonDetailResolver).toBeTruthy();
-        expect(lessonDetailResolver).toEqual(jasmine.any(LessonsDetailResolver));
+        expect(lessonDetailResolver).toEqual(jasmine.any(TopicsResolver));
     });
 
     it('should call lessons on page reload', () => {

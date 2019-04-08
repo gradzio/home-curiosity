@@ -6,14 +6,6 @@ import { Injectable } from '@angular/core';
 import { LessonFactory } from './lesson.factory';
 import { environment } from 'src/environments/environment';
 
-export interface LessonResponseContract {
-        guid: string;
-        name: string;
-        icon: string;
-        videoUrl: string;
-        isCompleted: boolean;
-}
-
 @Injectable()
 export class LessonsService {
 
@@ -30,14 +22,6 @@ export class LessonsService {
                     this._lessonsSubject.next(lessons);
                     return lessons;
                 })
-            );
-    }
-
-    getOne(lessonGuid: string): Observable<LessonModel> {
-        return this.client.get(`${environment.apis.baseUrl}/subjects/math/lessons/${lessonGuid}.json`)
-            .pipe(
-                map(response => response['data']),
-                map(LessonFactory.make)
             );
     }
 }

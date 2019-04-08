@@ -13,7 +13,7 @@ export interface ExercisesStateInterface {
 
 export class AnsweredCorrectly {
     static readonly type = '[Exercises Flow Page] Answered correctly';
-      constructor(public lessonGuid: string) {}
+      constructor(public lessonGuid: string, public topicGuid: string) {}
 }
 
 export class GetExercises {
@@ -47,7 +47,7 @@ export class ExercisesState {
     const exercises = ctx.getState().exercises;
     exercises.next();
     if (exercises.progress.isCompleted) {
-        return ctx.dispatch(new CompletedExercises(action.lessonGuid));
+        return ctx.dispatch(new CompletedExercises(action.lessonGuid, action.topicGuid));
     }
     return ctx.patchState({exercises});
   }

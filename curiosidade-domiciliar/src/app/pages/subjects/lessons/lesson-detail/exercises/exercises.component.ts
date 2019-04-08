@@ -19,20 +19,26 @@ import { ExercisesState, AnsweredCorrectly } from './exercises.state';
   styleUrls: ['./exercises.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExercisesComponent implements OnDestroy {
+export class ExercisesComponent implements OnInit, OnDestroy {
 
   @Select(ExercisesState.exercises)
   exercises$: Observable<Collection<ExerciseModel>>;
 
+  backLink$: Observable<string>;
+
   private _subscriptions: { [id: string]: Subscription; } = {};
 
   constructor(
-    private route: ActivatedRoute,
+    private _route: ActivatedRoute,
     private _store: Store,
-    private answerService: AnswersService,
-    private notificationService: NotificationService,
-    private changeDetectorRef: ChangeDetectorRef
+    private _answerService: AnswersService,
+    private _notificationService: NotificationService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
+
+  ngOnInit() {
+    this.backLink$ = this._route.params.pipe(map(params => `/subjects/math/lessons/${params.lessonGuid}`));
+  }
 
   ngOnDestroy() {
     Object.keys(this._subscriptions)
@@ -40,21 +46,21 @@ export class ExercisesComponent implements OnDestroy {
   }
 
   onAnswerSubmitted(answerValue: string) {
-      this._subscriptions['createAnswer'] = this.answerService.create(answerValue, 'guid1')
+      this._subscriptions['createAnswer'] = this._answerService.create(answerValue, 'guid1')
         .pipe(
           flatMap(answer => {
             if (answer.success) {
-              return this.notificationService.notifyCorrectAnswer();
+              return this._notificationService.notifyCorrectAnswer();
             } else {
-              this.notificationService.notifyWrongAnswer();
+              this._notificationService.notifyWrongAnswer();
               return EMPTY;
             }
           }),
-          switchMap(_ => this.route.params)
+          switchMap(_ => this._route.params)
         )
         .subscribe(params => {
-            this._store.dispatch(new AnsweredCorrectly(params.lessonGuid));
-            this.changeDetectorRef.detectChanges();
+            this._store.dispatch(new AnsweredCorrectly(params.lessonGuid, params.topicGuid));
+            this._changeDetectorRef.detectChanges();
         });
   }
 }

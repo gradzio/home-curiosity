@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
-import { GetLessons, SubjectState, CompletedExercises, SelectLesson } from './subject.state';
+import { GetLessons, SubjectState, CompletedExercises, SelectLesson, CompletedTopics } from './subject.state';
 import { ExercisesService } from './lessons/lesson-detail/exercises/exercises.service';
 import { LessonsService } from './lessons/lessons.service';
 
@@ -31,7 +31,7 @@ describe('SubjectState', () => {
     store.selectOnce(state => state.subject).subscribe(subject => {
       expect(lessonsService.getAll).toHaveBeenCalledWith('subject');
       expect(subject.lessons.length).toEqual(2);
-    });
+    }).unsubscribe();
   }));
 
   it('it binds GetLessons with pre select lesson', async(() => {
@@ -41,21 +41,38 @@ describe('SubjectState', () => {
       expect(lessonsService.getAll).toHaveBeenCalledWith('subject');
       expect(subject.lessons.length).toEqual(2);
       expect(subject.selectedLesson.guid).toEqual('guid1');
-    });
+    }).unsubscribe();
   }));
 
   it('it binds SelectLesson', async(() => {
     store.dispatch(new SelectLesson(LessonsProvider.two[0]));
     store.selectOnce(state => state.subject).subscribe(subject => {
       expect(subject.selectedLesson.guid).toEqual('guid1');
-    });
+    }).unsubscribe();
   }));
 
   it('it binds CompletedExercises', async(() => {
-    store.dispatch(new CompletedExercises('guid1'));
+    store.dispatch(new CompletedExercises('guid1', 'topicGuid'));
     store.selectOnce(state => state.subject).subscribe(subject => {
-      const completedLesson = subject.lessons.find(lesson => lesson.isCompleted === true);
-      expect(completedLesson.guid).toEqual('guid1');
-    });
+      const lesson = subject.lessons.find(l => l.guid === 'guid1');
+      expect(lesson.topics.progress.current).toEqual(2);
+    }).unsubscribe();
+  }));
+
+  it('it calls CompletedExercises and CompletedTopics', async(() => {
+    store.dispatch(new CompletedExercises('guid1', 'topicGuid1'));
+    store.dispatch(new CompletedExercises('guid1', 'topicGuid2'));
+    store.selectOnce(state => state.subject).subscribe(subject => {
+      const lesson = subject.lessons.find(l => l.guid === 'guid1');
+      expect(lesson.topics.progress.isCompleted).toEqual(true);
+    }).unsubscribe();
+  }));
+
+  it('it binds CompletedTopics', async(() => {
+    store.dispatch(new CompletedTopics('guid1'));
+    store.selectOnce(state => state.subject).subscribe(subject => {
+      const lesson = subject.lessons.find(l => l.guid === 'guid1');
+      expect(lesson.isCompleted).toEqual(true);
+    }).unsubscribe();
   }));
 });
