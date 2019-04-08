@@ -8,7 +8,7 @@ import { SubjectStateInterface, GetLessons, SelectLesson } from '../../subject.s
 @Injectable({
     providedIn: 'root',
 })
-export class LessonsDetailResolver implements Resolve<LessonModel> {
+export class TopicsResolver implements Resolve<LessonModel> {
     constructor(private _store: Store, private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LessonModel> {

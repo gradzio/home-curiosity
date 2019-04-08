@@ -11,11 +11,11 @@ import { Collection } from 'src/app/core/collection';
 import { TopicModel } from './topic.model';
 
 @Component({
-  selector: 'app-lesson-detail',
-  templateUrl: './lesson-detail.component.html',
-  styleUrls: ['./lesson-detail.component.scss']
+  selector: 'app-topics',
+  templateUrl: './topics.component.html',
+  styleUrls: ['./topics.component.scss']
 })
-export class LessonDetailComponent implements OnInit {
+export class TopicsComponent implements OnInit {
   @Select(SubjectState.selectedLesson)
   selectedLesson$: Observable<LessonModel>;
 
