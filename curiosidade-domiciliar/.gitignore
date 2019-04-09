@@ -5,6 +5,10 @@
 /tmp
 /out-tsc
 
+# cypress artifacts
+/cypress/videos/
+/cypress/screenshots/
+
 # dependencies
 /node_modules
 

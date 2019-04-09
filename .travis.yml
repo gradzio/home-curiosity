@@ -5,13 +5,15 @@ language: node_js
 node_js:
   - "8"
   
+services:
+  - docker
+
 addons:
   apt:
     sources:
       - google-chrome
     packages:
       - google-chrome-stable
-      - nginx
 
 cache:
   directories:
@@ -19,6 +21,8 @@ cache:
 
 before_install:
   - cd curiosidade-domiciliar
+  - docker build -t curiosidade-domiciliar .
+  - docker run -p 80:80 --name curiosidade-domiciliar curiosidade-domiciliar
 
 install:
   - npm install
@@ -27,7 +31,6 @@ script:
   - npm run lint
   - npm run test-headless
   - npm run build:prod
-  - nginx -c /home/travis/build/gradzio/home-curiosity/curiosidade-domiciliar/nginx/ci.conf
   - npm run e2e:ci
 
 after_success:

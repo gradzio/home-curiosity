@@ -9,6 +9,7 @@
     "test": "ng test",
     "lint": "ng lint ",
     "e2e": "cypress open",
+    "test:dev": "npm run build && http-server dist -p 4200 --push-state",
     "e2e:ci": "cypress run --record --key 0f013ea6-9e84-48f3-969c-ed1729859c3f",
     "test-headless": "ng test --watch=false --no-progress --code-coverage --browsers=ChromeHeadless"
   },

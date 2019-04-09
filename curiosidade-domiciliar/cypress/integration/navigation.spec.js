@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-const appUrl = 'http://localhost:4200/';
+const appUrl = 'http://localhost/';
 const exerciseSetup = [2, 3];
 
 context('Navigation of the Math subject', () => {
