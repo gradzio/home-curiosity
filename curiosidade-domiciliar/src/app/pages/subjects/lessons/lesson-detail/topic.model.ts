@@ -30,7 +30,7 @@ export class TopicModel {
             resourceUrl: sanitizer.bypassSecurityTrustResourceUrl(this._videoUrl),
             navigation: {
               link: `/subjects/math/lessons/${lessonGuid}/topics/${this._guid}/exercises`,
-              text: 'Exercises'
+              text: 'Practicar'
             }
           };
     }

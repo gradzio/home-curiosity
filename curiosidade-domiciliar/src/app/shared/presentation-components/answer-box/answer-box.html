@@ -2,9 +2,9 @@
   <h2 class="app-answer-box__header">{{header}}</h2>
   <ng-content></ng-content>
   <div class="center-container">
-    <input #answerInput type="number" (input)="onValueChange($event.target.value)" class="app-answer-box__answer" />
+    <input data-selector="answer-input" #answerInput type="number" (input)="onValueChange($event.target.value)" class="app-answer-box__answer" />
   </div>
   <div class="center-container">
-    <button (click)="onSubmitAnswer()" mat-raised-button color="primary" class="app-answer-box__button" [disabled]="isDisabled">Answer</button>
+    <button (click)="onSubmitAnswer()" mat-raised-button color="primary" class="app-answer-box__button" [disabled]="isDisabled">Verificar</button>
   </div>
 </div>

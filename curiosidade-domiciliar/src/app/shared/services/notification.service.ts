@@ -15,11 +15,11 @@ export class NotificationService {
     constructor(private snackbar: MatSnackBar) {}
 
     notifyCorrectAnswer(): Observable<MatSnackBarDismiss> {
-        return this.snackbar.open('Congrats!', null, {duration: 1000, panelClass: ['snackbar-success']})
+        return this.snackbar.open('Você acertou!', null, {duration: 1000, panelClass: ['snackbar-success']})
             .afterDismissed();
     }
 
     notifyWrongAnswer(): void {
-        this.snackbar.open('Incorrect! Try again...', null, {duration: 5000, panelClass: ['snackbar-error']});
+        this.snackbar.open('Tente mais uma vez...', null, {duration: 5000, panelClass: ['snackbar-error']});
     }
 }
