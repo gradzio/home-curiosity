@@ -27,7 +27,7 @@ script:
   - npm run lint
   - npm run test-headless
   - npm run build:prod
-  - nginx -c `pwd`/nginx/ci.conf
+  - nginx -c /home/travis/build/gradzio/home-curiosity/curiosidade-domiciliar/nginx/ci.conf
   - npm run e2e:ci
 
 after_success:
