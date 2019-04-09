@@ -30,7 +30,7 @@ script:
   - npm run test-headless
   - npm run build:prod
   - docker build -t curiosidade-domiciliar .
-  - docker run -p 80:80 --name curiosidade-domiciliar curiosidade-domiciliar
+  - docker run -d -p 80:80 --name curiosidade-domiciliar curiosidade-domiciliar
   - npm run e2e:ci
 
 after_success:
