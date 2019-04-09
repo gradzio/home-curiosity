@@ -29,7 +29,7 @@ describe('NotificationService', () => {
 
     it('should notify correct', () => {
       notificationService.notifyCorrectAnswer();
-        expect(snackbar.open).toHaveBeenCalledWith('Congrats!', null, {
+        expect(snackbar.open).toHaveBeenCalledWith('Você acertou!', null, {
             panelClass: ['snackbar-success'],
             duration: 1000
           });
@@ -37,7 +37,7 @@ describe('NotificationService', () => {
 
     it('should notify wrong', () => {
       notificationService.notifyWrongAnswer();
-        expect(snackbar.open).toHaveBeenCalledWith('Incorrect! Try again...', null, {
+        expect(snackbar.open).toHaveBeenCalledWith('Tente mais uma vez...', null, {
             panelClass: ['snackbar-error'],
             duration: 5000
           });
