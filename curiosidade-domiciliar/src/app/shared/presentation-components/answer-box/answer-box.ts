@@ -8,9 +8,11 @@ import {
   Input,
   HostBinding,
   ViewChild,
-  ElementRef
+  ElementRef,
+  QueryList,
+  ViewChildren
 } from '@angular/core';
-import { MatRadioGroup } from '@angular/material';
+import { MatRadioGroup, MatRadioButton } from '@angular/material';
 
 @Component({
   selector: 'app-answer-box',
@@ -29,7 +31,7 @@ export class AnswerBox implements OnInit {
   choices?: string[];
 
   @ViewChild('answerInput') answerInput: ElementRef;
-  @ViewChild('answerRadioGroup') answerRadioGroup: MatRadioGroup;
+  @ViewChildren(MatRadioButton) radios: QueryList<MatRadioButton>;
 
   private _answerText: string;
 
@@ -49,8 +51,8 @@ export class AnswerBox implements OnInit {
     if (this.answerInput) {
       this.answerInput.nativeElement.value = '';
     }
-    if (this.answerRadioGroup) {
-      this.answerRadioGroup.value = null;
+    if (this.radios) {
+      this.radios.forEach(item => item.checked = false);
     }
   }
 
