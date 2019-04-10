@@ -1,8 +1,8 @@
 import { LessonsComponent } from './lessons/lessons.component';
-import { TopicsComponent } from './lessons/lesson-detail/topics.component';
-import { TopicsResolver } from './lessons/lesson-detail/topics.resolver';
-import { ExercisesComponent } from './lessons/lesson-detail/exercises/exercises.component';
-import { ExercisesResolver } from './lessons/lesson-detail/exercises/exercises.resolver';
+import { TopicsComponent } from './lessons/topics/topics.component';
+import { TopicsResolver } from './lessons/topics/topics.resolver';
+import { ExercisesComponent } from './lessons/topics/exercises/exercises.component';
+import { ExercisesResolver } from './lessons/topics/exercises/exercises.resolver';
 import { LessonsResolver } from './lessons/lessons.resolver';
 
 export const SUBJECT_ROUTES = {

@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { NgxsModule } from '@ngxs/store';
 import { SubjectState } from './pages/subjects/subject.state';
-import { ExercisesState } from './pages/subjects/lessons/lesson-detail/exercises/exercises.state';
+import { ExercisesState } from './pages/subjects/lessons/topics/exercises/exercises.state';
 
 @NgModule({
   declarations: [

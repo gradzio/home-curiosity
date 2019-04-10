@@ -3,7 +3,13 @@
         {
             "guid": "guid1",
             "question": "How many circles?",
-            "imageUrl": "https://www.pngkey.com/png/full/333-3337678_two-circles-white-circle-transparent-outside.png"
+            "imageUrl": "https://www.pngkey.com/png/full/333-3337678_two-circles-white-circle-transparent-outside.png",
+            "choices": {
+                "type": "single",
+                "values": [
+                    "1", "2", "4"
+                ]
+            }
         },
         {
             "guid": "guid2",

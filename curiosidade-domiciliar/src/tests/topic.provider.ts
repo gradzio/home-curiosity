@@ -1,4 +1,4 @@
-import { TopicModel } from 'src/app/pages/subjects/lessons/lesson-detail/topic.model';
+import { TopicModel } from 'src/app/pages/subjects/lessons/topics/topic.model';
 
 export const TopicProvider = {
     TWO: [

@@ -1,5 +1,5 @@
 import { IconButtonInterface } from 'src/app/shared/presentation-components/icon-button/icon-button.interface';
-import { TopicModel } from './lesson-detail/topic.model';
+import { TopicModel } from './topics/topic.model';
 import { Collection } from 'src/app/core/collection';
 import { ResourceCardInterface } from 'src/app/shared/presentation-components/video-card/video-card.interface';
 
