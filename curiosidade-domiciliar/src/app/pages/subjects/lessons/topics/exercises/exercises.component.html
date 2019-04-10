@@ -3,7 +3,7 @@
   <app-progress-bar [progress]="currentExercises.progress"></app-progress-bar>
 </mat-card>
 <mat-card>
-  <app-answer-box *ngIf="!currentExercises.progress.isCompleted else congrats" [header]="currentExercises.current?.title" (answerSubmitted)="onAnswerSubmitted($event)">
+  <app-answer-box *ngIf="!currentExercises.progress.isCompleted else congrats" [header]="currentExercises.current?.title" [choices]="currentExercises.current?.choices" (answerSubmitted)="onAnswerSubmitted($event)">
     <img [src]="currentExercises.current?.imageUrl" width="100%" />
   </app-answer-box>
   <ng-template #congrats>

@@ -8,14 +8,16 @@ $anser-box-input-size: 30px;
     .center-container {
         text-align: center;
         padding: 5px;
-        .app-answer-box__answer {
-            width: $anser-box-input-size;
+        .app-answer-box__answer-input, .app-answer-box__answer-radio {
             padding: 5px;
+            width: $anser-box-input-size;
             font-size: $anser-box-input-size * 0.9;
             line-height: $anser-box-input-size;
-            border: 1px solid map-get($candy-app-primary, 'default');
-            border-radius: 5px;
-            text-align: center;
+            &.app-answer-box__answer-input {
+                border: 1px solid map-get($candy-app-primary, 'default');
+                border-radius: 5px;
+                text-align: center;
+            } 
         }
     }
 }

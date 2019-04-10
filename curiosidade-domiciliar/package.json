@@ -8,9 +8,9 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint ",
-    "e2e": "cypress open",
+    "e2e": "cypress open --env host=localhost:4200",
     "test:dev": "npm run build && http-server dist -p 4200 --push-state",
-    "e2e:ci": "cypress run --record --key 0f013ea6-9e84-48f3-969c-ed1729859c3f",
+    "e2e:ci": "cypress run --record --key 0f013ea6-9e84-48f3-969c-ed1729859c3f --env host=localhost",
     "test-headless": "ng test --watch=false --no-progress --code-coverage --browsers=ChromeHeadless"
   },
   "private": true,

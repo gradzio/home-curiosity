@@ -11,6 +11,7 @@ export interface ExerciseResponseContract {
     guid: string;
     question: string;
     imageUrl: string;
+    choices?: string[];
 }
 
 @Injectable()
