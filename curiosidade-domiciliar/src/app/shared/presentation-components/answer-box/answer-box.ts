@@ -10,6 +10,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import { MatRadioGroup } from '@angular/material';
 
 @Component({
   selector: 'app-answer-box',
@@ -24,7 +25,11 @@ export class AnswerBox implements OnInit {
   @Input()
   header: string;
 
+  @Input()
+  choices?: string[];
+
   @ViewChild('answerInput') answerInput: ElementRef;
+  @ViewChild('answerRadioGroup') answerRadioGroup: MatRadioGroup;
 
   private _answerText: string;
 
@@ -41,7 +46,12 @@ export class AnswerBox implements OnInit {
 
   clearState() {
     this._answerText = null;
-    this.answerInput.nativeElement.value = '';
+    if (this.answerInput) {
+      this.answerInput.nativeElement.value = '';
+    }
+    if (this.answerRadioGroup) {
+      this.answerRadioGroup.value = null;
+    }
   }
 
   onSubmitAnswer() {

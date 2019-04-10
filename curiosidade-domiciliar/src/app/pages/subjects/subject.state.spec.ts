@@ -5,7 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { GetLessons, SubjectState, CompletedExercises, SelectLesson, CompletedTopics } from './subject.state';
-import { ExercisesService } from './lessons/lesson-detail/exercises/exercises.service';
+import { ExercisesService } from './lessons/topics/exercises/exercises.service';
 import { LessonsService } from './lessons/lessons.service';
 
 describe('SubjectState', () => {

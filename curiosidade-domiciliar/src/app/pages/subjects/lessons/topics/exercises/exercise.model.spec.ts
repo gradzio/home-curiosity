@@ -6,6 +6,15 @@ describe('ExerciseModel', () => {
         expect(exercise.guid).toEqual('guid');
         expect(exercise.title).toEqual('title');
         expect(exercise.imageUrl).toEqual('imageUrl');
+        expect(exercise.choices.length).toEqual(0);
+    });
+
+    it('should create with choices', () => {
+        const exercise = new ExerciseModel('guid', 'title', 'imageUrl', ['1', '2', '3']);
+        expect(exercise.choices.length).toEqual(3);
+        expect(exercise.choices[0]).toEqual('1');
+        expect(exercise.choices[1]).toEqual('2');
+        expect(exercise.choices[2]).toEqual('3');
     });
 
     it('should compare as false', () => {
@@ -21,4 +30,6 @@ describe('ExerciseModel', () => {
 
         expect(exercise1.isEqual(exercise2)).toEqual(true);
     });
+
+
 });

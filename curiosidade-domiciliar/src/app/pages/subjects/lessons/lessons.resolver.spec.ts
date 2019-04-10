@@ -8,8 +8,8 @@ import { of } from 'rxjs';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 import { NgxsModule, Store } from '@ngxs/store';
 import { SubjectState, GetLessons } from '../subject.state';
-import { ExercisesState } from './lesson-detail/exercises/exercises.state';
-import { ExercisesService } from './lesson-detail/exercises/exercises.service';
+import { ExercisesState } from './topics/exercises/exercises.state';
+import { ExercisesService } from './topics/exercises/exercises.service';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 
 describe('LessonsResolver', () => {

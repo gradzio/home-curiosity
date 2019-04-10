@@ -1,5 +1,5 @@
 import { LessonModel } from './lesson.model';
-import { TopicModel } from './lesson-detail/topic.model';
+import { TopicModel } from './topics/topic.model';
 import { Collection } from 'src/app/core/collection';
 
 export class LessonFactory {
