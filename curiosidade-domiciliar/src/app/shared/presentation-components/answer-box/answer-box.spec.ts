@@ -141,10 +141,14 @@ describe('AnswerBoxComponent', () => {
 
       fixture.detectChanges();
 
+      expect(radioElements[2].classes['mat-radio-checked']).toEqual(true);
+
       expect(buttonElement.nativeElement.disabled).toBe(false);
       buttonElement.nativeElement.click();
 
+      fixture.detectChanges();
       expect(component.answeredValue).toEqual(component.choices[2]);
+      expect(radioElements[2].classes['mat-radio-checked']).toEqual(false);
     });
   });
 });

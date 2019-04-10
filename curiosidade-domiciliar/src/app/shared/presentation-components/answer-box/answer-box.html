@@ -3,7 +3,7 @@
   <ng-content></ng-content>
   <div class="center-container">
     <mat-radio-group *ngIf="choices && choices.length else singleValue" #answerRadioGroup aria-label="Escolha uma resposta" (change)="onValueChange($event.value)" class="app-answer-box__answer-radio" fxLayout="column" fxLayoutAlign="space-evenly center">
-        <mat-radio-button data-selector="answer-radio" *ngFor="let choice of choices" [value]="choice" [checked]="choice === 1">{{choice}}</mat-radio-button>
+        <mat-radio-button data-selector="answer-radio" *ngFor="let choice of choices" [value]="choice">{{choice}}</mat-radio-button>
     </mat-radio-group>
     <ng-template #singleValue>
         <input matInput data-selector="answer-input" #answerInput type="number" (input)="onValueChange($event.target.value)" class="app-answer-box__answer-input" />

@@ -2,17 +2,17 @@
     "data": [
         {
             "guid": "guid1",
-            "question": "What is this number?",
+            "question": "Qual é este número?",
             "imageUrl": "https://st2.depositphotos.com/1011969/6671/i/950/depositphotos_66714581-stock-photo-number-19.jpg"
         },
         {
             "guid": "guid2",
-            "question": "How many flowers?",
+            "question": "Quantas flores tem?",
             "imageUrl": "https://ae01.alicdn.com/kf/HTB1057jJVXXXXXKXFXXq6xXFXXXg/48pcs-lot-Artificial-Rose-Flower-Heads-11-Colors-Plastics-Flowers-8cm-Chinese-Roses-for-Wedding-Party.jpg"
         },
         {
             "guid": "guid3",
-            "question": "What is this number?",
+            "question": "Qual é este número?",
             "imageUrl": "https://cdn.pixabay.com/photo/2012/04/23/15/17/number-38464_960_720.png"
         }
     ]

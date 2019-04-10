@@ -1,7 +1,9 @@
 /// <reference types="Cypress" />
 const appUrl = Cypress.env('host');
 const exerciseSetup = [
-  ['radio', 'input'], ['input', 'input', 'input']
+  ['radio', 'radio', 'radio', 'radio', 'radio', 'radio', 'radio'],
+  ['radio', 'input'],
+  ['input', 'input', 'input']
 ];
 
 context('Navigation of the Math subject', () => {
@@ -25,11 +27,13 @@ context('Navigation of the Math subject', () => {
     cy.location(('pathname')).should('include', 'lessons');
     cy.contains('Practicar').click();
     
-    finishExercise(exerciseSetup.shift());
-    cy.location(('pathname')).should('include', 'lessons');
-    cy.contains('Practicar').click();
-    finishExercise(exerciseSetup.shift());
-    cy.location(('pathname')).should('include', 'lessons');
+    exerciseSetup.forEach((exercises, index) => {
+      finishExercise(exercises);
+      cy.location(('pathname')).should('include', 'lessons');
+      if (index < exerciseSetup.length - 1) {
+        cy.contains('Practicar').click();
+      }
+    });
     cy.get('h2').contains('Parabéns');
     cy.get('p').contains('Você acertou todos os assuntos');
     cy.contains('Próxima aula').click();
