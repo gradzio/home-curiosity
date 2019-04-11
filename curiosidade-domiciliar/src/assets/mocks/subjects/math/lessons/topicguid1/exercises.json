@@ -5,7 +5,7 @@
             "question": "Quantos círculos tem?",
             "imageUrl": "https://www.pngkey.com/png/full/333-3337678_two-circles-white-circle-transparent-outside.png",
             "choices": [
-                "1", "2", "4"
+                {"label": "1", "value": "1"}, {"label": "2", "value": "2"}, {"label": "4", "value": "4"}
             ]
         },
         {

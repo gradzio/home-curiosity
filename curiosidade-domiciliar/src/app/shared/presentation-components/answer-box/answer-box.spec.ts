@@ -33,7 +33,11 @@ class ImageAnswerBox {
 })
 class ImageAnswerBoxWithChoices {
   answeredValue: string;
-  choices = ['1', '2', '3'];
+  choices = [
+    {label: '<img src="/image1.jpg">', value: '1'},
+    {label: '<img src="/image2.jpg">', value: '2'},
+    {label: '<img src="/image3.jpg">', value: '3'}
+  ];
   onAnswered(value: string) {
     this.answeredValue = value;
   }
@@ -147,8 +151,13 @@ describe('AnswerBoxComponent', () => {
       buttonElement.nativeElement.click();
 
       fixture.detectChanges();
-      expect(component.answeredValue).toEqual(component.choices[2]);
+      expect(component.answeredValue).toEqual(component.choices[2].value);
       expect(radioElements[2].classes['mat-radio-checked']).toEqual(false);
+    });
+
+    it('should render html in label', () => {
+      const radioImageContainer = radioElements[2].query(By.css('label [data-selector="radio-image-container"]'));
+      expect(radioImageContainer.properties.innerHTML).toEqual(component.choices[2].label);
     });
   });
 });

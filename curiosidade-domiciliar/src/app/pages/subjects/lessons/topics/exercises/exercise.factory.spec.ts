@@ -16,9 +16,9 @@ describe('ExerciseFactory', () => {
             guid: 'guid1',
             question: 'question?',
             imageUrl: 'https://www.site.com/image.png',
-            choices: ['1', '2', '3']
+            choices: [{label: '1', value: '1'}, {label: '2', value: '2'}]
         });
         expect(actual).toEqual(jasmine.any(ExerciseModel));
-        expect(actual.choices.length).toEqual(3);
+        expect(actual.choices.length).toEqual(2);
     });
 });

@@ -13,6 +13,7 @@ import {
   ViewChildren
 } from '@angular/core';
 import { MatRadioGroup, MatRadioButton } from '@angular/material';
+import { Option } from './option.interface';
 
 @Component({
   selector: 'app-answer-box',
@@ -28,7 +29,7 @@ export class AnswerBox implements OnInit {
   header: string;
 
   @Input()
-  choices?: string[];
+  choices?: Option[];
 
   @ViewChild('answerInput') answerInput: ElementRef;
   @ViewChildren(MatRadioButton) radios: QueryList<MatRadioButton>;

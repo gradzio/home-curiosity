@@ -1,3 +1,4 @@
+import { Option } from 'src/app/shared/presentation-components/answer-box/option.interface';
 
 export class ExerciseModel {
     constructor(private _guid: string, private _title: string, private _imageUrl: string, private _choices = []) {}
@@ -20,7 +21,7 @@ export class ExerciseModel {
         return this._imageUrl;
     }
 
-    get choices(): string[] {
+    get choices(): Option[] {
         return this._choices;
     }
 }

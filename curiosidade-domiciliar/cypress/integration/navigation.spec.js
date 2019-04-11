@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 const appUrl = Cypress.env('host');
 const exerciseSetup = [
-  ['radio', 'radio', 'radio', 'radio', 'radio', 'radio', 'radio'],
+  ['radio', 'radio', 'radio', 'radio', 'radio', 'radio'],
   ['radio', 'input'],
   ['input', 'input', 'input']
 ];
