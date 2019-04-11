@@ -10,11 +10,19 @@ describe('ExerciseModel', () => {
     });
 
     it('should create with choices', () => {
-        const exercise = new ExerciseModel('guid', 'title', 'imageUrl', ['1', '2', '3']);
+        const exercise = new ExerciseModel(
+            'guid',
+            'title',
+            'imageUrl',
+            [{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}]
+        );
         expect(exercise.choices.length).toEqual(3);
-        expect(exercise.choices[0]).toEqual('1');
-        expect(exercise.choices[1]).toEqual('2');
-        expect(exercise.choices[2]).toEqual('3');
+        expect(exercise.choices[0].label).toEqual('1');
+        expect(exercise.choices[1].label).toEqual('2');
+        expect(exercise.choices[2].label).toEqual('3');
+        expect(exercise.choices[0].value).toEqual('1');
+        expect(exercise.choices[1].value).toEqual('2');
+        expect(exercise.choices[2].value).toEqual('3');
     });
 
     it('should compare as false', () => {

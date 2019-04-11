@@ -18,6 +18,12 @@ $anser-box-input-size: 30px;
                 border-radius: 5px;
                 text-align: center;
             } 
+            &.app-answer-box__answer-radio {
+                img {
+                    max-width: 300px;
+                    max-height: 300px;
+                }
+            }
         }
     }
 }
