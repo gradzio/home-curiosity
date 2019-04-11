@@ -6,12 +6,13 @@ import { HttpClient } from '@angular/common/http';
 import { ExerciseFactory } from './exercise.factory';
 import { ExerciseModel } from './exercise.model';
 import { environment } from 'src/environments/environment';
+import { Option } from 'src/app/shared/presentation-components/answer-box/option.interface';
 
 export interface ExerciseResponseContract {
     guid: string;
     question: string;
     imageUrl: string;
-    choices?: string[];
+    choices?: Option[];
 }
 
 @Injectable()
