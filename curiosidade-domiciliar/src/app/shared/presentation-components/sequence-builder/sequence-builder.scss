@@ -1,0 +1,8 @@
+$font-size: 40px;
+[data-selector="item-creator"], [data-selector="item-created"] {
+    font-size: $font-size;
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}

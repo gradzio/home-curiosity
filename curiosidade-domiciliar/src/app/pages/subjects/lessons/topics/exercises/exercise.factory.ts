@@ -3,6 +3,6 @@ import { ExerciseModel } from './exercise.model';
 
 export class ExerciseFactory {
     static make(object: ExerciseResponseContract) {
-        return new ExerciseModel(object.guid, object.question, object.imageUrl, object.choices);
+        return new ExerciseModel(object.guid, object.question, object.imageUrl, object.type, object.choices);
     }
 }

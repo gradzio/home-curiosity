@@ -3,9 +3,11 @@
   <app-progress-bar [progress]="currentExercises.progress"></app-progress-bar>
 </mat-card>
 <mat-card>
-  <app-answer-box *ngIf="!currentExercises.progress.isCompleted else congrats" [header]="currentExercises.current?.title" [choices]="currentExercises.current?.choices" (answerSubmitted)="onAnswerSubmitted($event)">
-    <img *ngIf="currentExercises.current?.imageUrl" [src]="currentExercises.current?.imageUrl" width="100%" />
-  </app-answer-box>
+  <div *ngIf="!currentExercises.progress.isCompleted else congrats">
+    <app-answer-box [item]="currentExercises.current" (answerSubmitted)="onAnswerSubmitted($event)">
+      <img *ngIf="currentExercises.current?.imageUrl" [src]="currentExercises.current?.imageUrl" width="100%" />
+    </app-answer-box>
+  </div>
   <ng-template #congrats>
     <h2>Bom trabalho!</h2>
     <img data-selector="congrats-image" height="300" src="https://drive.google.com/uc?export=view&id=10atErlnYlvXz2XjiOHWGs36J3bIUm_6M">

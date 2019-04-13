@@ -1,23 +1,22 @@
-import { AnswerBox } from './answer-box';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SequenceBuilderModule } from '../sequence-builder/sequence-builder.module';
+import { SequenceBuilder } from './sequence-builder';
+import { MatButton } from '@angular/material';
 
 @NgModule({
+    entryComponents: [ MatButton ],
     declarations: [
-        AnswerBox
+        SequenceBuilder
     ],
     imports: [
         CommonModule,
         FlexLayoutModule,
-        MaterialModule,
-        SequenceBuilderModule
+        MaterialModule
     ],
     exports: [
-        AnswerBox,
-        SequenceBuilderModule
+        SequenceBuilder
     ]
 })
-export class AnswerBoxModule { }
+export class SequenceBuilderModule { }
