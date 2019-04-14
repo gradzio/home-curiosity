@@ -1,13 +1,12 @@
 <div fxLayout="column" fxLayoutAlign="space-around center">  
-  <h2 class="app-answer-box__header">{{header}}</h2>
+  <h2 class="app-answer-box__header">{{item?.title}}</h2>
   <ng-content></ng-content>
   <div class="center-container">
-    <mat-radio-group *ngIf="choices && choices.length else singleValue" #answerRadioGroup aria-label="Escolha uma resposta" (change)="onValueChange($event.value)" class="app-answer-box__answer-radio" fxLayout="column" fxLayoutAlign="space-evenly center">
-        <mat-radio-button data-selector="answer-radio" *ngFor="let choice of choices" [value]="choice.value"><div data-selector="radio-image-container" [innerHTML]="choice.label"></div></mat-radio-button>
+    <app-sequence-builder *ngIf="item?.isSequence" [choices]="item?.choices" (change)="onValueChange($event)"></app-sequence-builder>
+    <mat-radio-group *ngIf="item?.isRadio" #answerRadioGroup aria-label="Escolha uma resposta" (change)="onValueChange($event.value)" class="app-answer-box__answer-radio" fxLayout="column" fxLayoutAlign="space-evenly center">
+        <mat-radio-button color="primary" data-selector="answer-radio" *ngFor="let choice of item.choices" [value]="choice.value"><div data-selector="radio-image-container" [innerHTML]="choice.label"></div></mat-radio-button>
     </mat-radio-group>
-    <ng-template #singleValue>
-        <input matInput data-selector="answer-input" #answerInput type="number" (input)="onValueChange($event.target.value)" class="app-answer-box__answer-input" />
-    </ng-template>
+    <input *ngIf="item?.isInput" matInput data-selector="answer-input" #answerInput type="number" (input)="onValueChange($event.target.value)" class="app-answer-box__answer-input" />
   </div>
   <div class="center-container">
     <button (click)="onSubmitAnswer()" mat-raised-button color="primary" class="app-answer-box__button" [disabled]="isDisabled">Verificar</button>

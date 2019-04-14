@@ -4,36 +4,42 @@
             "guid": "guid1",
             "question": "Qual imagem mostrar o quantidade?",
             "imageUrl": null,
+            "type": "RADIO",
             "choices": [ {"label": "<img src='https://drive.google.com/uc?export=view&id=1k-FxioozNw6ka6q4BMeUfUA12XoqwDgq'>", "value": "codigo"}, {"label": "<img src='https://drive.google.com/uc?export=view&id=1Lc8tTjw-oPGzhG4IYhs_co7ZIUDLEcbR'>", "value": "quantidade"} ]
         },
         {
             "guid": "guid2",
             "question": "Codigo ou quantidade?",
             "imageUrl": "https://drive.google.com/uc?export=view&id=1CQuMQRDgQwK2P704_vgmYZVz16teS2Vu",
+            "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
             "question": "Codigo ou quantidade?",
             "imageUrl": "https://drive.google.com/uc?export=view&id=1haZXM6I5Em5cYuIAVEINU1BbVr-mia_A",
+            "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
             "question": "Codigo ou quantidade?",
             "imageUrl": "https://drive.google.com/uc?export=view&id=11dZ8JXlMTPtYSAQT5JcMYsxBd6eQq_zg",
+            "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
             "question": "Codigo ou quantidade?",
             "imageUrl": "https://drive.google.com/uc?export=view&id=1_aGgCEFGmQTKkgHmEGfCvCxZ6mBfB5cM",
+            "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
             "question": "Codigo ou quantidade?",
             "imageUrl": "https://drive.google.com/uc?export=view&id=1JVavPl5EZ8dxWZdMtWfhEqP_fUpgpRvQ",
+            "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         }
     ]

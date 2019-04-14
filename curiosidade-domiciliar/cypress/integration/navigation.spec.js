@@ -2,7 +2,7 @@
 const appUrl = Cypress.env('host');
 const exerciseSetup = [
   ['radio', 'radio', 'radio', 'radio', 'radio', 'radio'],
-  ['radio', 'input'],
+  ['sequence', 'sequence', 'radio', 'input'],
   ['input', 'input', 'input']
 ];
 
@@ -57,6 +57,8 @@ context('Navigation of the Math subject', () => {
       cy.get('[data-selector="answer-input"]').type(1);
     } else if (selectorType === 'radio') {
       cy.get('[data-selector="answer-radio"]').first().click();
+    } else if (selectorType === 'sequence') {
+      cy.get('[data-selector="item-creator"]').first().click();
     }
     cy.contains('Verificar').click();
   };
@@ -79,7 +81,7 @@ context('Navigation of the Math subject', () => {
 
   it('should load exercises', () => {
     cy.visit( `${appUrl}/subjects/math/lessons/lessonguid1/topics/topicguid1/exercises`);
-    cy.get('app-progress-bar').contains('1 / 2');
+    cy.get('app-progress-bar').contains('1 / 4');
     cy.contains('Verificar').should('be.disabled');
   });
   })

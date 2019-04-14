@@ -6,17 +6,21 @@ import { MaterialModule } from 'src/app/material.module';
 import { MatRadioButton, MatInput } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AnswerBoxModule } from './answer-box.module';
+import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provider';
+import { ExerciseModel } from 'src/app/pages/subjects/lessons/topics/exercises/exercise.model';
+import { SequenceBuilderModule } from '../sequence-builder/sequence-builder.module';
+import { SequenceBuilder } from '../sequence-builder/sequence-builder';
 
 @Component({
   template: `<app-answer-box
               (answerSubmitted)="onAnswered($event)"
-              [choices]="choices"
-              header="Header">
+              [item]="item">
               <img src="image.jpg" alt="image" />
              </app-answer-box>`,
 })
 class ImageAnswerBox {
-  choices = null;
+  item = ExerciseCollectionProvider.SINGLE_WITH_INPUT.current;
   answeredValue: string;
   onAnswered(value: string) {
     this.answeredValue = value;
@@ -26,18 +30,28 @@ class ImageAnswerBox {
 @Component({
   template: `<app-answer-box
               (answerSubmitted)="onAnswered($event)"
-              header="Header"
-              [choices]="choices">
+              [item]="item">
               <img src="image.jpg" alt="image" />
              </app-answer-box>`,
 })
 class ImageAnswerBoxWithChoices {
   answeredValue: string;
-  choices = [
-    {label: '<img src="/image1.jpg">', value: '1'},
-    {label: '<img src="/image2.jpg">', value: '2'},
-    {label: '<img src="/image3.jpg">', value: '3'}
-  ];
+  item = ExerciseCollectionProvider.SINGLE_WITH_RADIO_CHOICES.current;
+  onAnswered(value: string) {
+    this.answeredValue = value;
+  }
+}
+
+@Component({
+  template: `<app-answer-box
+              (answerSubmitted)="onAnswered($event)"
+              [item]="item">
+              <img src="image.jpg" alt="image" />
+             </app-answer-box>`,
+})
+class ImageAnswerBoxWithSequence {
+  answeredValue: string;
+  item = ExerciseCollectionProvider.SINGLE_WITH_SEQUENCE.current;
   onAnswered(value: string) {
     this.answeredValue = value;
   }
@@ -52,10 +66,12 @@ describe('AnswerBoxComponent', () => {
   let inputElement: DebugElement;
   let radioElements: DebugElement[];
   let buttonElement: DebugElement;
+  let sequenceElement: DebugElement;
+
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [MaterialModule, FlexLayoutModule],
-        declarations: [ AnswerBox, ImageAnswerBox ]
+        imports: [AnswerBoxModule, SequenceBuilderModule],
+        declarations: [ ImageAnswerBox ]
       })
       .compileComponents();
     }));
@@ -68,6 +84,7 @@ describe('AnswerBoxComponent', () => {
       headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
       inputElement = answerBoxElement.query(By.directive(MatInput));
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
+      sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
       buttonElement = answerBoxElement.query(By.css('.app-answer-box__button'));
     });
 
@@ -75,6 +92,7 @@ describe('AnswerBoxComponent', () => {
       expect(component).toBeTruthy();
       expect(answerBoxElement).toBeTruthy();
       expect(inputElement).toBeTruthy();
+      expect(sequenceElement).toBeNull();
       expect(radioElements.length).toEqual(0);
       expect(headerElement).toBeTruthy();
       expect(buttonElement).toBeTruthy();
@@ -98,7 +116,8 @@ describe('AnswerBoxComponent', () => {
     });
 
     it('should render header', () => {
-      expect(headerElement.nativeElement.textContent).toContain('Header');
+      const item = <ExerciseModel>component.item;
+      expect(headerElement.nativeElement.textContent).toContain(item.title);
     });
   });
 
@@ -110,10 +129,11 @@ describe('AnswerBoxComponent', () => {
     let inputElement: DebugElement;
     let radioElements: DebugElement[];
     let buttonElement: DebugElement;
+    let sequenceElement: DebugElement;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [MaterialModule, CommonModule, FlexLayoutModule],
+        imports: [MaterialModule, CommonModule, FlexLayoutModule, SequenceBuilderModule],
         declarations: [ AnswerBox, ImageAnswerBoxWithChoices ]
       })
       .compileComponents();
@@ -127,6 +147,7 @@ describe('AnswerBoxComponent', () => {
       headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
       inputElement = answerBoxElement.query(By.css('.app-answer-box__answer-input'));
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
+      sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
       buttonElement = answerBoxElement.query(By.css('.app-answer-box__button'));
     });
 
@@ -134,6 +155,7 @@ describe('AnswerBoxComponent', () => {
       expect(component).toBeTruthy();
       expect(answerBoxElement).toBeTruthy();
       expect(inputElement).toBeNull();
+      expect(sequenceElement).toBeNull();
       expect(radioElements.length).toEqual(3);
       expect(headerElement).toBeTruthy();
       expect(buttonElement).toBeTruthy();
@@ -151,13 +173,73 @@ describe('AnswerBoxComponent', () => {
       buttonElement.nativeElement.click();
 
       fixture.detectChanges();
-      expect(component.answeredValue).toEqual(component.choices[2].value);
+      const item = <ExerciseModel>component.item;
+      expect(component.answeredValue).toEqual(item.choices[2].value);
       expect(radioElements[2].classes['mat-radio-checked']).toEqual(false);
     });
 
     it('should render html in label', () => {
+      const item = <ExerciseModel>component.item;
       const radioImageContainer = radioElements[2].query(By.css('label [data-selector="radio-image-container"]'));
-      expect(radioImageContainer.properties.innerHTML).toEqual(component.choices[2].label);
+      expect(radioImageContainer.properties.innerHTML).toEqual(item.choices[2].label);
+    });
+  });
+
+  describe('ImageAnswerBoxWithSequence', () => {
+    let component: ImageAnswerBoxWithSequence;
+    let fixture: ComponentFixture<ImageAnswerBoxWithSequence>;
+    let answerBoxElement: DebugElement;
+    let headerElement: DebugElement;
+    let inputElement: DebugElement;
+    let radioElements: DebugElement[];
+    let buttonElement: DebugElement;
+    let sequenceElement: DebugElement;
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [MaterialModule, CommonModule, FlexLayoutModule, SequenceBuilderModule],
+        declarations: [ AnswerBox, ImageAnswerBoxWithSequence ]
+      })
+      .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ImageAnswerBoxWithSequence);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      answerBoxElement = fixture.debugElement.query(By.css('.app-answer-box'));
+      headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
+      inputElement = answerBoxElement.query(By.css('.app-answer-box__answer-input'));
+      radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
+      sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
+      buttonElement = answerBoxElement.query(By.css('.app-answer-box__button'));
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+      expect(answerBoxElement).toBeTruthy();
+      expect(inputElement).toBeNull();
+      expect(radioElements.length).toEqual(0);
+      expect(sequenceElement).toBeTruthy();
+      expect(headerElement).toBeTruthy();
+      expect(buttonElement).toBeTruthy();
+      expect(buttonElement.nativeElement.disabled).toBe(true);
+    });
+
+    it('should output an answer', () => {
+      sequenceElement.query(By.css('[data-selector="item-creator"]')).nativeElement.click();
+
+      fixture.detectChanges();
+
+      expect(sequenceElement.queryAll(By.css('[data-selector="item-created"]')).length).toEqual(1);
+
+      expect(buttonElement.nativeElement.disabled).toBe(false);
+      buttonElement.nativeElement.click();
+
+      fixture.detectChanges();
+
+      const item = <ExerciseModel>component.item;
+      expect(component.answeredValue).toEqual(item.choices[0].value);
     });
   });
 });

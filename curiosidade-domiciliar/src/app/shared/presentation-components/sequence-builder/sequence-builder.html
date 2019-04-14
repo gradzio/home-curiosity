@@ -1,0 +1,25 @@
+<!-- <mat-grid-list cols="3" rowHeight="100px"> -->
+    <!-- <mat-grid-tile [colspan]="3"> -->
+      <mat-list fxFlex="100">
+        <h3 mat-subheader>Opções</h3>
+        <mat-list-item>
+            <button *ngFor="let item of choices" data-selector="item-creator" class="mat-elevation-z2" (click)="onItemSelected(item)" [innerHTML]="item.label"></button>
+        </mat-list-item>
+        <h3 mat-subheader>Resposta:</h3>
+        <mat-list-item>
+            <div class="answer-container">  
+                <button *ngFor="let item of sequence; let i = index" data-selector="item-created" class="mat-elevation-z2" (click)="onItemCreatedClicked(i)" [innerHTML]="item.label"></button>
+              </div>
+        </mat-list-item>
+      </mat-list>
+    <!-- </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="3"> -->
+        <!--  -->
+    <!-- </mat-grid-tile> -->
+    <!-- <mat-grid-tile
+    *ngFor="let item of sequence; let i = index"
+        [colspan]="1"
+        [rowspan]="1"> -->
+      
+    <!-- </mat-grid-tile> -->
+  <!-- </mat-grid-list> -->

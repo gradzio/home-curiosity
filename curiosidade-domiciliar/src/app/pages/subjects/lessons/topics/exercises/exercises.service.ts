@@ -12,6 +12,7 @@ export interface ExerciseResponseContract {
     guid: string;
     question: string;
     imageUrl: string;
+    type: string;
     choices?: Option[];
 }
 

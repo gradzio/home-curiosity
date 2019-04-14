@@ -14,6 +14,8 @@ import {
 } from '@angular/core';
 import { MatRadioGroup, MatRadioButton } from '@angular/material';
 import { Option } from './option.interface';
+import { ExerciseModel } from 'src/app/pages/subjects/lessons/topics/exercises/exercise.model';
+import { SequenceBuilder } from '../sequence-builder/sequence-builder';
 
 @Component({
   selector: 'app-answer-box',
@@ -25,26 +27,26 @@ import { Option } from './option.interface';
 })
 export class AnswerBox implements OnInit {
   @HostBinding('class') classes = 'app-answer-box';
-  @Input()
-  header: string;
 
   @Input()
-  choices?: Option[];
+  item: ExerciseModel;
 
   @ViewChild('answerInput') answerInput: ElementRef;
   @ViewChildren(MatRadioButton) radios: QueryList<MatRadioButton>;
+  @ViewChild(SequenceBuilder) sequenceBuilder: SequenceBuilder;
 
   private _answerText: string;
 
-  get isDisabled(): boolean {
-    return this._answerText == null || this._answerText.trim().length === 0;
-  }
-
   @Output()
   answerSubmitted: EventEmitter<string> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  get isDisabled(): boolean {
+    return this._answerText == null || this._answerText.trim().length === 0;
   }
 
   clearState() {
@@ -54,6 +56,9 @@ export class AnswerBox implements OnInit {
     }
     if (this.radios) {
       this.radios.forEach(item => item.checked = false);
+    }
+    if (this.sequenceBuilder) {
+      this.sequenceBuilder.reset();
     }
   }
 

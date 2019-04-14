@@ -6,7 +6,8 @@ describe('ExerciseFactory', () => {
         const actual = ExerciseFactory.make({
             guid: 'guid1',
             question: 'question?',
-            imageUrl: 'https://www.site.com/image.png'
+            imageUrl: 'https://www.site.com/image.png',
+            type: 'type'
         });
         expect(actual).toEqual(jasmine.any(ExerciseModel));
     });
@@ -16,6 +17,7 @@ describe('ExerciseFactory', () => {
             guid: 'guid1',
             question: 'question?',
             imageUrl: 'https://www.site.com/image.png',
+            type: 'type',
             choices: [{label: '1', value: '1'}, {label: '2', value: '2'}]
         });
         expect(actual).toEqual(jasmine.any(ExerciseModel));
