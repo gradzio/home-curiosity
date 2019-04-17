@@ -2,18 +2,16 @@ import { ExerciseModel } from './exercise.model';
 
 describe('ExerciseModel', () => {
     it('should create', () => {
-        const exercise = new ExerciseModel('guid', 'title', 'imageUrl', 'type');
+        const exercise = new ExerciseModel('guid', 'content', 'type');
         expect(exercise.guid).toEqual('guid');
-        expect(exercise.title).toEqual('title');
-        expect(exercise.imageUrl).toEqual('imageUrl');
+        expect(exercise.content).toEqual('content');
         expect(exercise.choices.length).toEqual(0);
     });
 
     it('should create with choices', () => {
         const exercise = new ExerciseModel(
             'guid',
-            'title',
-            'imageUrl',
+            'content',
             'type',
             [{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}]
         );
@@ -27,15 +25,15 @@ describe('ExerciseModel', () => {
     });
 
     it('should compare as false', () => {
-        const exercise1 = new ExerciseModel('guid1', 'title1', 'imageUrl1', 'RADIO');
-        const exercise2 = new ExerciseModel('guid2', 'title2', 'imageUrl2', 'INPUT');
+        const exercise1 = new ExerciseModel('guid1', 'conten1', 'RADIO');
+        const exercise2 = new ExerciseModel('guid2', 'content2', 'INPUT');
 
         expect(exercise1.isEqual(exercise2)).toEqual(false);
     });
 
     it('should compare as true', () => {
-        const exercise1 = new ExerciseModel('guid1', 'title1', 'imageUrl1', 'RADIO');
-        const exercise2 = new ExerciseModel('guid1', 'title1', 'imageUrl1', 'INPUT');
+        const exercise1 = new ExerciseModel('guid1', 'content1', 'RADIO');
+        const exercise2 = new ExerciseModel('guid1', 'content1', 'INPUT');
 
         expect(exercise1.isEqual(exercise2)).toEqual(true);
     });

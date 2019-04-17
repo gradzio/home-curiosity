@@ -9,10 +9,12 @@ const choices = [
 
 export const ExerciseCollectionProvider = {
     two: new Collection([
-        new ExerciseModel('guid1', 'title1', 'image1.jpg', 'RADIO'),
-        new ExerciseModel('guid2', 'title2', 'image2.jpg', 'INPUT')
+        new ExerciseModel('guid1', '<h2>title1</h2><img src="image1.jpg">', 'RADIO'),
+        new ExerciseModel('guid2', '<h2>title2</h2><img src="image2.jpg">', 'INPUT')
     ]),
-    SINGLE_WITH_RADIO_CHOICES: new Collection<ExerciseModel>([new ExerciseModel('guid', 'title', 'image.jpg', 'RADIO', choices)]),
-    SINGLE_WITH_INPUT: new Collection([new ExerciseModel('guid', 'title', 'image.jpg', 'INPUT')]),
-    SINGLE_WITH_SEQUENCE: new Collection([new ExerciseModel('guid', 'title', '/image.jpg', 'SEQUENCE', choices)])
+    SINGLE_WITH_RADIO_CHOICES: new Collection<ExerciseModel>([
+        new ExerciseModel('guid', '<h2>title</h2><img src="image.jpg">', 'RADIO', choices)
+    ]),
+    SINGLE_WITH_INPUT: new Collection([new ExerciseModel('guid', '<h2>title</h2><img src="image.jpg">', 'INPUT')]),
+    SINGLE_WITH_SEQUENCE: new Collection([new ExerciseModel('guid', '<h2>title</h2><img src="image.jpg">', 'SEQUENCE', choices)])
 };

@@ -1,5 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="space-around center">  
-  <h2 class="app-answer-box__header">{{item?.title}}</h2>
+<div fxLayout="column" fxLayoutAlign="space-around center">
   <ng-content></ng-content>
   <div class="center-container">
     <app-sequence-builder *ngIf="item?.isSequence" [choices]="item?.choices" (change)="onValueChange($event)"></app-sequence-builder>

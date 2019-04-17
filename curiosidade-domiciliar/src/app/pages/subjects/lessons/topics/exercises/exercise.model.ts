@@ -7,24 +7,19 @@ export enum ExercisePresentation {
 }
 
 export class ExerciseModel {
-    constructor(private _guid: string, private _title: string, private _imageUrl: string, private _type: string, private _choices = []) {}
+    constructor(private _guid: string, private _content: string, private _type: string, private _choices = []) {}
 
     isEqual(exercise: ExerciseModel): boolean {
         return this._guid === exercise.guid
-            && this._title === exercise.title
-            && this._imageUrl === exercise.imageUrl;
+            && this._content === exercise.content;
     }
 
     get guid(): string {
         return this._guid;
     }
 
-    get title(): string {
-        return this._title;
-    }
-
-    get imageUrl(): string {
-        return this._imageUrl;
+    get content(): string {
+        return this._content;
     }
 
     get choices(): Option[] {

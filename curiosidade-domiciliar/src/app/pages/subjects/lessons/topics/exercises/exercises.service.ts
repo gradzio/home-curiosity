@@ -10,8 +10,7 @@ import { Option } from 'src/app/shared/presentation-components/answer-box/option
 
 export interface ExerciseResponseContract {
     guid: string;
-    question: string;
-    imageUrl: string;
+    content: string;
     type: string;
     choices?: Option[];
 }

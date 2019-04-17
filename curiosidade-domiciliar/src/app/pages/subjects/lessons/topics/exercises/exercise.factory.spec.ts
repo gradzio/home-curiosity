@@ -5,8 +5,7 @@ describe('ExerciseFactory', () => {
     it('should make object without choices', () => {
         const actual = ExerciseFactory.make({
             guid: 'guid1',
-            question: 'question?',
-            imageUrl: 'https://www.site.com/image.png',
+            content: 'content',
             type: 'type'
         });
         expect(actual).toEqual(jasmine.any(ExerciseModel));
@@ -15,8 +14,7 @@ describe('ExerciseFactory', () => {
     it('should make object with choices', () => {
         const actual = ExerciseFactory.make({
             guid: 'guid1',
-            question: 'question?',
-            imageUrl: 'https://www.site.com/image.png',
+            content: 'content',
             type: 'type',
             choices: [{label: '1', value: '1'}, {label: '2', value: '2'}]
         });
