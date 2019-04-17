@@ -19,6 +19,8 @@ import { Store, NgxsModule } from '@ngxs/store';
 import { ExercisesState, AnsweredCorrectly } from './exercises.state';
 import { SubjectState } from '../../../subject.state';
 import { ActivatedRoute } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { Collection } from 'src/app/core/collection';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -63,6 +65,15 @@ describe('ExercisesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render content', () => {
+    component.exercises$
+        .subscribe((collection: Collection<ExerciseModel>) => {
+          const contentElement = fixture.debugElement.query(By.css('[data-selector="exercise-content"]'));
+          expect(contentElement.properties.innerHTML).toEqual(collection.current.content);
+        })
+        .unsubscribe();
   });
 
   it('should set right defaults', () => {

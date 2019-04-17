@@ -62,7 +62,6 @@ describe('AnswerBoxComponent', () => {
   let component: ImageAnswerBox | ImageAnswerBoxWithChoices;
   let fixture: ComponentFixture<ImageAnswerBox>;
   let answerBoxElement: DebugElement;
-  let headerElement: DebugElement;
   let inputElement: DebugElement;
   let radioElements: DebugElement[];
   let buttonElement: DebugElement;
@@ -81,7 +80,6 @@ describe('AnswerBoxComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       answerBoxElement = fixture.debugElement.query(By.css('.app-answer-box'));
-      headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
       inputElement = answerBoxElement.query(By.directive(MatInput));
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
       sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
@@ -94,7 +92,6 @@ describe('AnswerBoxComponent', () => {
       expect(inputElement).toBeTruthy();
       expect(sequenceElement).toBeNull();
       expect(radioElements.length).toEqual(0);
-      expect(headerElement).toBeTruthy();
       expect(buttonElement).toBeTruthy();
       expect(buttonElement.nativeElement.disabled).toBe(true);
     });
@@ -114,18 +111,12 @@ describe('AnswerBoxComponent', () => {
 
       expect(component.answeredValue).toEqual('1');
     });
-
-    it('should render header', () => {
-      const item = <ExerciseModel>component.item;
-      expect(headerElement.nativeElement.textContent).toContain(item.title);
-    });
   });
 
   describe('AnswerBoxComponentWithChoices', () => {
     let component: ImageAnswerBoxWithChoices;
     let fixture: ComponentFixture<ImageAnswerBoxWithChoices>;
     let answerBoxElement: DebugElement;
-    let headerElement: DebugElement;
     let inputElement: DebugElement;
     let radioElements: DebugElement[];
     let buttonElement: DebugElement;
@@ -144,7 +135,6 @@ describe('AnswerBoxComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       answerBoxElement = fixture.debugElement.query(By.css('.app-answer-box'));
-      headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
       inputElement = answerBoxElement.query(By.css('.app-answer-box__answer-input'));
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
       sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
@@ -157,7 +147,6 @@ describe('AnswerBoxComponent', () => {
       expect(inputElement).toBeNull();
       expect(sequenceElement).toBeNull();
       expect(radioElements.length).toEqual(3);
-      expect(headerElement).toBeTruthy();
       expect(buttonElement).toBeTruthy();
       expect(buttonElement.nativeElement.disabled).toBe(true);
     });
@@ -189,7 +178,6 @@ describe('AnswerBoxComponent', () => {
     let component: ImageAnswerBoxWithSequence;
     let fixture: ComponentFixture<ImageAnswerBoxWithSequence>;
     let answerBoxElement: DebugElement;
-    let headerElement: DebugElement;
     let inputElement: DebugElement;
     let radioElements: DebugElement[];
     let buttonElement: DebugElement;
@@ -208,7 +196,6 @@ describe('AnswerBoxComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       answerBoxElement = fixture.debugElement.query(By.css('.app-answer-box'));
-      headerElement = answerBoxElement.query(By.css('.app-answer-box__header'));
       inputElement = answerBoxElement.query(By.css('.app-answer-box__answer-input'));
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
       sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
@@ -221,7 +208,6 @@ describe('AnswerBoxComponent', () => {
       expect(inputElement).toBeNull();
       expect(radioElements.length).toEqual(0);
       expect(sequenceElement).toBeTruthy();
-      expect(headerElement).toBeTruthy();
       expect(buttonElement).toBeTruthy();
       expect(buttonElement.nativeElement.disabled).toBe(true);
     });

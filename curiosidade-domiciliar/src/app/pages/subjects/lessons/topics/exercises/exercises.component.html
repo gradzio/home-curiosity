@@ -5,7 +5,7 @@
 <mat-card>
   <div *ngIf="!currentExercises.progress.isCompleted else congrats">
     <app-answer-box [item]="currentExercises.current" (answerSubmitted)="onAnswerSubmitted($event)">
-      <img *ngIf="currentExercises.current?.imageUrl" [src]="currentExercises.current?.imageUrl" width="100%" />
+      <div data-selector="exercise-content" [innerHTML]="currentExercises.current?.content"></div>
     </app-answer-box>
   </div>
   <ng-template #congrats>

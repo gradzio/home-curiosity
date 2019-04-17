@@ -2,43 +2,37 @@
     "data": [
         {
             "guid": "guid1",
-            "question": "Qual imagem mostrar o quantidade?",
-            "imageUrl": null,
+            "content": "<h2>Codigo ou quantidade?</h2>",
             "type": "RADIO",
             "choices": [ {"label": "<img src='https://drive.google.com/uc?export=view&id=1k-FxioozNw6ka6q4BMeUfUA12XoqwDgq'>", "value": "codigo"}, {"label": "<img src='https://drive.google.com/uc?export=view&id=1Lc8tTjw-oPGzhG4IYhs_co7ZIUDLEcbR'>", "value": "quantidade"} ]
         },
         {
             "guid": "guid2",
-            "question": "Codigo ou quantidade?",
-            "imageUrl": "https://drive.google.com/uc?export=view&id=1CQuMQRDgQwK2P704_vgmYZVz16teS2Vu",
+            "content": "<h2>Codigo ou quantidade?</h2><img src='https://drive.google.com/uc?export=view&id=1CQuMQRDgQwK2P704_vgmYZVz16teS2Vu' width='100%' />",
             "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
-            "question": "Codigo ou quantidade?",
-            "imageUrl": "https://drive.google.com/uc?export=view&id=1haZXM6I5Em5cYuIAVEINU1BbVr-mia_A",
+            "content": "<h2>Codigo ou quantidade?</h2><img src='https://drive.google.com/uc?export=view&id=1haZXM6I5Em5cYuIAVEINU1BbVr-mia_A' width='100%' />",
             "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
-            "question": "Codigo ou quantidade?",
-            "imageUrl": "https://drive.google.com/uc?export=view&id=11dZ8JXlMTPtYSAQT5JcMYsxBd6eQq_zg",
+            "content": "<h2>Codigo ou quantidade?</h2><img src='https://drive.google.com/uc?export=view&id=11dZ8JXlMTPtYSAQT5JcMYsxBd6eQq_zg' width='100%' />",
             "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
-            "question": "Codigo ou quantidade?",
-            "imageUrl": "https://drive.google.com/uc?export=view&id=1_aGgCEFGmQTKkgHmEGfCvCxZ6mBfB5cM",
+            "content": "<h2>Codigo ou quantidade?</h2><img src='https://drive.google.com/uc?export=view&id=1_aGgCEFGmQTKkgHmEGfCvCxZ6mBfB5cM' width='100%' />",
             "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         },
         {
             "guid": "guid3",
-            "question": "Codigo ou quantidade?",
-            "imageUrl": "https://drive.google.com/uc?export=view&id=1JVavPl5EZ8dxWZdMtWfhEqP_fUpgpRvQ",
+            "content": "<h2><Codigo ou quantidade?/h2><img src='https://drive.google.com/uc?export=view&id=1JVavPl5EZ8dxWZdMtWfhEqP_fUpgpRvQ' width='100%' />",
             "type": "RADIO",
             "choices": [ {"label": "codigo", "value": "codigo"}, {"label": "quantidade", "value":  "quantidade"} ]
         }
