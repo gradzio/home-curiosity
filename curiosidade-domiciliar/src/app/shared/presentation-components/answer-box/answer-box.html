@@ -1,5 +1,5 @@
+<ng-content></ng-content>
 <div fxLayout="column" fxLayoutAlign="space-around center">
-  <ng-content></ng-content>
   <div class="center-container">
     <app-sequence-builder *ngIf="item?.isSequence" [choices]="item?.choices" (change)="onValueChange($event)"></app-sequence-builder>
     <mat-radio-group *ngIf="item?.isRadio" #answerRadioGroup aria-label="Escolha uma resposta" (change)="onValueChange($event.value)" class="app-answer-box__answer-radio" fxLayout="column" fxLayoutAlign="space-evenly center">

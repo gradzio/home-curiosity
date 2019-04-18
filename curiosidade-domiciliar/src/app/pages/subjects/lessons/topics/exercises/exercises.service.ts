@@ -7,10 +7,12 @@ import { ExerciseFactory } from './exercise.factory';
 import { ExerciseModel } from './exercise.model';
 import { environment } from 'src/environments/environment';
 import { Option } from 'src/app/shared/presentation-components/answer-box/option.interface';
+import { QuestionContentConfig } from 'src/app/shared/presentation-components/question-content/question-content.interface';
 
 export interface ExerciseResponseContract {
     guid: string;
     content: string;
+    contentConfig?: QuestionContentConfig;
     type: string;
     choices?: Option[];
 }

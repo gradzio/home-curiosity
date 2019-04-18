@@ -2,17 +2,29 @@
     "data": [
         {
             "guid": "guid1",
-            "content": "<h2>Qual é este número?</h2><img src='https://st2.depositphotos.com/1011969/6671/i/950/depositphotos_66714581-stock-photo-number-19.jpg' width='100%' />",
+            "content": "<h2>Quantos corações tem?</h2>",
+            "contentConfig": {
+                "min": 10,
+                "max": 20
+            },
             "type": "INPUT"
         },
         {
             "guid": "guid2",
-            "content": "<h2>Quantas flores tem?</h2><img src='https://ae01.alicdn.com/kf/HTB1057jJVXXXXXKXFXXq6xXFXXXg/48pcs-lot-Artificial-Rose-Flower-Heads-11-Colors-Plastics-Flowers-8cm-Chinese-Roses-for-Wedding-Party.jpg' width='100%' />",
+            "content": "<h2>Quantos corações tem?</h2>",
+            "contentConfig": {
+                "min": 11,
+                "max": 20
+            },
             "type": "INPUT"
         },
         {
             "guid": "guid3",
-            "content": "<h2>Qual é este número?</h2><img src='https://cdn.pixabay.com/photo/2012/04/23/15/17/number-38464_960_720.png' width='100%' />",
+            "content": "<h2>Quantos corações tem?</h2>",
+            "contentConfig": {
+                "min": 10,
+                "max": 20
+            },
             "type": "INPUT"
         }
     ]

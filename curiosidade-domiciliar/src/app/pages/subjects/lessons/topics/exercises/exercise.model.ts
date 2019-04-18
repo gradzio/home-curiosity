@@ -1,4 +1,5 @@
 import { Option } from 'src/app/shared/presentation-components/answer-box/option.interface';
+import { QuestionContentConfig } from 'src/app/shared/presentation-components/question-content/question-content.interface';
 
 export enum ExercisePresentation {
     INPUT,
@@ -7,7 +8,9 @@ export enum ExercisePresentation {
 }
 
 export class ExerciseModel {
-    constructor(private _guid: string, private _content: string, private _type: string, private _choices = []) {}
+    constructor(
+        private _guid: string, private _content: string, private _type: string, private _choices = [], private _contentConfig = null
+    ) {}
 
     isEqual(exercise: ExerciseModel): boolean {
         return this._guid === exercise.guid
@@ -24,6 +27,10 @@ export class ExerciseModel {
 
     get choices(): Option[] {
         return this._choices;
+    }
+
+    get contentConfig(): QuestionContentConfig {
+        return this._contentConfig;
     }
 
     get isInput(): boolean {

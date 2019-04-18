@@ -24,6 +24,19 @@ describe('ExerciseModel', () => {
         expect(exercise.choices[2].value).toEqual('3');
     });
 
+    it('should create content config', () => {
+        const exercise = new ExerciseModel(
+            'guid',
+            'content',
+            'type',
+            [],
+            { min: 1, max: 10}
+        );
+
+        expect(exercise.contentConfig.min).toEqual(1);
+        expect(exercise.contentConfig.max).toEqual(10);
+    });
+
     it('should compare as false', () => {
         const exercise1 = new ExerciseModel('guid1', 'conten1', 'RADIO');
         const exercise2 = new ExerciseModel('guid2', 'content2', 'INPUT');
