@@ -81,9 +81,8 @@ describe('QuestionContent', () => {
   });
 
   it('should get right columns', () => {
-      component.config = {min: 10, max: 10};
+      component.config = {min: 1, max: 10};
 
-      expect(component.elements.length).toEqual(10);
       expect(component.gridColumns).toEqual(Math.ceil(Math.sqrt(10)));
   });
 });

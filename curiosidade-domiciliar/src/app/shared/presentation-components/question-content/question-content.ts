@@ -17,7 +17,6 @@ export class QuestionContent {
                 Math.random() * (this._config.max - this._config.min + 1)
             ) + this._config.min
         );
-        this._gridColumns = Math.ceil(Math.sqrt(this._elements.length));
     }
 
     get elements() {
@@ -25,6 +24,6 @@ export class QuestionContent {
     }
 
     get gridColumns() {
-        return this._gridColumns;
+        return Math.ceil(Math.sqrt(this._config.max));
     }
 }

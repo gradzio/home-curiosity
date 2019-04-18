@@ -1,4 +1,4 @@
-<mat-grid-list cols="4" rowHeight="100px">
+<mat-grid-list [cols]="gridColumns" rowHeight="100px">
     <mat-grid-tile
         *ngFor="let element of elements" data-selector="question-content-element">
         <mat-icon color="primary">favorite</mat-icon>
