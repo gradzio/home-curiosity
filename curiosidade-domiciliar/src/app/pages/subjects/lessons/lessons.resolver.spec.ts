@@ -11,6 +11,7 @@ import { SubjectState, GetLessons } from '../subject.state';
 import { ExercisesState } from './topics/exercises/exercises.state';
 import { ExercisesService } from './topics/exercises/exercises.service';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
+import { TimerService } from 'src/app/shared/services/timer.service';
 
 describe('LessonsResolver', () => {
     let router: Router;
@@ -29,7 +30,8 @@ describe('LessonsResolver', () => {
                 LessonsResolver,
                 ExercisesService,
                 LessonsService,
-                {provide: RouterStateSnapshot, useValue: mockSnapshot}
+                {provide: RouterStateSnapshot, useValue: mockSnapshot},
+                TimerService
             ]
         });
         router = TestBed.get(Router);

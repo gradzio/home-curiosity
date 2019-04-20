@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ExercisesComponent } from './exercises.component';
 import { ExercisesService } from './exercises.service';
@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provider';
 import { last } from 'rxjs/operators';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
 import { NotificationService } from 'src/app/shared/services/notification.service';
@@ -21,6 +20,9 @@ import { SubjectState } from '../../../subject.state';
 import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Collection } from 'src/app/core/collection';
+import { TimerService } from 'src/app/shared/services/timer.service';
+import { CounterProgressModel } from './counter-progress.model';
+import { ExercisesStateProvider } from 'src/tests/exercises-state.provider';
 
 describe('ExercisesComponent', () => {
   let component: ExercisesComponent;
@@ -45,7 +47,7 @@ describe('ExercisesComponent', () => {
         useValue: {
           params: of({lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'})
         }
-      }, AnswersService, ExercisesService, LessonsService, NotificationService, ChangeDetectorRef ]
+      }, AnswersService, ExercisesService, LessonsService, NotificationService, ChangeDetectorRef, TimerService ]
     })
     .compileComponents();
   }));
@@ -114,5 +116,12 @@ describe('ExercisesComponent', () => {
       component.backLink$
         .subscribe(backLink => expect(backLink).toEqual('/subjects/math/lessons/lessonGuid'))
         .unsubscribe();
+  });
+
+  it('should get count down progress', () => {
+    store.reset(ExercisesStateProvider.TWO);
+    component.countDownProgress$
+      .subscribe(countDownProgress => expect(jasmine.any(CounterProgressModel)))
+      .unsubscribe();
   });
 });

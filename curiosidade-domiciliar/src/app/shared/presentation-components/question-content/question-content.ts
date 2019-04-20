@@ -8,7 +8,7 @@ import { QuestionContentConfig } from './question-content.interface';
 export class QuestionContent {
     private _elements;
     private _config: QuestionContentConfig;
-    private _gridColumns;
+
     @Input()
     set config(config: QuestionContentConfig) {
         this._config = config;
@@ -24,6 +24,6 @@ export class QuestionContent {
     }
 
     get gridColumns() {
-        return Math.ceil(Math.sqrt(this._config.max));
+        return this._config ? Math.ceil(Math.sqrt(this._config.max)) : 0;
     }
 }

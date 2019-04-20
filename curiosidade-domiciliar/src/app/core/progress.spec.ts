@@ -10,7 +10,6 @@ describe('Progress', () => {
         expect(progress.current).toEqual(1);
         expect(progress.total).toEqual(2);
         expect(progress.state).toEqual(ProgressStates.NOT_STARTED);
-        expect(progress.percentage).toEqual(0);
     });
 
     it('should change on next', () => {
@@ -19,13 +18,19 @@ describe('Progress', () => {
         expect(progress.current).toEqual(2);
         expect(progress.total).toEqual(2);
         expect(progress.state).toEqual(ProgressStates.IN_PROGRESS);
-        expect(progress.percentage).toEqual(50);
 
         progress.next();
 
         expect(progress.current).toEqual(2);
         expect(progress.total).toEqual(2);
         expect(progress.state).toEqual(ProgressStates.COMPLETED);
-        expect(progress.percentage).toEqual(100);
+    });
+
+    it('should make ProgressBarInterface', () => {
+        expect(progress.makeProgressBarInterface()).toEqual({percentage: 0, label: `1 / 2`});
+        progress.next();
+        expect(progress.makeProgressBarInterface()).toEqual({percentage: 50, label: `2 / 2`});
+        progress.next();
+        expect(progress.makeProgressBarInterface()).toEqual({percentage: 100, label: `2 / 2`});
     });
 });

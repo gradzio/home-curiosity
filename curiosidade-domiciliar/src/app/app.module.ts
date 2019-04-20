@@ -16,6 +16,7 @@ import { PagesModule } from './pages/pages.module';
 import { NgxsModule } from '@ngxs/store';
 import { SubjectState } from './pages/subjects/subject.state';
 import { ExercisesState } from './pages/subjects/lessons/topics/exercises/exercises.state';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ExercisesState } from './pages/subjects/lessons/topics/exercises/exerci
       SubjectState,
       ExercisesState
     ]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

@@ -1,3 +1,5 @@
+import { ProgressBarInterface } from '../shared/presentation-components/progress-bar/progress-bar.interface';
+
 export enum ProgressStates {
     NOT_STARTED,
     IN_PROGRESS,
@@ -43,10 +45,15 @@ export class Progress {
         return this._state;
     }
 
-    get percentage(): number {
-        if (this._state === ProgressStates.COMPLETED) {
-            return 100;
+    makeProgressBarInterface(): ProgressBarInterface {
+        let percentage = 100;
+        if (this._state !== ProgressStates.COMPLETED) {
+            percentage = Math.floor((this._current - 1) / this._total * 100);
         }
-        return Math.floor((this._current - 1) / this._total * 100);
+
+        return {
+            percentage,
+            label: `${this._current} / ${this._total}`
+        };
     }
 }

@@ -16,6 +16,7 @@ import { ExercisesService } from './topics/exercises/exercises.service';
 import { LessonsService } from './lessons.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
+import { TimerService } from 'src/app/shared/services/timer.service';
 
 describe('LessonsComponent', () => {
   let component: LessonsComponent;
@@ -34,7 +35,12 @@ describe('LessonsComponent', () => {
         MaterialModule,
         PresentationComponentsModule
       ],
-      providers: [ExercisesService, LessonsService, {provide: ActivatedRoute, useValue: activatedRoute}]
+      providers: [
+        ExercisesService,
+        LessonsService,
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        TimerService
+      ]
     })
     .compileComponents();
   }));

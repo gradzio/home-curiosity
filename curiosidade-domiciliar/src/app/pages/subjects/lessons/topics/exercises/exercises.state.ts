@@ -5,50 +5,93 @@ import { ExerciseModel } from './exercise.model';
 import { ExercisesService } from './exercises.service';
 import { CompletedExercises } from '../../../subject.state';
 import { map } from 'rxjs/operators';
+import { TimerService, CountDownInterface } from 'src/app/shared/services/timer.service';
 
 export interface ExercisesStateInterface {
   exercises: Collection<ExerciseModel>;
   currentExercise?: ExerciseModel;
+  countDown?: CountDownInterface;
+  scope: {
+    lessonGuid?: string,
+    topicGuid?: string
+  };
+}
+
+export class GetCountDown {
+  static readonly type = '[Exercises Flow Page] Get Count Down';
+  constructor(public total: number) {}
+}
+
+export class ExercisesExited {
+  static readonly type = '[Exercises Flow Page] Exited';
 }
 
 export class AnsweredCorrectly {
-    static readonly type = '[Exercises Flow Page] Answered correctly';
-      constructor(public lessonGuid: string, public topicGuid: string) {}
+  static readonly type = '[Exercises Flow Page] Answered correctly';
+  constructor(public lessonGuid: string, public topicGuid: string) {}
 }
 
 export class GetExercises {
-    static readonly type = '[Exercises Flow Page] Get exercises';
-    constructor(public lessonGuid: string) {}
-  }
+  static readonly type = '[Exercises Flow Page] Get exercises';
+  constructor(public lessonGuid: string) {}
+}
 
 @State<ExercisesStateInterface>({
   name: 'exercises',
   defaults: {
-      exercises: new Collection([])
+      exercises: new Collection([]),
+      scope: {}
   }
 })
 export class ExercisesState {
-  constructor(private exerciseService: ExercisesService) {}
+  private _countDownTotal = 20;
+  private _subscriptions = {};
+  constructor(private _exerciseService: ExercisesService, private _timerService: TimerService) {}
 
   @Selector()
   static exercises(state: ExercisesStateInterface) {
     return state.exercises;
   }
 
+  @Selector()
+  static countDown(state: ExercisesStateInterface) {
+    return state.countDown;
+  }
+
   @Action(GetExercises)
   getExercises(ctx: StateContext<ExercisesStateInterface>, action: GetExercises) {
-    return this.exerciseService.getAll(action.lessonGuid).pipe(
+    ctx.dispatch(new GetCountDown(this._countDownTotal));
+    return this._exerciseService.getAll(action.lessonGuid).pipe(
       map(exercises => ctx.patchState({exercises}))
     );
   }
 
   @Action(AnsweredCorrectly)
   answeredCorrectly(ctx: StateContext<ExercisesStateInterface>, action: AnsweredCorrectly) {
-    const exercises = ctx.getState().exercises;
+    const { exercises } = ctx.getState();
     exercises.next();
-    if (exercises.progress.isCompleted) {
-        return ctx.dispatch(new CompletedExercises(action.lessonGuid, action.topicGuid));
+    return ctx.patchState({exercises, scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}});
+  }
+
+  @Action(GetCountDown)
+  getCountDown(ctx: StateContext<ExercisesStateInterface>, action: GetCountDown) {
+    this._subscriptions['getCountDown'] = this._timerService.getCountDown(action.total)
+    .pipe(
+      map(countDown => {
+        ctx.patchState({countDown});
+        if (countDown.current === 0) {
+          const { scope } = ctx.getState();
+          ctx.dispatch(new CompletedExercises(scope.lessonGuid, scope.topicGuid));
+        }
+      }),
+    ).subscribe();
+  }
+
+  @Action(ExercisesExited)
+  stopCountDown(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {
+    if (Object.keys(this._subscriptions).includes('getCountDown')) {
+      this._subscriptions['getCountDown'].unsubscribe();
     }
-    return ctx.patchState({exercises});
+    ctx.patchState({countDown: undefined});
   }
 }

@@ -3,7 +3,7 @@
     <button data-selector="back-button" [routerLink]="['/subjects/math']" mat-mini-fab color="accent"><mat-icon>arrow_back</mat-icon></button>
 </div>
 <mat-card>
-    <app-progress-bar [progress]="(selectedLesson$ | async)?.topics.progress"></app-progress-bar>
+    <app-progress-bar [progress]="(selectedLesson$ | async)?.topics.progress.makeProgressBarInterface()"></app-progress-bar>
 </mat-card>
 <app-video-card *ngIf="!(selectedLesson$ | async)?.topics.progress.isCompleted else congratsTopics" [item]="videoCard$ | async"></app-video-card>
 <ng-template #congratsTopics>
