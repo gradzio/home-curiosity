@@ -1,9 +1,10 @@
 <div *ngIf="exercises$ | async as currentExercises">
-<mat-card>
-  <app-progress-bar [progress]="currentExercises.progress"></app-progress-bar>
+<div *ngIf="countDownProgress$ | async as countDownProgress">
+<mat-card *ngIf="!countDownProgress.isCompleted">
+  <app-progress-bar [progress]="countDownProgress"></app-progress-bar>
 </mat-card>
 <mat-card>
-  <div *ngIf="!currentExercises.progress.isCompleted else congrats">
+  <div *ngIf="!countDownProgress.isCompleted else congrats">
     <div data-selector="exercise-content" [innerHTML]="currentExercises.current?.content"></div>
     <app-question-content *ngIf="currentExercises.current?.contentConfig" [config]="currentExercises.current?.contentConfig"></app-question-content>
     <app-answer-box [item]="currentExercises.current" (answerSubmitted)="onAnswerSubmitted($event)"></app-answer-box>
@@ -14,4 +15,5 @@
     <a mat-raised-button color="primary" [routerLink]="backLink$ | async">Próximo assunto</a>
   </ng-template>
 </mat-card>
+</div>
 </div>

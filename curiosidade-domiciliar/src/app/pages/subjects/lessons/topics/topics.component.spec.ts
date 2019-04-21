@@ -13,6 +13,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { MaterialModule } from 'src/app/material.module';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
+import { TimerService } from 'src/app/shared/services/timer.service';
 
 describe('TopicsComponent', () => {
   let component: TopicsComponent;
@@ -30,7 +31,12 @@ describe('TopicsComponent', () => {
         RouterTestingModule,
         PresentationComponentsModule
       ],
-      providers: [ExercisesService, LessonsService, {provide: ActivatedRoute, useValue: activatedRoute}]
+      providers: [
+        ExercisesService,
+        LessonsService,
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        TimerService
+      ]
     })
     .compileComponents();
   }));

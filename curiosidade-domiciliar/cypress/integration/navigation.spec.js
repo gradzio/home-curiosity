@@ -5,6 +5,7 @@ const exerciseSetup = [
   ['sequence', 'sequence', 'radio', 'input'],
   ['input', 'input', 'input']
 ];
+const exerciseCountDown = 20;
 
 context('Navigation of the Math subject', () => {
   it('should navigate to exercises', () => {
@@ -36,10 +37,11 @@ context('Navigation of the Math subject', () => {
 
   const finishExercise = (exerciseConfig) => {
     cy.location(('pathname')).should('include', 'exercises');
+    cy.get('app-progress-bar').contains(exerciseCountDown);
     for(let i = 0; i < exerciseConfig.length; i++) {
-      cy.get('app-progress-bar').contains((i + 1) + ' / ' + exerciseConfig.length);
+      cy.get('simple-snack-bar').should('not.be.visible');
       answerExercise(exerciseConfig[i]);
-      cy.get('simple-snack-bar').contains('Você acertou!');
+      cy.get('simple-snack-bar').should('be.visible').contains('Você acertou!');
     }
     shouldShowCongratsTopicPage();
     cy.contains('Próximo assunto').click();
@@ -47,7 +49,7 @@ context('Navigation of the Math subject', () => {
   };
 
   const shouldShowCongratsTopicPage = () => {
-    cy.get('h2').should('contain', 'Bom trabalho!');
+    cy.contains('h2', 'Bom trabalho!', {timeout: exerciseCountDown * 1000});
     cy.contains('Próximo assunto');
     cy.get('img[data-selector="congrats-image"]').should('have.attr', 'src', 'https://drive.google.com/uc?export=view&id=10atErlnYlvXz2XjiOHWGs36J3bIUm_6M');
   }
@@ -81,7 +83,7 @@ context('Navigation of the Math subject', () => {
 
   it('should load exercises', () => {
     cy.visit( `${appUrl}/subjects/math/lessons/lessonguid1/topics/topicguid1/exercises`);
-    cy.get('app-progress-bar').contains('1 / 4');
+    cy.get('app-progress-bar').contains(exerciseCountDown);
     cy.contains('Verificar').should('be.disabled');
   });
   })

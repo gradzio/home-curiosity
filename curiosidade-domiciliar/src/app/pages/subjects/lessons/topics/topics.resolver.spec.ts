@@ -11,6 +11,7 @@ import { SubjectState, GetLessons, SelectLesson } from '../../subject.state';
 import { ExercisesState } from './exercises/exercises.state';
 import { NgxsModule, Store } from '@ngxs/store';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
+import { TimerService } from 'src/app/shared/services/timer.service';
 
 
 describe('TopicsResolver', () => {
@@ -34,7 +35,8 @@ describe('TopicsResolver', () => {
                 TopicsResolver,
                 ExercisesService,
                 LessonsService,
-                {provide: RouterStateSnapshot, useValue: mockSnapshot}
+                {provide: RouterStateSnapshot, useValue: mockSnapshot},
+                TimerService
             ]
         });
         router = TestBed.get(Router);

@@ -7,7 +7,7 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Progress } from 'src/app/core/progress';
 
-@Component({template: '<app-progress-bar [progress]="progress"></app-progress-bar>'})
+@Component({template: '<app-progress-bar [progress]="progress.makeProgressBarInterface()"></app-progress-bar>'})
 class BasicProgressBar {
   public progress = new Progress(10);
 }

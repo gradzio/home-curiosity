@@ -13,6 +13,7 @@ import { PresentationComponentsModule } from 'src/app/shared/presentation-compon
 import { ExercisesService } from './lessons/topics/exercises/exercises.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { AnswersService } from './lessons/topics/exercises/answers.service';
+import { TimerService } from 'src/app/shared/services/timer.service';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,6 @@ import { AnswersService } from './lessons/topics/exercises/answers.service';
         MaterialModule,
         PresentationComponentsModule,
       ],
-      providers: [LessonsService, ExercisesService, AnswersService, NotificationService],
+      providers: [LessonsService, ExercisesService, AnswersService, NotificationService, TimerService],
 })
 export class SubjectsModule { }
