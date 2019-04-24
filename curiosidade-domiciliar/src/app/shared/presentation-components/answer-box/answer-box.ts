@@ -10,7 +10,8 @@ import {
   ViewChild,
   ElementRef,
   QueryList,
-  ViewChildren
+  ViewChildren,
+  ChangeDetectorRef
 } from '@angular/core';
 import { MatRadioGroup, MatRadioButton } from '@angular/material';
 import { Option } from './option.interface';
@@ -28,19 +29,28 @@ import { SequenceBuilder } from '../sequence-builder/sequence-builder';
 export class AnswerBox implements OnInit {
   @HostBinding('class') classes = 'app-answer-box';
 
-  @Input()
-  item: ExerciseModel;
-
   @ViewChild('answerInput') answerInput: ElementRef;
   @ViewChildren(MatRadioButton) radios: QueryList<MatRadioButton>;
   @ViewChild(SequenceBuilder) sequenceBuilder: SequenceBuilder;
 
   private _answerText: string;
 
+  private _item;
+  @Input()
+  set item(item: ExerciseModel) {
+    this._item = item;
+    if (this.sequenceBuilder) {
+      this.sequenceBuilder.choices = item.choices;
+    }
+  }
+  get item() {
+    return this._item;
+  }
+
   @Output()
   answerSubmitted: EventEmitter<string> = new EventEmitter();
 
-  constructor() { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
   }

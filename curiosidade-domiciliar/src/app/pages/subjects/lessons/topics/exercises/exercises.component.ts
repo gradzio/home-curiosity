@@ -30,6 +30,9 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   @Select(ExercisesState.countDown)
   countDown$: Observable<CountDownInterface>;
 
+  @Select(ExercisesState.currentExercise)
+  currentExercise$: Observable<ExerciseModel>;
+
   backLink$: Observable<string>;
   countDownProgress$: Observable<ProgressBarInterface>;
 

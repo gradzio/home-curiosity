@@ -51,5 +51,19 @@ describe('ExerciseModel', () => {
         expect(exercise1.isEqual(exercise2)).toEqual(true);
     });
 
+    it('should generate new object', () => {
+        const choices = [1, 2, 3];
+        const exercise = new ExerciseModel('guid', 'content', 'RADIO', choices);
 
+        const generator = exercise.generate();
+
+        const newExercise = generator.next().value;
+
+        expect(newExercise).toEqual(jasmine.objectContaining({
+            guid: 'guid',
+            content: 'content',
+            isRadio: true
+        }));
+        expect(newExercise.choices.length).toEqual(choices.length);
+    });
 });

@@ -8,24 +8,6 @@
                 "max": 20
             },
             "type": "INPUT"
-        },
-        {
-            "guid": "guid2",
-            "content": "<h2>Quantos corações tem?</h2>",
-            "contentConfig": {
-                "min": 11,
-                "max": 20
-            },
-            "type": "INPUT"
-        },
-        {
-            "guid": "guid3",
-            "content": "<h2>Quantos corações tem?</h2>",
-            "contentConfig": {
-                "min": 10,
-                "max": 20
-            },
-            "type": "INPUT"
         }
     ]
 }

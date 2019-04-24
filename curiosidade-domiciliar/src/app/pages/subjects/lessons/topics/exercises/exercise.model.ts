@@ -8,6 +8,7 @@ export enum ExercisePresentation {
 }
 
 export class ExerciseModel {
+    private _math = Math;
     constructor(
         private _guid: string, private _content: string, private _type: string, private _choices = [], private _contentConfig = null
     ) {}
@@ -15,6 +16,21 @@ export class ExerciseModel {
     isEqual(exercise: ExerciseModel): boolean {
         return this._guid === exercise.guid
             && this._content === exercise.content;
+    }
+
+    *generate(): IterableIterator<ExerciseModel> {
+        const contentConfig = this._contentConfig ? Object.assign({}, this._contentConfig) : null;
+        yield new ExerciseModel(this._guid, this._content, this._type, this._shuffleArray(this._choices), contentConfig);
+    }
+
+    private _shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = this._math.floor(this._math.random() * (i + 1));
+            const temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
     get guid(): string {
