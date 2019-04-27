@@ -1,7 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AnswerBox } from './answer-box';
 import { By } from '@angular/platform-browser';
-import { DebugElement, Component } from '@angular/core';
+import { DebugElement, Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { MatRadioButton, MatInput } from '@angular/material';
 import { CommonModule } from '@angular/common';
@@ -174,6 +174,35 @@ describe('AnswerBoxComponent', () => {
     });
   });
 
+  describe('AnswerBoxWithSequence', () => {
+    let component: AnswerBox;
+    let fixture: ComponentFixture<AnswerBox>;
+    const sequenceBuilderSpy = jasmine.createSpyObj('SequenceBuilder', ['reset']);
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [MaterialModule, CommonModule, FlexLayoutModule],
+        declarations: [ AnswerBox, SequenceBuilder ]
+      })
+      .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(AnswerBox);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should bind item to sequenceBuilder', () => {
+      component.sequenceBuilder = sequenceBuilderSpy;
+      component.item = ExerciseCollectionProvider.SINGLE_WITH_RADIO_CHOICES.current;
+    });
+  });
+
   describe('ImageAnswerBoxWithSequence', () => {
     let component: ImageAnswerBoxWithSequence;
     let fixture: ComponentFixture<ImageAnswerBoxWithSequence>;
@@ -200,6 +229,7 @@ describe('AnswerBoxComponent', () => {
       radioElements = answerBoxElement.queryAll(By.directive(MatRadioButton));
       sequenceElement = answerBoxElement.query(By.directive(SequenceBuilder));
       buttonElement = answerBoxElement.query(By.css('.app-answer-box__button'));
+      fixture.detectChanges();
     });
 
     it('should create', () => {

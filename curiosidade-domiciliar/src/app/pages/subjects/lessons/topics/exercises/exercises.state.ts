@@ -6,6 +6,7 @@ import { ExercisesService } from './exercises.service';
 import { CompletedExercises } from '../../../subject.state';
 import { map } from 'rxjs/operators';
 import { TimerService, CountDownInterface } from 'src/app/shared/services/timer.service';
+import { STEP_STATE } from '@angular/cdk/stepper';
 
 export interface ExercisesStateInterface {
   exercises: Collection<ExerciseModel>;
@@ -58,19 +59,24 @@ export class ExercisesState {
     return state.countDown;
   }
 
+  @Selector()
+  static currentExercise(state: ExercisesStateInterface) {
+    return state.currentExercise;
+  }
+
   @Action(GetExercises)
   getExercises(ctx: StateContext<ExercisesStateInterface>, action: GetExercises) {
     ctx.dispatch(new GetCountDown(this._countDownTotal));
     return this._exerciseService.getAll(action.lessonGuid).pipe(
-      map(exercises => ctx.patchState({exercises}))
+      map(exercises => ctx.patchState({exercises, currentExercise: exercises.current}))
     );
   }
 
   @Action(AnsweredCorrectly)
   answeredCorrectly(ctx: StateContext<ExercisesStateInterface>, action: AnsweredCorrectly) {
     const { exercises } = ctx.getState();
-    exercises.next();
-    return ctx.patchState({exercises, scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}});
+    const currentExercise = exercises.current.generate().next().value;
+    return ctx.patchState({currentExercise, exercises, scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}});
   }
 
   @Action(GetCountDown)

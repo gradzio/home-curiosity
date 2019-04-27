@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-sequence-builder',
@@ -8,8 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, O
 })
 export class SequenceBuilder implements OnInit {
 
+  private _choices;
   @Input()
-  choices: string[];
+  set choices(choices) {
+    this._choices = choices;
+    this._changeDetectorRef.detectChanges();
+  }
+  get choices() {
+    return this._choices;
+  }
 
   @Input()
   maxItems = 5;

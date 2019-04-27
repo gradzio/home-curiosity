@@ -1,13 +1,13 @@
-<div *ngIf="exercises$ | async as currentExercises">
+<div *ngIf="currentExercise$ | async as currentExercise">
 <div *ngIf="countDownProgress$ | async as countDownProgress">
 <mat-card *ngIf="!countDownProgress.isCompleted">
   <app-progress-bar [progress]="countDownProgress"></app-progress-bar>
 </mat-card>
 <mat-card>
   <div *ngIf="!countDownProgress.isCompleted else congrats">
-    <div data-selector="exercise-content" [innerHTML]="currentExercises.current?.content"></div>
-    <app-question-content *ngIf="currentExercises.current?.contentConfig" [config]="currentExercises.current?.contentConfig"></app-question-content>
-    <app-answer-box [item]="currentExercises.current" (answerSubmitted)="onAnswerSubmitted($event)"></app-answer-box>
+    <div data-selector="exercise-content" [innerHTML]="currentExercise.content"></div>
+    <app-question-content *ngIf="currentExercise.contentConfig" [config]="currentExercise.contentConfig"></app-question-content>
+    <app-answer-box [item]="currentExercise" (answerSubmitted)="onAnswerSubmitted($event)"></app-answer-box>
   </div>
   <ng-template #congrats>
     <h2>Bom trabalho!</h2>

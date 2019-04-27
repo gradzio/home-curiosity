@@ -48,8 +48,7 @@ describe('ExercisesState', () => {
   it('should handle AnsweredCorrectly', async(() => {
     store.dispatch(new AnsweredCorrectly('lessonGuid', 'topicGUid'));
     store.selectOnce(state => state.exercises.exercises).subscribe(exercises => {
-      expect(exercises.progress.current).toEqual(2);
-      expect(exercises.current.guid).toEqual('guid2');
+      expect(exercises.current.guid).toEqual('guid1');
     });
   }));
 
