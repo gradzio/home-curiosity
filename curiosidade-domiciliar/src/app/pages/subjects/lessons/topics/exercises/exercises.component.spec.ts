@@ -90,6 +90,17 @@ describe('ExercisesComponent', () => {
     .unsubscribe();
   });
 
+  it('should render congrats page', () => {
+    const stateMock = ExercisesStateProvider.COUNTDOWN_COMPLETED;
+    const answeredCount = stateMock.exercises.answeredCount;
+    store.reset(stateMock);
+    fixture.detectChanges();
+    const headerElement = fixture.debugElement.query(By.css('[data-selector="congrats-header"]'));
+    const messageElement = fixture.debugElement.query(By.css('[data-selector="congrats-counter-message"]'));
+    expect(headerElement.nativeElement.textContent).toEqual('Bom trabalho!');
+    expect(messageElement.nativeElement.textContent).toEqual(`Você acertou ${answeredCount} exercícios`);
+  });
+
   it('should show positive snackbar and trigger AnsweredCorrectly even on correct answer', () => {
     spyOn(answersService, 'create').and.returnValue(of({'success': true, 'exerciseGuid': 'guid1'}));
     spyOn(notificationService, 'notifyCorrectAnswer').and.returnValue(of({dismissedByAction: true}));

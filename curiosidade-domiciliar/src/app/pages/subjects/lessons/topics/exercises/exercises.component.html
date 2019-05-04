@@ -10,7 +10,8 @@
     <app-answer-box [item]="currentExercise" (answerSubmitted)="onAnswerSubmitted($event)"></app-answer-box>
   </div>
   <ng-template #congrats>
-    <h2>Bom trabalho!</h2>
+    <h2 data-selector="congrats-header">Bom trabalho!</h2>
+    <h3 data-selector="congrats-counter-message">Você acertou {{answeredCount$ | async}} exercícios</h3>
     <img data-selector="congrats-image" height="300" src="https://drive.google.com/uc?export=view&id=10atErlnYlvXz2XjiOHWGs36J3bIUm_6M">
     <a mat-raised-button color="primary" [routerLink]="backLink$ | async">Próximo assunto</a>
   </ng-template>

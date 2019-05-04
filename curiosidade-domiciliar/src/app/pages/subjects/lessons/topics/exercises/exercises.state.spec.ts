@@ -47,8 +47,9 @@ describe('ExercisesState', () => {
 
   it('should handle AnsweredCorrectly', async(() => {
     store.dispatch(new AnsweredCorrectly('lessonGuid', 'topicGUid'));
-    store.selectOnce(state => state.exercises.exercises).subscribe(exercises => {
-      expect(exercises.current.guid).toEqual('guid1');
+    store.selectOnce(state => state.exercises).subscribe(state => {
+      expect(state.exercises.current.guid).toEqual('guid1');
+      expect(state.answeredCount).toEqual(1);
     });
   }));
 
@@ -70,11 +71,14 @@ describe('ExercisesState', () => {
     });
   });
 
-  it('should stop started timer', () => {
+  it('should clear state', () => {
     spyOn(timerService, 'getCountDown').and.returnValue(of(10));
     store.dispatch(new GetCountDown(10));
     store.dispatch(new ExercisesExited());
 
-    store.selectOnce(state => state.exercises.countDown).subscribe(countDown => expect(countDown).toBeUndefined());
+    store.selectOnce(state => state.exercises).subscribe(state => {
+      expect(state.countDown).toBeUndefined();
+      expect(state.answeredCount).toEqual(0);
+    });
   });
 });

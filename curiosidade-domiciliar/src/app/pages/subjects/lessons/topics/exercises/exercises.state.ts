@@ -6,12 +6,12 @@ import { ExercisesService } from './exercises.service';
 import { CompletedExercises } from '../../../subject.state';
 import { map } from 'rxjs/operators';
 import { TimerService, CountDownInterface } from 'src/app/shared/services/timer.service';
-import { STEP_STATE } from '@angular/cdk/stepper';
 
 export interface ExercisesStateInterface {
   exercises: Collection<ExerciseModel>;
   currentExercise?: ExerciseModel;
   countDown?: CountDownInterface;
+  answeredCount: number;
   scope: {
     lessonGuid?: string,
     topicGuid?: string
@@ -41,6 +41,7 @@ export class GetExercises {
   name: 'exercises',
   defaults: {
       exercises: new Collection([]),
+      answeredCount: 0,
       scope: {}
   }
 })
@@ -52,6 +53,11 @@ export class ExercisesState {
   @Selector()
   static exercises(state: ExercisesStateInterface) {
     return state.exercises;
+  }
+
+  @Selector()
+  static answeredCount(state: ExercisesStateInterface) {
+    return state.answeredCount;
   }
 
   @Selector()
@@ -74,9 +80,14 @@ export class ExercisesState {
 
   @Action(AnsweredCorrectly)
   answeredCorrectly(ctx: StateContext<ExercisesStateInterface>, action: AnsweredCorrectly) {
-    const { exercises } = ctx.getState();
+    const { exercises, answeredCount } = ctx.getState();
     const currentExercise = exercises.current.generate().next().value;
-    return ctx.patchState({currentExercise, exercises, scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}});
+    return ctx.patchState({
+      currentExercise,
+      answeredCount: answeredCount + 1,
+      exercises,
+      scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}
+    });
   }
 
   @Action(GetCountDown)
@@ -94,10 +105,10 @@ export class ExercisesState {
   }
 
   @Action(ExercisesExited)
-  stopCountDown(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {
+  clearState(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {
     if (Object.keys(this._subscriptions).includes('getCountDown')) {
       this._subscriptions['getCountDown'].unsubscribe();
     }
-    ctx.patchState({countDown: undefined});
+    ctx.patchState({countDown: undefined, answeredCount: 0});
   }
 }
