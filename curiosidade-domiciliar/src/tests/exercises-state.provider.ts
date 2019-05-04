@@ -6,6 +6,7 @@ export const ExercisesStateProvider = {
         exercises: {
             exercises: new Collection([]),
             currentExercise: null,
+            answeredCount: 0,
             countDown: null,
             scope: {}
         }
@@ -14,6 +15,7 @@ export const ExercisesStateProvider = {
         exercises: {
             exercises: ExerciseCollectionProvider.two,
             currentExercise: null,
+            answeredCount: 0,
             countDown: { current: 60, total: 60 },
             scope: { lessonGuid: 'lessonGuid', topicGuid: 'topicGuid' }
         }
@@ -21,8 +23,10 @@ export const ExercisesStateProvider = {
     COUNTDOWN_COMPLETED: {
         exercises: {
             exercises: ExerciseCollectionProvider.two,
-            currentExercise: null,
+            currentExercise: ExerciseCollectionProvider.two.current,
+            countDownProgress: {isCompleted: true},
             countDown: { current: 0, total: 1 },
+            answeredCount: 5,
             scope: { lessonGuid: 'lessonGuid', topicGuid: 'topicGuid' }
         }
     }

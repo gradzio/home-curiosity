@@ -43,13 +43,14 @@ context('Navigation of the Math subject', () => {
       answerExercise(exerciseConfig[i]);
       cy.get('simple-snack-bar').should('be.visible').contains('Você acertou!');
     }
-    shouldShowCongratsTopicPage();
+    shouldShowCongratsTopicPage(exerciseConfig.length);
     cy.contains('Próximo assunto').click();
     cy.location(('pathname')).should('include', 'lessons');
   };
 
-  const shouldShowCongratsTopicPage = () => {
+  const shouldShowCongratsTopicPage = (correctCount) => {
     cy.contains('h2', 'Bom trabalho!', {timeout: exerciseCountDown * 1000});
+    cy.contains('h3', `Você acertou ${correctCount} exercícios`)
     cy.contains('Próximo assunto');
     cy.get('img[data-selector="congrats-image"]').should('have.attr', 'src', 'https://drive.google.com/uc?export=view&id=10atErlnYlvXz2XjiOHWGs36J3bIUm_6M');
   }

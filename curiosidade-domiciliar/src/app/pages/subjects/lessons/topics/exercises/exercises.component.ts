@@ -27,6 +27,9 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   @Select(ExercisesState.exercises)
   exercises$: Observable<Collection<ExerciseModel>>;
 
+  @Select(ExercisesState.answeredCount)
+  answeredCount$: Observable<number>;
+
   @Select(ExercisesState.countDown)
   countDown$: Observable<CountDownInterface>;
 
