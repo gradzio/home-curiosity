@@ -7,10 +7,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExercisesService } from './exercises.service';
 import { NgxsModule, Store } from '@ngxs/store';
-import { SubjectState, SubjectStateInterface, GetLessons } from '../../../subject.state';
-import { ExercisesState, GetExercises } from './exercises.state';
+import { SubjectState, GetLessons } from '../../../subject.state';
+import { ExercisesState, ExercisesRequested } from './exercises.state';
 import { LessonsService } from '../../lessons.service';
-import { LessonsProvider } from 'src/tests/lessons.provider';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { TimerService } from 'src/app/shared/services/timer.service';
 
@@ -23,7 +22,7 @@ describe('ExercisesResolver', () => {
     const activatedRouteSnapshot = new ActivatedRouteSnapshot();
 
     beforeEach(() => {
-        activatedRouteSnapshot.params = {lessonGuid: 'guid1', topicGuid: 'topicGuid', subject: 'subject'};
+        activatedRouteSnapshot.params = {lessonGuid: 'lessonGuid', topicGuid: 'topicGuid', subject: 'subject'};
         exercisesServiceMock = jasmine.createSpyObj('ExercisesService', ['getAll']);
         exercisesServiceMock.getAll.and.returnValue(of(ExerciseCollectionProvider.two));
         TestBed.configureTestingModule({
@@ -51,8 +50,10 @@ describe('ExercisesResolver', () => {
 
         exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
-        expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('topicGuid'));
+        expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'lessonGuid'));
+        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested({
+            subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
+        }));
     });
 
     it('should not get lessons on navigation', () => {
@@ -60,7 +61,9 @@ describe('ExercisesResolver', () => {
 
         exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
-        expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'guid1'));
-        expect(store.dispatch).toHaveBeenCalledWith(new GetExercises('topicGuid'));
+        expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'lessonGuid'));
+        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested({
+            subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
+        }));
     });
 });
