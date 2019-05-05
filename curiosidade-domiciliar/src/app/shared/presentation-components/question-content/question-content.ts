@@ -3,20 +3,34 @@ import { QuestionContentConfig } from './question-content.interface';
 
 @Component({
   selector: 'app-question-content',
-  templateUrl: './question-content.html'
+  templateUrl: './question-content.html',
+  styleUrls: ['question-content.scss']
 })
 export class QuestionContent {
+    private _math = Math;
     private _elements;
     private _config: QuestionContentConfig;
+    private _template;
 
     @Input()
     set config(config: QuestionContentConfig) {
         this._config = config;
         this._elements = new Array(
-            Math.floor(
-                Math.random() * (this._config.max - this._config.min + 1)
-            ) + this._config.min
+            this._getRandomNumber(this._config.min, this._config.max)
         );
+        if (this._config.data) {
+            this._template = this._config.data[this._getRandomNumber(0, this._config.data.length - 1)].label;
+        }
+    }
+
+    private _getRandomNumber(min, max) {
+        return this._math.floor(
+            this._math.random() * (max - min + 1)
+        ) + min;
+    }
+
+    get template() {
+        return this._template;
     }
 
     get elements() {

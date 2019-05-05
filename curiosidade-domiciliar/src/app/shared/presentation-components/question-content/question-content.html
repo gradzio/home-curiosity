@@ -1,7 +1,10 @@
 <mat-grid-list [cols]="gridColumns" rowHeight="100px">
     <mat-grid-tile
         *ngFor="let element of elements" data-selector="question-content-element">
-        <mat-icon color="primary">favorite</mat-icon>
+        <div *ngIf="template else noElementTemplate" [innerHTML]="template" class="template-container"></div>
+        <ng-template #noElementTemplate>
+                <mat-icon color="primary">favorite</mat-icon>
+        </ng-template>
     </mat-grid-tile>
 </mat-grid-list>
   
