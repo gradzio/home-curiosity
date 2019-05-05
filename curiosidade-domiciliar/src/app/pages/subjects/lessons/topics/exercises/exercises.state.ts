@@ -12,15 +12,12 @@ export interface ExercisesStateInterface {
   currentExercise?: ExerciseModel;
   countDown?: CountDownInterface;
   answeredCount: number;
-  scope: {
-    lessonGuid?: string,
-    topicGuid?: string
-  };
 }
 
-export class GetCountDown {
-  static readonly type = '[Exercises Flow Page] Get Count Down';
-  constructor(public total: number) {}
+export interface ScopeInterface {
+  subject: string;
+  lessonGuid: string;
+  topicGuid: string;
 }
 
 export class ExercisesExited {
@@ -32,17 +29,16 @@ export class AnsweredCorrectly {
   constructor(public lessonGuid: string, public topicGuid: string) {}
 }
 
-export class GetExercises {
+export class ExercisesRequested {
   static readonly type = '[Exercises Flow Page] Get exercises';
-  constructor(public lessonGuid: string) {}
+  constructor(public scope: ScopeInterface) {}
 }
 
 @State<ExercisesStateInterface>({
   name: 'exercises',
   defaults: {
       exercises: new Collection([]),
-      answeredCount: 0,
-      scope: {}
+      answeredCount: 0
   }
 })
 export class ExercisesState {
@@ -70,10 +66,9 @@ export class ExercisesState {
     return state.currentExercise;
   }
 
-  @Action(GetExercises)
-  getExercises(ctx: StateContext<ExercisesStateInterface>, action: GetExercises) {
-    ctx.dispatch(new GetCountDown(this._countDownTotal));
-    return this._exerciseService.getAll(action.lessonGuid).pipe(
+  @Action(ExercisesRequested)
+  getExercises(ctx: StateContext<ExercisesStateInterface>, action: ExercisesRequested) {
+    return this._exerciseService.getAll(action.scope.topicGuid).pipe(
       map(exercises => ctx.patchState({exercises, currentExercise: exercises.current}))
     );
   }
@@ -85,20 +80,18 @@ export class ExercisesState {
     return ctx.patchState({
       currentExercise,
       answeredCount: answeredCount + 1,
-      exercises,
-      scope: {lessonGuid: action.lessonGuid, topicGuid: action.topicGuid}
+      exercises
     });
   }
 
-  @Action(GetCountDown)
-  getCountDown(ctx: StateContext<ExercisesStateInterface>, action: GetCountDown) {
-    this._subscriptions['getCountDown'] = this._timerService.getCountDown(action.total)
+  @Action(ExercisesRequested)
+  getCountDown(ctx: StateContext<ExercisesStateInterface>, action: ExercisesRequested) {
+    this._subscriptions['getCountDown'] = this._timerService.getCountDown(this._countDownTotal)
     .pipe(
       map(countDown => {
         ctx.patchState({countDown});
         if (countDown.current === 0) {
-          const { scope } = ctx.getState();
-          ctx.dispatch(new CompletedExercises(scope.lessonGuid, scope.topicGuid));
+          ctx.dispatch(new CompletedExercises(action.scope.lessonGuid, action.scope.topicGuid));
         }
       }),
     ).subscribe();
@@ -106,9 +99,7 @@ export class ExercisesState {
 
   @Action(ExercisesExited)
   clearState(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {
-    if (Object.keys(this._subscriptions).includes('getCountDown')) {
-      this._subscriptions['getCountDown'].unsubscribe();
-    }
+    Object.keys(this._subscriptions).forEach(key => this._subscriptions[key].unsubscribe());
     ctx.patchState({countDown: undefined, answeredCount: 0});
   }
 }

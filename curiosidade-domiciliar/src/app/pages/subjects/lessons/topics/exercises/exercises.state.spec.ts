@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
-import { ExercisesState, GetExercises, AnsweredCorrectly, GetCountDown, ExercisesExited } from './exercises.state';
+import { ExercisesState, AnsweredCorrectly, ExercisesExited, ExercisesRequested } from './exercises.state';
 import { ExercisesService } from './exercises.service';
 import { of } from 'rxjs';
 import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provider';
@@ -37,7 +37,7 @@ describe('ExercisesState', () => {
   it('should bind GetExercises', async(() => {
     const countDownFrom = 60;
     spyOn(timerService, 'getCountDown').and.returnValue(of({current: countDownFrom, total: countDownFrom}));
-    store.dispatch(new GetExercises('lessonGuid'));
+    store.dispatch(new ExercisesRequested({subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'}));
     store.selectOnce(state => state.exercises.exercises).subscribe(exercises => {
       expect(exercisesService.getAll).toHaveBeenCalled();
       expect(exercises).toEqual(jasmine.any(Collection));
@@ -56,24 +56,17 @@ describe('ExercisesState', () => {
   it('should set completed on timer up', async(() => {
     spyOn(timerService, 'getCountDown').and.returnValue(of({current: 0, total: 1}));
     store.reset(ExercisesStateProvider.COUNTDOWN_COMPLETED);
-    store.dispatch(new GetCountDown(1));
+    store.dispatch(new ExercisesRequested({
+      subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
+    }));
   }));
-
-  it('should handle GetCountDown', () => {
-    const countDownFrom = 60;
-    spyOn(timerService, 'getCountDown').and.returnValue(of({current: countDownFrom, total: countDownFrom}));
-    store.dispatch(new GetCountDown(countDownFrom));
-
-    expect(timerService.getCountDown).toHaveBeenCalledWith(countDownFrom);
-
-    store.selectOnce(state => state.exercises.countDown).subscribe(countDown => {
-      expect(countDown).toEqual(jasmine.objectContaining({current: countDownFrom, total: countDownFrom}));
-    });
-  });
 
   it('should clear state', () => {
     spyOn(timerService, 'getCountDown').and.returnValue(of(10));
-    store.dispatch(new GetCountDown(10));
+    store.reset(ExercisesStateProvider.TWO);
+    store.dispatch(new ExercisesRequested({
+      subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
+    }));
     store.dispatch(new ExercisesExited());
 
     store.selectOnce(state => state.exercises).subscribe(state => {
