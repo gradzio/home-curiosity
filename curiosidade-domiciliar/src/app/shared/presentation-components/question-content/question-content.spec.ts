@@ -90,5 +90,5 @@ describe('QuestionContent', () => {
     component.config = {min: 1, max: 1, data: [{label: 'label1', value: 'label1'}]};
 
     expect(component.template).toEqual('label1');
-});
+  });
 });

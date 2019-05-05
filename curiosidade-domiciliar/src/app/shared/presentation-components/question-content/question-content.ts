@@ -7,6 +7,7 @@ import { QuestionContentConfig } from './question-content.interface';
   styleUrls: ['question-content.scss']
 })
 export class QuestionContent {
+    private _math = Math;
     private _elements;
     private _config: QuestionContentConfig;
     private _template;
@@ -23,9 +24,9 @@ export class QuestionContent {
     }
 
     private _getRandomNumber(min, max) {
-        return Math.floor(
-            Math.random() * (max - min + 1)
-        ) + min
+        return this._math.floor(
+            this._math.random() * (max - min + 1)
+        ) + min;
     }
 
     get template() {
