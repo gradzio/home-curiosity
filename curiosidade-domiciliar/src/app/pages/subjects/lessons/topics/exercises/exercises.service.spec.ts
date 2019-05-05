@@ -26,7 +26,7 @@ describe('ExercisesService', () => {
             .subscribe(exercises => {
                 if (exercises !== null) {
                     expect(exercises).toEqual(jasmine.any(Collection));
-                    expect(exercises.length).toEqual(4);
+                    expect(exercises.length).toEqual(exercisesMock.data.length);
                 }
             });
 
