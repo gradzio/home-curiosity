@@ -41,10 +41,8 @@ jobs:
       script:
         - npm run build:prod
         - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA .
-      deploy:
-        script:
-          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
     - stage: acceptance
       script:
         - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
