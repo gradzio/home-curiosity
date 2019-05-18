@@ -25,11 +25,16 @@ before_install:
 install:
   - npm install
 
+stages:
+  - test
+  - build
+  - acceptance
+
 jobs:
   include:
     - stage: test
       script: npm run lint
-      script: npm run test-headless`
+      script: npm run test-headless
     - stage: build
       script: npm run build:prod
       script: docker build -t curiosidade-domiciliar .
