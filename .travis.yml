@@ -33,14 +33,17 @@ stages:
 jobs:
   include:
     - stage: test
-      script: npm run lint
-      script: npm run test-headless
+      script:
+        - npm run lint
+        - npm run test-headless
     - stage: build
-      script: npm run build:prod
-      script: docker build -t curiosidade-domiciliar .
+      script:
+        - npm run build:prod
+        - docker build -t curiosidade-domiciliar .
     - stage: acceptance
-      script: docker run -d -p 80:80 --name curiosidade-domiciliar curiosidade-domiciliar
-      script: npm run e2e:ci
+      script:
+        - docker run -d -p 80:80 --name curiosidade-domiciliar curiosidade-domiciliar
+        - npm run e2e:ci
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
