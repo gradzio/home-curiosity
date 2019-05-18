@@ -45,6 +45,7 @@ jobs:
         - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
     - stage: acceptance
       script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
         - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
         - npm run e2e:ci
