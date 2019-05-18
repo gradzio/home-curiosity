@@ -17,13 +17,10 @@ addons:
 
 cache:
   directories:
-     - ./node_modules
+     - ./curiosidade-domiciliar/node_modules
 
 before_install:
   - cd curiosidade-domiciliar
-
-install:
-  - npm install
 
 stages:
   - test
@@ -32,20 +29,23 @@ stages:
 
 jobs:
   include:
-    # - stage: test
-    #   script:
-    #     - npm run lint
-    #     - npm run test-headless
-    #     - bash <(curl -s https://codecov.io/bash)
+    - stage: test
+      install: npm install
+      script:
+        - npm run lint
+        - npm run test-headless
+        - bash <(curl -s https://codecov.io/bash)
     - stage: build
+      install: npm install --production
       script:
         - npm run build:prod
         - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
     - stage: acceptance
+      install: npm install -g cypress
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
         - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
-        - npm run e2e:ci
+        - cypress run --record --key $CYPRESS_KEY --env host=localhost
