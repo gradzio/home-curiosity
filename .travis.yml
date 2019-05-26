@@ -65,6 +65,7 @@ jobs:
 #        - docker build -t gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 .
 #        - gcloud docker push gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 > /dev/null
         - gcloud container clusters get-credentials $CLOUDSDK_CORE_PROJECT
+        - gcloud container clusters list
         - kubectl create secret docker-registry docker-auth --docker-server=DOCKER_SERVER --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=DOCKER_EMAIL
       script:
         - kubectl apply -f deployment.yml
