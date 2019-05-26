@@ -57,11 +57,14 @@ jobs:
         - source /home/travis/google-cloud-sdk/path.bash.inc
         - gcloud version
         - gcloud --quiet components update kubectl
-        - gcloud config set project healthy-spark-241818
         # Auth flowf
         - echo $GCLOUD_KEY | base64 --decode > gcloud.json
         - gcloud auth activate-service-account --key-file gcloud.json
         - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
+        - gcloud --quiet config set project healthy-spark-241818
+        - gcloud --quiet config set container/cluster staging-cluster
+        - gcloud --quiet config set compute/zone us-central1-a
+        - gcloud --quiet container clusters get-credentials staging-cluster
         # Push to Google container registry
 #        - docker build -t gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 .
 #        - gcloud docker push gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 > /dev/null
