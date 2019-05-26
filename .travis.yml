@@ -64,6 +64,7 @@ jobs:
         - gcloud --quiet config set project healthy-spark-241818
         - gcloud --quiet config set container/cluster staging-cluster
         - gcloud --quiet config set compute/zone us-central1-a
+        - gcloud --quiet config set container/use_client_certificate True
         - gcloud --quiet container clusters get-credentials staging-cluster
         # Push to Google container registry
 #        - docker build -t gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 .
