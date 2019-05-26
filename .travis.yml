@@ -52,8 +52,7 @@ jobs:
 #        - cypress run --record --key $CYPRESS_KEY --env host=localhost
     - stage: deploy
       install:
-#        - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash; fi
-        - curl https://sdk.cloud.google.com | bash
+        - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
         # Add gcloud to $PATH
         - source /home/travis/google-cloud-sdk/path.bash.inc
         - gcloud version
