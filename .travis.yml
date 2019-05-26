@@ -60,6 +60,7 @@ jobs:
         - gcloud config set project healthy-spark-241818
         # Auth flowf
         - echo $GCLOUD_KEY | base64 --decode > gcloud.p12
+        - cat gcloud.p12
         - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.p12
         - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
         # Push to Google container registry
