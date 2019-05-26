@@ -18,6 +18,7 @@ addons:
 cache:
   directories:
      - ./curiosidade-domiciliar/node_modules
+     - $HOME/google-cloud-sdk
 
 before_install:
   - cd curiosidade-domiciliar
