@@ -60,11 +60,11 @@ jobs:
         # Auth flowf
         - echo $GCLOUD_KEY | base64 --decode > gcloud.json
         - gcloud auth activate-service-account --key-file gcloud.json
+        - cat gcloud.json
         - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
         - gcloud --quiet config set project healthy-spark-241818
         - gcloud --quiet config set container/cluster staging-cluster
         - gcloud --quiet config set compute/zone us-central1-a
-        - gcloud --quiet config set container/use_client_certificate True
         - gcloud container clusters list
         - gcloud --quiet container clusters get-credentials staging-cluster --zone=us-central1-a --project=healthy-spark-241818
         # Push to Google container registry
