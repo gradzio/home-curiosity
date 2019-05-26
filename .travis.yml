@@ -70,6 +70,6 @@ jobs:
         # Push to Google container registry
 #        - docker build -t gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 .
 #        - gcloud docker push gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 > /dev/null
-        - kubectl create secret docker-registry docker-auth --docker-server=DOCKER_SERVER --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=DOCKER_EMAIL > /dev/null
+#        - kubectl create secret docker-registry docker-auth --docker-server=DOCKER_SERVER --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=DOCKER_EMAIL > /dev/null
       script:
         - kubectl apply -f deployment.yml
