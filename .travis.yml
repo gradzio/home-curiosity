@@ -29,26 +29,26 @@ stages:
 
 jobs:
   include:
-    - stage: test
-      install: npm install
-      script:
-        - npm run lint
-        - npm run test-headless
-        - bash <(curl -s https://codecov.io/bash)
-    - stage: build
-      install: npm install --production
-      script:
-        - npm run build:prod
-        - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA .
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
-    - stage: acceptance
-      install: npm install -g cypress
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
-        - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
-        - cypress run --record --key $CYPRESS_KEY --env host=localhost
+#    - stage: test
+#      install: npm install
+#      script:
+#        - npm run lint
+#        - npm run test-headless
+#        - bash <(curl -s https://codecov.io/bash)
+#    - stage: build
+#      install: npm install --production
+#      script:
+#        - npm run build:prod
+#        - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA .
+#        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#        - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+#    - stage: acceptance
+#      install: npm install -g cypress
+#      script:
+#        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#        - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+#        - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+#        - cypress run --record --key $CYPRESS_KEY --env host=localhost
     - stage: deploy
       install:
         - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash; fi
