@@ -65,11 +65,11 @@ jobs:
         - gcloud --quiet config set container/cluster staging-cluster
         - gcloud --quiet config set compute/zone us-central1-a
         - gcloud --quiet config set container/use_client_certificate True
+        - gcloud container clusters list
         - gcloud --quiet container clusters get-credentials staging-cluster --zone=us-central1-a --project=healthy-spark-241818
         # Push to Google container registry
 #        - docker build -t gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 .
 #        - gcloud docker push gcr.io/$CLOUDSDK_CORE_PROJECT/$CLOUDSDK_CORE_PROJECT:v1 > /dev/null
-        - gcloud container clusters list
         - gcloud container clusters get-credentials $CLOUDSDK_CORE_PROJECT
         - kubectl create secret docker-registry docker-auth --docker-server=DOCKER_SERVER --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=DOCKER_EMAIL
       script:
