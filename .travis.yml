@@ -31,18 +31,16 @@ stages:
 jobs:
   include:
     - stage: test
-      branches:
-        only:
-          - /^feature.*$/
+      on:
+        branch: /^feature.*$/
       install: npm install
       script:
         - npm run lint
         - npm run test-headless
         - bash <(curl -s https://codecov.io/bash)
     - stage: build
-      branches:
-        only:
-          - /^feature.*$/
+      on:
+        branch: /^feature.*$/
       install: npm install --production
       script:
         - npm run build:prod
@@ -50,9 +48,8 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push $DOCKER_USERNAME/$DOCKER_REPO:test
     - stage: acceptance
-      branches:
-        only:
-          - /^feature.*$/
+      on:
+        branch: /^feature.*$/
       install: npm install -g cypress
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -61,8 +58,8 @@ jobs:
         - cypress run --record --key $CYPRESS_KEY --env host=localhost
         - docker push $DOCKER_USERNAME/$DOCKER_REPO:staging
     - stage: deploy
-    branches:
-      - only: master
+      on:
+        branch: master
       install:
         - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
         - source /home/travis/google-cloud-sdk/path.bash.inc
