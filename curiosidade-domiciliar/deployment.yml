@@ -32,7 +32,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: ortho23/curiosidade-domiciliar:v0.1.0
+      - image: ortho23/curiosidade-domiciliar:staging
         name: cur-dom
         ports:
         - containerPort: 80
