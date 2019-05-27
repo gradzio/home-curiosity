@@ -66,7 +66,7 @@ jobs:
 #        - gcloud --quiet config set container/cluster staging-cluster
 #        - gcloud --quiet config set compute/zone us-central1-a
 #        - gcloud --quiet container clusters list
-        - gcloud --quiet container clusters get-credentials staging-cluster --zone=$CLOUDSDK_COMPUTE_ZONE --project=healthy-spark-241818
-        - kubectl create secret docker-registry docker-auth --docker-server=docker.io --docker-username=ortho23 --docker-password=aha --docker-email=gregradzio@gmail.com --dry-run -o yaml | kubectl apply -f -
+        - gcloud --quiet container clusters get-credentials $CLOUDSDK_CONTAINER_CLUSTER --zone=$CLOUDSDK_COMPUTE_ZONE --project=$CLOUDSDK_CORE_PROJECT
+        - kubectl create secret docker-registry docker-auth --docker-server=$DOCKER_PASSWORD --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --dry-run -o yaml | kubectl apply -f -
       script:
         - kubectl apply -f deployment.yml
