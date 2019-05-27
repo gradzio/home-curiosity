@@ -65,11 +65,9 @@ jobs:
       - only: master
       install:
         - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
-        # Add gcloud to $PATH
         - source /home/travis/google-cloud-sdk/path.bash.inc
         - gcloud version
         - gcloud --quiet components update kubectl
-        # Auth flowf
         - echo $GCLOUD_KEY | base64 --decode > gcloud.json
         - gcloud auth activate-service-account --key-file gcloud.json
         - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
