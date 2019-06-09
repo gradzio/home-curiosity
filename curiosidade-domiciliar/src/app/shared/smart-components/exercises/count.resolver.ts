@@ -3,8 +3,8 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@a
 import { Observable } from 'rxjs';
 import { Collection } from 'src/app/core/collection';
 import { Store } from '@ngxs/store';
-import { ExercisesRequested } from '../../subjects/lessons/topics/exercises/exercises.state';
-import { ExerciseModel } from '../../subjects/lessons/topics/exercises/exercise.model';
+import { ExercisesRequested } from './exercises.state';
+import { ExerciseModel } from './exercise.model';
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +21,6 @@ export class CountResolver implements Resolve<Collection<ExerciseModel>> {
         //     this._store.dispatch(new GetLessons(subject, lessonGuid));
         // }
 
-        return this._store.dispatch(new ExercisesRequested({subject: 'math', lessonGuid: 'lessonGuid1', topicGuid: 'topicGuid2'}));
+        return this._store.dispatch(new ExercisesRequested('exerciseGuid2'));
     }
 }

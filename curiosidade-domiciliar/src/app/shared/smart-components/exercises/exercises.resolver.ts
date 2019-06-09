@@ -5,7 +5,8 @@ import { Collection } from 'src/app/core/collection';
 import { ExerciseModel } from './exercise.model';
 import { Store } from '@ngxs/store';
 import { ExercisesRequested } from './exercises.state';
-import { SubjectStateInterface, GetLessons } from '../../../subject.state';
+import { SubjectStateInterface, GetLessons } from '../../../pages/subjects/subject.state';
+import { tap, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -16,12 +17,15 @@ export class ExercisesResolver implements Resolve<Collection<ExerciseModel>> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Collection<ExerciseModel>> {
         const subjectStateSnapshot  = this._store.selectSnapshot<SubjectStateInterface>((subjectState) => subjectState.subject);
 
-        const { subject, lessonGuid, topicGuid} = route.params;
+        const { subject, lessonGuid } = route.params;
 
-        if (subjectStateSnapshot.lessons.length === 0) {
-            this._store.dispatch(new GetLessons(subject, lessonGuid));
+        if (!subjectStateSnapshot.selectedLesson) {
+            return this._store.dispatch(new GetLessons(subject, lessonGuid))
+            .pipe(
+                switchMap(scope => this._store.dispatch(new ExercisesRequested(scope.subject.selectedLesson.topics.current.exerciseGuid)))
+            )
         }
 
-        return this._store.dispatch(new ExercisesRequested({subject, lessonGuid, topicGuid}));
+        return this._store.dispatch(new ExercisesRequested(subjectStateSnapshot.selectedLesson.topics.current.exerciseGuid));
     }
 }

@@ -10,12 +10,11 @@ import { AppFullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
-import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { NgxsModule } from '@ngxs/store';
 import { SubjectState } from './pages/subjects/subject.state';
-import { ExercisesState } from './pages/subjects/lessons/topics/exercises/exercises.state';
+import { ExercisesState } from './shared/smart-components/exercises/exercises.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
@@ -38,8 +37,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     FlexLayoutModule,
     MaterialModule,
     PagesModule,
-    PresentationComponentsModule,
-    SmartComponentsModule
+    PresentationComponentsModule
   ],
   bootstrap: [AppComponent]
 })

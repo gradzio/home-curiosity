@@ -8,11 +8,11 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { TimerService } from 'src/app/shared/services/timer.service';
 import { CountResolver } from './count.resolver';
-import { ExercisesState, ExercisesRequested } from '../../subjects/lessons/topics/exercises/exercises.state';
+import { ExercisesState, ExercisesRequested } from './exercises.state';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
-import { ExercisesService } from '../../subjects/lessons/topics/exercises/exercises.service';
+import { ExercisesService } from './exercises.service';
 
-fdescribe('ExercisesResolver', () => {
+describe('ExercisesResolver', () => {
     let router: Router;
     let exercisesServiceMock;
     let store;
@@ -47,8 +47,6 @@ fdescribe('ExercisesResolver', () => {
 
         countResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
-        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested({
-            subject: 'math', lessonGuid: 'lessonGuid1', topicGuid: 'topicGuid2'
-        }));
+        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested('exerciseGuid2'));
     });
 });

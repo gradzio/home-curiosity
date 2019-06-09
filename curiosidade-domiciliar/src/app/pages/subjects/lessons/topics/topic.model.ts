@@ -2,7 +2,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ResourceCardInterface } from 'src/app/shared/presentation-components/video-card/video-card.interface';
 
 export class TopicModel {
-    constructor(private _guid: string, private _name: string, private _videoUrl: string, private _isCompleted = false) {}
+    constructor(private _guid: string, private _name: string, private _videoUrl: string, private _exerciseGuid = null, private _isCompleted = false) {}
 
     get guid(): string {
         return this._guid;
@@ -14,6 +14,10 @@ export class TopicModel {
 
     get videoUrl(): string {
         return this._videoUrl;
+    }
+
+    get exerciseGuid(): string {
+        return this._exerciseGuid;
     }
 
     get isCompleted(): boolean {

@@ -13,19 +13,22 @@
                     "guid": "topicguid3",
                     "name": "Codigo ou quantidade",
                     "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-                    "isCompleted": false
+                    "isCompleted": false,
+                    "exerciseGuid": "exerciseGuid1"
                 },
                 {
                     "guid": "topicguid1",
                     "name": "1 ate 10",
                     "videoUrl": "https://www.youtube.com/embed/DR-cfDsHCGA",
-                    "isCompleted": false
+                    "isCompleted": false,
+                    "exerciseGuid": "exerciseGuid2"
                 },
                 {
                     "guid": "topicguid2",
-                    "name": "10 ate 20",
+                    "name": "Ordem",
                     "videoUrl": "https://www.youtube.com/embed/wiGEEJLLKd8",
-                    "isCompleted": false
+                    "isCompleted": false,
+                    "exerciseGuid": "exerciseGuid3"
                 }
             ]
         },

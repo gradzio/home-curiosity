@@ -7,9 +7,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ExercisesService } from './exercises.service';
 import { NgxsModule, Store } from '@ngxs/store';
-import { SubjectState, GetLessons } from '../../../subject.state';
+import { SubjectState, GetLessons } from '../../../pages/subjects/subject.state';
 import { ExercisesState, ExercisesRequested } from './exercises.state';
-import { LessonsService } from '../../lessons.service';
+import { LessonsService } from '../../../pages/subjects/lessons/lessons.service';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { TimerService } from 'src/app/shared/services/timer.service';
 
@@ -46,24 +46,21 @@ describe('ExercisesResolver', () => {
     });
 
     it('should get lessons on page reload', () => {
-        store.reset(SubjectStateProvider.EMPTY_LESSONS);
+        store.reset({...SubjectStateProvider.EMPTY_LESSONS});
+        store.dispatch.and.returnValue(of({...SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED}))
 
-        exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
+        const subscription = exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).toHaveBeenCalledWith(new GetLessons('subject', 'lessonGuid'));
-        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested({
-            subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
-        }));
+        subscription.subscribe().unsubscribe();
     });
 
     it('should not get lessons on navigation', () => {
-        store.reset(SubjectStateProvider.TWO_LESSONS);
+        store.reset({...SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED});
 
         exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 
         expect(store.dispatch).not.toHaveBeenCalledWith(new GetLessons('subject', 'lessonGuid'));
-        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested({
-            subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
-        }));
+        expect(store.dispatch).toHaveBeenCalledWith(new ExercisesRequested('exerciseGuid2'));
     });
 });

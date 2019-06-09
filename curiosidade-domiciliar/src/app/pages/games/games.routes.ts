@@ -1,6 +1,6 @@
 import { GamesComponent } from './games.component';
-import { ExercisesComponent } from '../subjects/lessons/topics/exercises/exercises.component';
-import { CountResolver } from './count/count.resolver';
+import { ExercisesComponent } from '../../shared/smart-components/exercises/exercises.component';
+import { CountResolver } from '../../shared/smart-components/exercises/count.resolver';
 
 export const GAME_ROUTES = {
     path: 'games',

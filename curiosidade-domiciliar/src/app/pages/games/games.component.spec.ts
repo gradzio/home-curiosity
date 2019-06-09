@@ -5,7 +5,7 @@ import { PresentationComponentsModule } from 'src/app/shared/presentation-compon
 import { MaterialModule } from 'src/app/material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('GamesComponent', () => {
+describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
 

@@ -12,7 +12,7 @@ context('Deep linking navigation', () => {
 
   it('should load exercises', () => {
     cy.visit(`${appUrl}/subjects/math/lessons/lessonguid1/topics/topicguid1/exercises`);
-    cy.get('app-progress-bar').contains(exerciseCountDown);
+    cy.get('app-progress-bar').contains(20);
     cy.contains('Verificar').should('be.disabled');
   });
 });

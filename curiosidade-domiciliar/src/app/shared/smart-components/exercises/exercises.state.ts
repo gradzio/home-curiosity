@@ -3,7 +3,7 @@ import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Collection } from 'src/app/core/collection';
 import { ExerciseModel } from './exercise.model';
 import { ExercisesService } from './exercises.service';
-import { CompletedExercises } from '../../../subject.state';
+import { CompletedExercises } from '../../../pages/subjects/subject.state';
 import { map } from 'rxjs/operators';
 import { TimerService, CountDownInterface } from 'src/app/shared/services/timer.service';
 
@@ -31,7 +31,7 @@ export class AnsweredCorrectly {
 
 export class ExercisesRequested {
   static readonly type = '[Exercises Flow Page] Get exercises';
-  constructor(public scope: ScopeInterface) {}
+  constructor(public exerciseGuid: string) {}
 }
 
 export class CountExercisesRequested {
@@ -72,7 +72,7 @@ export class ExercisesState {
 
   @Action(ExercisesRequested)
   getExercises(ctx: StateContext<ExercisesStateInterface>, action: ExercisesRequested) {
-    return this._exerciseService.getAll(action.scope.topicGuid).pipe(
+    return this._exerciseService.getAll(action.exerciseGuid).pipe(
       map(exercises => ctx.patchState({exercises, currentExercise: exercises.current}))
     );
   }
@@ -95,7 +95,7 @@ export class ExercisesState {
       map(countDown => {
         ctx.patchState({countDown});
         if (countDown.current === 0) {
-          ctx.dispatch(new CompletedExercises(action.scope.lessonGuid, action.scope.topicGuid));
+          ctx.dispatch(new CompletedExercises(action.exerciseGuid));
         }
       }),
     ).subscribe();

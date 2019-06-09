@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { MatRadioGroup, MatRadioButton } from '@angular/material';
 import { Option } from './option.interface';
-import { ExerciseModel } from 'src/app/pages/subjects/lessons/topics/exercises/exercise.model';
+import { ExerciseModel } from 'src/app/shared/smart-components/exercises/exercise.model';
 import { SequenceBuilder } from '../sequence-builder/sequence-builder';
 
 @Component({

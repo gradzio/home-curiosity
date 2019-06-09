@@ -2,8 +2,8 @@
 const appUrl = Cypress.env('host');
 const exerciseSetup = [
   ['radio'],
-  ['sequence'],
-  ['input']
+  ['input'],
+  ['sequence']
 ];
 const exerciseCountDown = 20;
 

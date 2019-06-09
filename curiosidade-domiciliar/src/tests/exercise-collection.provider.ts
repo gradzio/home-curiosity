@@ -1,5 +1,5 @@
 import { Collection } from 'src/app/core/collection';
-import { ExerciseModel } from 'src/app/pages/subjects/lessons/topics/exercises/exercise.model';
+import { ExerciseModel } from 'src/app/shared/smart-components/exercises/exercise.model';
 
 const choices = [
     {label: '<img src="/image1.jpg">', value: '1'},
