@@ -1,0 +1,7 @@
+<mat-card *ngIf="iconButtonVMs$ | async as iconButtonVMs">
+  <div fxLayout="column" fxLayoutAlign="space-around center">
+    <a *ngFor="let iconButtonVM of iconButtonVMs">
+      <app-icon-button [item]="iconButtonVM"></app-icon-button>
+    </a>
+  </div>
+</mat-card>

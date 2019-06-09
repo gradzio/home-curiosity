@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:docker": "docker run -d -p 80:80 -v $(pwd)/server/nginx.conf:/etc/nginx/conf.d/default.conf -v $(pwd)/dist/curiosidade-domiciliar:/usr/share/nginx/html nginx:alpine && ng build --delete-output-path=false --watch",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "cypress open --env host=localhost:4200",
+    "e2e": "cypress open --env host=localhost",
     "test:dev": "npm run build && http-server dist -p 4200 --push-state",
     "test-headless": "ng test --watch=false --no-progress --code-coverage --browsers=ChromeHeadless"
   },

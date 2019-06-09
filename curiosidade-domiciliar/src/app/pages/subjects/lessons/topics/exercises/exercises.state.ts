@@ -34,6 +34,10 @@ export class ExercisesRequested {
   constructor(public scope: ScopeInterface) {}
 }
 
+export class CountExercisesRequested {
+  static readonly type = '[Exercises Flow Page] Get count exercises'
+}
+
 @State<ExercisesStateInterface>({
   name: 'exercises',
   defaults: {
@@ -96,6 +100,7 @@ export class ExercisesState {
       }),
     ).subscribe();
   }
+  
 
   @Action(ExercisesExited)
   clearState(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {

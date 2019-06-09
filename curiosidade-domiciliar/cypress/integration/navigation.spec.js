@@ -65,27 +65,5 @@ context('Navigation of the Math subject', () => {
     }
     cy.contains('Verificar').click();
   };
-
-  it('should open drawer', () => {
-    cy.visit( `${appUrl}` );
-    cy.get('[data-selector="sidebar-open"]').click();
-    cy.get('[data-selector="math-link"]').click();
-    cy.location('pathname').should('include', 'subjects/math');
-    cy.location('pathname').should('not.include', 'lessons');
-  });
-
-  it('should load lessons', () => {
-    cy.visit( `${appUrl}/subjects/math/lessons/lessonguid1` );
-    cy.get('app-topics iframe');
-    cy.get('app-topics').contains('Practicar');
-    cy.get('[data-selector="back-button"]').click();
-    cy.location('pathname').should('not.include', 'lessons');
-  });
-
-  it('should load exercises', () => {
-    cy.visit( `${appUrl}/subjects/math/lessons/lessonguid1/topics/topicguid1/exercises`);
-    cy.get('app-progress-bar').contains(exerciseCountDown);
-    cy.contains('Verificar').should('be.disabled');
-  });
-  })
+});
   
