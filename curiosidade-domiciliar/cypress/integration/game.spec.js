@@ -22,6 +22,6 @@ context('Game variant', () => {
     const countButtonText = cy.get('app-icon-button').contains(gameName);
     countButtonText.parent().find('button').click();
     cy.location(('pathname')).should('include', gameName.toLowerCase());
-    finishExercise(['radio'], {label: 'Voltar', path: 'games'})
+    finishExercise([gameType], {label: 'Voltar', path: 'games'})
   } 
 });
