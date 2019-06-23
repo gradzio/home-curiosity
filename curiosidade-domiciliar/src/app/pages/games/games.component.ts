@@ -23,6 +23,11 @@ export class GamesComponent implements OnInit {
       icon: 'question_answer',
       navigationLink: '/games/choice',
       isDisabled: false
+    }, {
+      name: 'Order',
+      icon: 'reorder',
+      navigationLink: '/games/order',
+      isDisabled: false
     }]);
   }
 
