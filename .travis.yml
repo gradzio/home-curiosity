@@ -54,9 +54,10 @@ jobs:
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull $DOCKER_USERNAME/$DOCKER_REPO:test
+        - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:staging .
         - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:test
         - cypress run --record --key $CYPRESS_KEY --env host=localhost
-        - docker push -t $DOCKER_USERNAME/$DOCKER_REPO:staging
+        - docker push $DOCKER_USERNAME/$DOCKER_REPO:staging
     - stage: deploy
       on:
         branch: master
