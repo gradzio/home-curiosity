@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AnswerBoxModule } from './answer-box.module';
 import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provider';
-import { ExerciseModel } from 'src/app/pages/subjects/lessons/topics/exercises/exercise.model';
+import { ExerciseModel } from 'src/app/shared/smart-components/exercises/exercise.model';
 import { SequenceBuilderModule } from '../sequence-builder/sequence-builder.module';
 import { SequenceBuilder } from '../sequence-builder/sequence-builder';
 

@@ -11,7 +11,7 @@ export class GetLessons {
 
 export class CompletedExercises {
   static readonly type = '[Exercise Flow Page] Completed exercises';
-  constructor(public lessonGuid: string, public topicGuid: string) {}
+  constructor(public exerciseGuid: string) {}
 }
 
 export class CompletedTopics {
@@ -73,16 +73,17 @@ export class SubjectState {
 
   @Action(CompletedExercises)
   completedExercises(ctx: StateContext<SubjectStateInterface>, action: CompletedExercises) {
-    const lessons = ctx.getState().lessons.map(lesson => {
-      if (lesson.guid === action.lessonGuid) {
+    const { lessons, selectedLesson} = ctx.getState();
+    const completedLessons = lessons.map(lesson => {
+      if (lesson.guid === selectedLesson.guid) {
           lesson.topics.next();
           if (lesson.topics.progress.isCompleted) {
-            ctx.dispatch(new CompletedTopics(action.lessonGuid));
+            ctx.dispatch(new CompletedTopics(selectedLesson.guid));
           }
       }
       return lesson;
     });
-    ctx.patchState({lessons});
+    ctx.patchState({lessons: completedLessons});
   }
 
   @Action(CompletedTopics)

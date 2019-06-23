@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { SubjectsModule } from './subjects/subjects.module';
+import { GamesModule } from './games/games.module';
 
 @NgModule({
       imports: [
-        SubjectsModule
+        SubjectsModule,
+        GamesModule
       ],
       exports: [
-          SubjectsModule
+          SubjectsModule,
+          GamesModule
       ]
 })
 export class PagesModule { }

@@ -13,10 +13,10 @@ import { ExerciseModel } from './exercise.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AnswersService } from './answers.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { LessonsService } from '../../lessons.service';
+import { LessonsService } from '../../../pages/subjects/lessons/lessons.service';
 import { Store, NgxsModule } from '@ngxs/store';
 import { ExercisesState, AnsweredCorrectly } from './exercises.state';
-import { SubjectState } from '../../../subject.state';
+import { SubjectState } from '../../../pages/subjects/subject.state';
 import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Collection } from 'src/app/core/collection';
@@ -109,7 +109,7 @@ describe('ExercisesComponent', () => {
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly('lessonGuid', 'topicGuid'));
+    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly());
   });
 
   it('should show negative snackbar on wrong answer', () => {
@@ -121,12 +121,6 @@ describe('ExercisesComponent', () => {
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
     expect(store.dispatch).not.toHaveBeenCalled();
-  });
-
-  it('should get backlink', () => {
-      component.backLink$
-        .subscribe(backLink => expect(backLink).toEqual('/subjects/math/lessons/lessonGuid'))
-        .unsubscribe();
   });
 
   it('should get count down progress', () => {
