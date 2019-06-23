@@ -18,6 +18,7 @@ addons:
 cache:
   directories:
      - ./curiosidade-domiciliar/node_modules
+     - $HOME/google-cloud-sdk
 
 before_install:
   - cd curiosidade-domiciliar
@@ -30,22 +31,46 @@ stages:
 jobs:
   include:
     - stage: test
+      on:
+        branch: /^feature.*$/
       install: npm install
       script:
         - npm run lint
         - npm run test-headless
         - bash <(curl -s https://codecov.io/bash)
     - stage: build
+      on:
+        branch: /^feature.*$/
       install: npm install --production
       script:
         - npm run build:prod
-        - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA .
+        - docker build -t $DOCKER_USERNAME/$DOCKER_REPO:test .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+        - docker push $DOCKER_USERNAME/$DOCKER_REPO:test
     - stage: acceptance
+      on:
+        branch: /^feature.*$/
       install: npm install -g cypress
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
-        - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:$TRAVIS_PULL_REQUEST_SHA
+        - docker pull $DOCKER_USERNAME/$DOCKER_REPO:test
+        - docker run -d -p 80:80 $DOCKER_USERNAME/$DOCKER_REPO:test
         - cypress run --record --key $CYPRESS_KEY --env host=localhost
+      after_success:
+        - docker tag DOCKER_REPO DOCKER_USERNAME/DOCKER_REPO:staging
+        - docker push $DOCKER_USERNAME/$DOCKER_REPO:staging
+    - stage: deploy
+      on:
+        branch: master
+      install:
+        - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash > /dev/null; fi
+        - source /home/travis/google-cloud-sdk/path.bash.inc
+        - gcloud version
+        - gcloud --quiet components update kubectl
+        - echo $GCLOUD_KEY | base64 --decode > gcloud.json
+        - gcloud auth activate-service-account --key-file gcloud.json
+        - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
+        - gcloud --quiet container clusters get-credentials $CLOUDSDK_CONTAINER_CLUSTER --zone=$CLOUDSDK_COMPUTE_ZONE --project=$CLOUDSDK_CORE_PROJECT
+        - kubectl create secret docker-registry docker-auth --docker-server=$DOCKER_PASSWORD --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --dry-run -o yaml | kubectl apply -f -
+      script:
+        - kubectl apply -f deployment.yml
