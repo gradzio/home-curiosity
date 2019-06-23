@@ -31,5 +31,5 @@ describe('GamesComponent', () => {
       component.iconButtonVMs$.subscribe(iconButtons => {
         expect(iconButtons.length).toEqual(1);
       }).unsubscribe();
-  })
+  });
 });

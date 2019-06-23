@@ -23,7 +23,6 @@ export class ExercisesService {
     constructor(private client: HttpClient) {}
 
     getAll(exerciseGuid: string): Observable<Collection<ExerciseModel>> {
-        console.log(exerciseGuid)
         return this.client.get(`${environment.apis.baseUrl}/exercises/${exerciseGuid}.json`)
             .pipe(
                 map(response => new Collection<ExerciseModel>(response['data'].map(ExerciseFactory.make)))

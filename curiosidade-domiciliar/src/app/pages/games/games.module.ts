@@ -7,10 +7,13 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
 import { GamesComponent } from './games.component';
+import { CountGameComponent } from './count/count.component';
+import { ExercisesModule } from 'src/app/shared/smart-components/exercises/exercises.module';
 
 @NgModule({
     declarations: [
         GamesComponent,
+        CountGameComponent
       ],
       imports: [
         RouterModule,
@@ -20,6 +23,7 @@ import { GamesComponent } from './games.component';
         FlexLayoutModule,
         MaterialModule,
         PresentationComponentsModule,
+        ExercisesModule
       ]
 })
 export class GamesModule { }

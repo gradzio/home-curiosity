@@ -109,7 +109,7 @@ describe('ExercisesComponent', () => {
 
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyCorrectAnswer).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly('lessonGuid', 'topicGuid'));
+    expect(store.dispatch).toHaveBeenCalledWith(new AnsweredCorrectly());
   });
 
   it('should show negative snackbar on wrong answer', () => {
@@ -121,12 +121,6 @@ describe('ExercisesComponent', () => {
     expect(answersService.create).toHaveBeenCalledWith('2', 'guid1');
     expect(notificationService.notifyWrongAnswer).toHaveBeenCalled();
     expect(store.dispatch).not.toHaveBeenCalled();
-  });
-
-  it('should get backlink', () => {
-      component.backLink$
-        .subscribe(backLink => expect(backLink).toEqual('/subjects/math/lessons/lessonGuid'))
-        .unsubscribe();
   });
 
   it('should get count down progress', () => {

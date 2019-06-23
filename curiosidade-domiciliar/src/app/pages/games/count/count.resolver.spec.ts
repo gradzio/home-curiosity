@@ -7,16 +7,16 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { TimerService } from 'src/app/shared/services/timer.service';
-import { CountResolver } from './count.resolver';
-import { ExercisesState, ExercisesRequested } from './exercises.state';
+import { CountGameResolver } from './count.resolver';
+import { ExercisesState, ExercisesRequested } from '../../../shared/smart-components/exercises/exercises.state';
 import { PresentationComponentsModule } from 'src/app/shared/presentation-components/presentation-components.module';
-import { ExercisesService } from './exercises.service';
+import { ExercisesService } from '../../../shared/smart-components/exercises/exercises.service';
 
 describe('ExercisesResolver', () => {
     let router: Router;
     let exercisesServiceMock;
     let store;
-    let countResolver: CountResolver;
+    let countResolver: CountGameResolver;
     const mockSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
     const activatedRouteSnapshot = new ActivatedRouteSnapshot();
 
@@ -39,7 +39,7 @@ describe('ExercisesResolver', () => {
         router = TestBed.get(Router);
         store = TestBed.get(Store);
         spyOn(store, 'dispatch');
-        countResolver = TestBed.get(CountResolver);
+        countResolver = TestBed.get(CountGameResolver);
     });
 
     it('should get exercises', () => {

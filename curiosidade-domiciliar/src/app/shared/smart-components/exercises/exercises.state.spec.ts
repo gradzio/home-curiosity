@@ -46,7 +46,7 @@ describe('ExercisesState', () => {
   }));
 
   it('should handle AnsweredCorrectly', async(() => {
-    store.dispatch(new AnsweredCorrectly('lessonGuid', 'topicGUid'));
+    store.dispatch(new AnsweredCorrectly());
     store.selectOnce(state => state.exercises).subscribe(state => {
       expect(state.exercises.current.guid).toEqual('guid1');
       expect(state.answeredCount).toEqual(1);

@@ -47,7 +47,7 @@ describe('ExercisesResolver', () => {
 
     it('should get lessons on page reload', () => {
         store.reset({...SubjectStateProvider.EMPTY_LESSONS});
-        store.dispatch.and.returnValue(of({...SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED}))
+        store.dispatch.and.returnValue(of({...SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED}));
 
         const subscription = exercisesResolver.resolve(activatedRouteSnapshot, mockSnapshot);
 

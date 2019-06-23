@@ -15,4 +15,8 @@ context('Deep linking navigation', () => {
     cy.get('app-progress-bar').contains(20);
     cy.contains('Verificar').should('be.disabled');
   });
+
+  it('should load games', () => {
+    cy.visit(`${appUrl}/games`);
+  })
 });

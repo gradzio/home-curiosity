@@ -4,6 +4,7 @@ import { TopicsResolver } from './lessons/topics/topics.resolver';
 import { ExercisesComponent } from '../../shared/smart-components/exercises/exercises.component';
 import { ExercisesResolver } from '../../shared/smart-components/exercises/exercises.resolver';
 import { LessonsResolver } from './lessons/lessons.resolver';
+import { TopicExerciseComponent } from './lessons/topics/topic-exercise/topic-exercise.component';
 
 export const SUBJECT_ROUTES = {
     path: 'subjects/:subject',
@@ -24,7 +25,7 @@ export const SUBJECT_ROUTES = {
         },
         {
             path: 'lessons/:lessonGuid/topics/:topicGuid/exercises',
-            component: ExercisesComponent,
+            component: TopicExerciseComponent,
             resolve: {
                 exercises: ExercisesResolver
             }

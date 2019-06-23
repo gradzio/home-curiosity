@@ -6,7 +6,7 @@ import { ExerciseModel } from './exercise.model';
 import { Store } from '@ngxs/store';
 import { ExercisesRequested } from './exercises.state';
 import { SubjectStateInterface, GetLessons } from '../../../pages/subjects/subject.state';
-import { tap, switchMap, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -23,7 +23,7 @@ export class ExercisesResolver implements Resolve<Collection<ExerciseModel>> {
             return this._store.dispatch(new GetLessons(subject, lessonGuid))
             .pipe(
                 switchMap(scope => this._store.dispatch(new ExercisesRequested(scope.subject.selectedLesson.topics.current.exerciseGuid)))
-            )
+            );
         }
 
         return this._store.dispatch(new ExercisesRequested(subjectStateSnapshot.selectedLesson.topics.current.exerciseGuid));

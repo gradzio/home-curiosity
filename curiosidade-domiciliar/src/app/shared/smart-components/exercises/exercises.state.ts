@@ -26,7 +26,7 @@ export class ExercisesExited {
 
 export class AnsweredCorrectly {
   static readonly type = '[Exercises Flow Page] Answered correctly';
-  constructor(public lessonGuid: string, public topicGuid: string) {}
+  constructor() {}
 }
 
 export class ExercisesRequested {
@@ -35,7 +35,7 @@ export class ExercisesRequested {
 }
 
 export class CountExercisesRequested {
-  static readonly type = '[Exercises Flow Page] Get count exercises'
+  static readonly type = '[Exercises Flow Page] Get count exercises';
 }
 
 @State<ExercisesStateInterface>({
@@ -100,7 +100,6 @@ export class ExercisesState {
       }),
     ).subscribe();
   }
-  
 
   @Action(ExercisesExited)
   clearState(ctx: StateContext<ExercisesStateInterface>, action: ExercisesExited) {

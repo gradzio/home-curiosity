@@ -30,7 +30,6 @@ describe('ExercisesService', () => {
                     expect(exercises.length).toEqual(exercisesMock.data.length);
                 }
             });
-            
 
         const req = httpTestingController.expectOne('/assets/mocks/exercises/exerciseGuid.json');
 
