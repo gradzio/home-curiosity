@@ -8,7 +8,7 @@ const exerciseSetup = [
 const exerciseCountDown = 20;
 
 export const finishExercise = (exerciseConfig, {label, path}) => {
-  cy.get('app-progress-bar').contains(exerciseCountDown);
+  // cy.get('app-progress-bar').contains(exerciseCountDown);
   for(let i = 0; i < exerciseConfig.length; i++) {
     cy.get('simple-snack-bar').should('not.be.visible');
     answerExercise(exerciseConfig[i]);
