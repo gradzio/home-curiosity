@@ -71,6 +71,6 @@ jobs:
         - gcloud auth activate-service-account --key-file gcloud.json
         - ssh-keygen -f ~/.ssh/google_compute_engine -N ""
         - gcloud --quiet container clusters get-credentials $CLOUDSDK_CONTAINER_CLUSTER --zone=$CLOUDSDK_COMPUTE_ZONE --project=$CLOUDSDK_CORE_PROJECT
-        - kubectl create secret docker-registry docker-auth --docker-server=$DOCKER_PASSWORD --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --dry-run -o yaml | kubectl apply -f -
+        - kubectl create secret docker-registry docker-auth --docker-server=$DOCKER_SERVER --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-email=$DOCKER_EMAIL --dry-run -o yaml | kubectl apply -f -
       script:
         - kubectl apply -f deployment.yml
