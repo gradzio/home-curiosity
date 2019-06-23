@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Collection } from 'src/app/core/collection';
-import { ExerciseModel } from './exercise.model';
+import { ExerciseModel } from '../../../../../shared/smart-components/exercises/exercise.model';
 import { Store } from '@ngxs/store';
-import { ExercisesRequested } from './exercises.state';
-import { SubjectStateInterface, GetLessons } from '../../../pages/subjects/subject.state';
+import { ExercisesRequested } from '../../../../../shared/smart-components/exercises/exercises.state';
+import { SubjectStateInterface, GetLessons } from '../../../subject.state';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
-export class ExercisesResolver implements Resolve<Collection<ExerciseModel>> {
+export class TopicExerciseResolver implements Resolve<Collection<ExerciseModel>> {
     constructor(private _store: Store, private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Collection<ExerciseModel>> {

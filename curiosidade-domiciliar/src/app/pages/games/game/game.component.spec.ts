@@ -10,16 +10,16 @@ import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { LessonsService } from 'src/app/pages/subjects/lessons/lessons.service';
 import { TimerService } from 'src/app/shared/services/timer.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CountGameComponent } from 'src/app/pages/games/count/count.component';
+import { GameComponent } from 'src/app/pages/games/game/game.component';
 
 describe('TopicExerciseComponent', () => {
-  let component: CountGameComponent;
-  let fixture: ComponentFixture<CountGameComponent>;
+  let component: GameComponent;
+  let fixture: ComponentFixture<GameComponent>;
   let store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CountGameComponent ],
+      declarations: [ GameComponent ],
       imports: [
         NgxsModule.forRoot([SubjectState, ExercisesState]),
         RouterTestingModule,
@@ -37,7 +37,7 @@ describe('TopicExerciseComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CountGameComponent);
+    fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
     store.reset(SubjectStateProvider.EMPTY_LESSONS);

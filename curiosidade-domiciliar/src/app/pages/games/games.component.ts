@@ -18,6 +18,11 @@ export class GamesComponent implements OnInit {
       icon: 'filter_1',
       navigationLink: '/games/count',
       isDisabled: false
+    }, {
+      name: 'Choice',
+      icon: 'question_answer',
+      navigationLink: '/games/choice',
+      isDisabled: false
     }]);
   }
 

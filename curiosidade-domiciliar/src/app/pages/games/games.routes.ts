@@ -1,6 +1,7 @@
 import { GamesComponent } from './games.component';
-import { CountResolver } from './count/count.resolver';
-import { CountGameComponent } from './count/count.component';
+import { CountGameResolver } from './game/count.resolver';
+import { GameComponent } from './game/game.component';
+import { ChoiceGameResolver } from './game/choice.resolver';
 
 export const GAME_ROUTES = {
     path: 'games',
@@ -11,9 +12,16 @@ export const GAME_ROUTES = {
         },
         {
             path: 'count',
-            component: CountGameComponent,
+            component: GameComponent,
             resolve: {
-                exercises: CountResolver
+                exercises: CountGameResolver
+            }
+        },
+        {
+            path: 'choice',
+            component: GameComponent,
+            resolve: {
+                exercises: ChoiceGameResolver
             }
         }
     ]

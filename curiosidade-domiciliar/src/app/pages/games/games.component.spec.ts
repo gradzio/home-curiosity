@@ -29,7 +29,7 @@ describe('GamesComponent', () => {
 
   it('should contain iconButtonVMs', () => {
       component.iconButtonVMs$.subscribe(iconButtons => {
-        expect(iconButtons.length).toEqual(1);
+        expect(iconButtons.length).toEqual(2);
       }).unsubscribe();
   });
 });
