@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PresentationComponentsModule } from './shared/presentation-components/presentation-components.module';
-import { SmartComponentsModule } from './shared/smart-components/smart-components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -25,8 +24,7 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         FlexLayoutModule,
         MaterialModule,
-        PresentationComponentsModule,
-        SmartComponentsModule
+        PresentationComponentsModule
       ],
       declarations: [
         AppComponent,

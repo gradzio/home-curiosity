@@ -2,8 +2,9 @@ import { ExercisesService } from './exercises.service';
 import { Collection } from 'src/app/core/collection';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import exercisesMock from 'src/assets/mocks/subjects/math/lessons/topicguid1/exercises.json';
-import { last } from 'rxjs/operators';
+import exercisesMock from 'src/assets/mocks/exercises/exerciseGuid1.json';
+import { last, take } from 'rxjs/operators';
+import { async } from 'q';
 
 describe('ExercisesService', () => {
     let exerciseService: ExercisesService;
@@ -19,7 +20,7 @@ describe('ExercisesService', () => {
     });
 
     it('should getAll', () => {
-        const subscription = exerciseService.getAll('topicguid1')
+        const subscription = exerciseService.getAll('exerciseGuid')
             .pipe(
                 last()
             )
@@ -30,7 +31,7 @@ describe('ExercisesService', () => {
                 }
             });
 
-        const req = httpTestingController.expectOne('/assets/mocks/subjects/math/lessons/topicguid1/exercises.json');
+        const req = httpTestingController.expectOne('/assets/mocks/exercises/exerciseGuid.json');
 
         expect(req.request.method).toEqual('GET');
 

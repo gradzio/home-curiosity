@@ -10,8 +10,8 @@ describe('LessonFactory', () => {
             icon: 'icon',
             isCompleted: false,
             topics: [
-                {guid: 'topicguid1', name: 'topicname1', videoUrl: 'videoUrl1'},
-                {guid: 'topicguid2', name: 'topicname2', videoUrl: 'videoUrl2'}
+                {guid: 'topicguid1', name: 'topicname1', videoUrl: 'videoUrl1', exerciseGuid: 'exerciseGuid1'},
+                {guid: 'topicguid2', name: 'topicname2', videoUrl: 'videoUrl2', exerciseGuid: 'exerciseGuid2'}
             ]
         });
         expect(actual).toEqual(jasmine.any(LessonModel));
