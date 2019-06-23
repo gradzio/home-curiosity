@@ -5,7 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LessonsProvider } from 'src/tests/lessons.provider';
 import { SubjectStateProvider } from 'src/tests/subject-state.provider';
 import { GetLessons, SubjectState, CompletedExercises, SelectLesson, CompletedTopics } from './subject.state';
-import { ExercisesService } from './lessons/topics/exercises/exercises.service';
+import { ExercisesService } from '../../shared/smart-components/exercises/exercises.service';
 import { LessonsService } from './lessons/lessons.service';
 
 describe('SubjectState', () => {
@@ -22,10 +22,10 @@ describe('SubjectState', () => {
   beforeEach(() => {
     store = TestBed.get(Store);
     lessonsService = TestBed.get(LessonsService);
-    store.reset(SubjectStateProvider.TWO_LESSONS);
+    store.reset(SubjectStateProvider.TWO_LESSONS_FIRST_SELECTED);
   });
 
-  it('it binds GetLessons', async(() => {
+  it('should bind GetLessons', async(() => {
     spyOn(lessonsService, 'getAll').and.returnValue(of(LessonsProvider.two));
     store.dispatch(new GetLessons('subject'));
     store.selectOnce(state => state.subject).subscribe(subject => {
@@ -34,7 +34,7 @@ describe('SubjectState', () => {
     }).unsubscribe();
   }));
 
-  it('it binds GetLessons with pre select lesson', async(() => {
+  it('should bind GetLessons with pre select lesson', async(() => {
     spyOn(lessonsService, 'getAll').and.returnValue(of(LessonsProvider.two));
     store.dispatch(new GetLessons('subject', 'guid1'));
     store.selectOnce(state => state.subject).subscribe(subject => {
@@ -44,15 +44,15 @@ describe('SubjectState', () => {
     }).unsubscribe();
   }));
 
-  it('it binds SelectLesson', async(() => {
+  it('should bind SelectLesson', async(() => {
     store.dispatch(new SelectLesson(LessonsProvider.two[0]));
     store.selectOnce(state => state.subject).subscribe(subject => {
       expect(subject.selectedLesson.guid).toEqual('guid1');
     }).unsubscribe();
   }));
 
-  it('it binds CompletedExercises', async(() => {
-    store.dispatch(new CompletedExercises('guid1', 'topicGuid'));
+  it('should bind CompletedExercises', async(() => {
+    store.dispatch(new CompletedExercises('exerciseGuid1'));
     store.selectOnce(state => state.subject).subscribe(subject => {
       const lesson = subject.lessons.find(l => l.guid === 'guid1');
       expect(lesson.topics.progress.current).toEqual(2);
@@ -60,8 +60,8 @@ describe('SubjectState', () => {
   }));
 
   it('it calls CompletedExercises and CompletedTopics', async(() => {
-    store.dispatch(new CompletedExercises('guid1', 'topicGuid1'));
-    store.dispatch(new CompletedExercises('guid1', 'topicGuid2'));
+    store.dispatch(new CompletedExercises('exerciseGuid1'));
+    store.dispatch(new CompletedExercises('exerciseGuid2'));
     store.selectOnce(state => state.subject).subscribe(subject => {
       const lesson = subject.lessons.find(l => l.guid === 'guid1');
       expect(lesson.topics.progress.isCompleted).toEqual(true);

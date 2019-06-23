@@ -7,7 +7,7 @@ import { ExerciseCollectionProvider } from 'src/tests/exercise-collection.provid
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Collection } from 'src/app/core/collection';
 import { ExercisesStateProvider } from 'src/tests/exercises-state.provider';
-import { LessonsService } from '../../lessons.service';
+import { LessonsService } from '../../../pages/subjects/lessons/lessons.service';
 import { TimerService } from 'src/app/shared/services/timer.service';
 
 describe('ExercisesState', () => {
@@ -37,7 +37,7 @@ describe('ExercisesState', () => {
   it('should bind GetExercises', async(() => {
     const countDownFrom = 60;
     spyOn(timerService, 'getCountDown').and.returnValue(of({current: countDownFrom, total: countDownFrom}));
-    store.dispatch(new ExercisesRequested({subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'}));
+    store.dispatch(new ExercisesRequested('exerciseGuid1'));
     store.selectOnce(state => state.exercises.exercises).subscribe(exercises => {
       expect(exercisesService.getAll).toHaveBeenCalled();
       expect(exercises).toEqual(jasmine.any(Collection));
@@ -46,7 +46,7 @@ describe('ExercisesState', () => {
   }));
 
   it('should handle AnsweredCorrectly', async(() => {
-    store.dispatch(new AnsweredCorrectly('lessonGuid', 'topicGUid'));
+    store.dispatch(new AnsweredCorrectly());
     store.selectOnce(state => state.exercises).subscribe(state => {
       expect(state.exercises.current.guid).toEqual('guid1');
       expect(state.answeredCount).toEqual(1);
@@ -56,17 +56,13 @@ describe('ExercisesState', () => {
   it('should set completed on timer up', async(() => {
     spyOn(timerService, 'getCountDown').and.returnValue(of({current: 0, total: 1}));
     store.reset(ExercisesStateProvider.COUNTDOWN_COMPLETED);
-    store.dispatch(new ExercisesRequested({
-      subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
-    }));
+    store.dispatch(new ExercisesRequested('exerciseGuid1'));
   }));
 
   it('should clear state', () => {
     spyOn(timerService, 'getCountDown').and.returnValue(of(10));
     store.reset(ExercisesStateProvider.TWO);
-    store.dispatch(new ExercisesRequested({
-      subject: 'subject', lessonGuid: 'lessonGuid', topicGuid: 'topicGuid'
-    }));
+    store.dispatch(new ExercisesRequested('exerciseGuid1'));
     store.dispatch(new ExercisesExited());
 
     store.selectOnce(state => state.exercises).subscribe(state => {
